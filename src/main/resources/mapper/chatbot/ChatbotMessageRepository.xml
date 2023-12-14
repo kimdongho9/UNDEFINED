@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lec.spring.repository.user.ChatbotRepository">
+
+    <sql id="SELECT_BASE">
+        SELECT
+            chatbot_id "id",
+            user_id "user_id",
+            context "context",
+            isFromChat "isFromChat",
+            reg_date "regDate"
+        FROM chatbot
+        WHERE 1 = 1
+    </sql>
+    <resultMap id="mapChatbotMessage" type="com.lec.spring.domain.chatbot.ChatbotMessage">
+        <result column="id" property="id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="context" property="context" />
+        <result column="isFromChat" property="isFromChat"/>
+        <result column="regDate" property="regDate"/>
+    </resultMap>
+
+    <select id="loadByUserId" resultMap="mapChatbotMessage">
+        SELECT
+            chatbot_id "id",
+            user_id "user_id",
+            context "context",
+            isFromChat "isFromChat",
+            reg_date "regDate"
+        FROM
+            chatbot
+        WHERE
+            user_id = #{id}
+        ORDER BY
+            reg_date
+    </select>
+
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.chatbot.ChatbotMessage"
+            keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO chatbot (user_id, context, isFromChat)
+        VALUES(#{user_id},#{context}, #{isFromChat})
+    </insert>
+
+
+</mapper>
+

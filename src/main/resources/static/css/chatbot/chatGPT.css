@@ -1,0 +1,91 @@
+.userask
+{
+    position: relative;
+    width: 275px;
+    min-height: 80px;
+    padding: 10px;
+    background: #FFFFFF;
+    -webkit-border-radius: 19px;
+    -moz-border-radius: 19px;
+    border-radius: 19px;
+    border: #000000 solid 1px;
+    overflow: visible;
+}
+
+.userask:after
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 15px 0 15px 21px;
+    border-color: transparent #FFFFFF;
+    display: block;
+    width: 0;
+    z-index: 1;
+    margin-top: -15px;
+    right: -21px;
+    top: 69%;
+}
+
+.userask:before
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 15px 0 15px 21px;
+    border-color: transparent #000000;
+    display: block;
+    width: 0;
+    z-index: 0;
+    margin-top: -15px;
+    right: -22px;
+    top: 69%;
+}
+
+
+
+
+.GPTanswer
+{
+    position: relative;
+    width: 275px;
+    min-height: 110px;
+    padding: 10px;
+    background: #000000;
+    -webkit-border-radius: 19px;
+    -moz-border-radius: 19px;
+    border-radius: 19px;
+    border: #000000 solid 1px;
+    color: white;
+    overflow: visible;
+}
+
+.GPTanswer:after
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 16px 21px 16px 0;
+    border-color: transparent #000000;
+    display: block;
+    width: 0;
+    z-index: 1;
+    margin-top: -16px;
+    left: -21px;
+    top: 69%;
+}
+
+.GPTanswer:before
+{
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 16px 21px 16px 0;
+    border-color: transparent #000000;
+    display: block;
+    width: 0;
+    z-index: 0;
+    margin-top: -16px;
+    left: -22px;
+    top: 69%;
+}

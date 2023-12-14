@@ -1,0 +1,23 @@
+.popout {
+    position: absolute;
+    bottom: 4rem;
+    right: 4rem;
+}
+.popout #toggleBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    outline: none;
+    user-select: none;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 32px;
+    z-index: 999;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    transition: 0.2s opacity ease-in-out;
+}

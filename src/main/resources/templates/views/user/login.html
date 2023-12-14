@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>UNDEFINED LOGIN PAGE</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- 가져온 template의 css-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <!--sidebar 동작 시키는 js-->
+    <script th:src="@{/js/sidebar.js}"></script>
+    <!-- loginpage에서 사용되는 js-->
+    <script th:src="@{/js/login.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/sketchy/bootstrap.min.css">
+</head>
+
+<body>
+
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="index.html">Undefined</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fas fa-bars"></i></button>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <ul sec:authorize="isAuthenticated()" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#!">Profile</a></li>
+                <li>
+                    <hr class="dropdown-divider" />
+                </li>
+                <li><a class="dropdown-item" th:href="@{/user/logout}">LOG OUT</a></li>
+            </ul>
+            <ul sec:authorize="isAnonymous()" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" th:href="@{/user/register}">Register</a></li>
+                <li>
+                    <hr class="dropdown-divider" />
+                </li>
+                <li><a class="dropdown-item" th:href="@{/user/login}">Login</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <!--Home-->
+                    <div class="sb-sidenav-menu-heading">Home</div>
+                    <a class="nav-link" href="index.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Dashboard
+                    </a>
+
+
+                    <!--Category-->
+                    <div class="sb-sidenav-menu-heading">Category</div>
+                    <!--Study-->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                        Study
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">Menu1</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Menu2</a>
+                        </nav>
+                    </div>
+
+                    <!--Project-->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#collapseProject" aria-expanded="false" aria-controls="collapseProject">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-p"></i></div>
+                        &nbsp;Project
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseProject" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">Menu1</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Menu2 </a>
+                        </nav>
+                    </div>
+
+                    <!--QnA-->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#collapseQnA" aria-expanded="false" aria-controls="collapseQnA">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-comments"></i></div>
+                        QnA
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseQnA" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">Menu1</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Menu2 </a>
+                        </nav>
+                    </div>
+
+                    <!--Job Info-->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#collapseJobInfo" aria-expanded="false" aria-controls="collapseJobInfo">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-circle-info"></i></div>
+                        Job Info
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseJobInfo" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">Menu1</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Menu2 </a>
+                        </nav>
+                    </div>
+
+                    <!--Community-->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#collapseCommunity" aria-expanded="false" aria-controls="collapseCommunity">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-users-between-lines"></i></div>
+                        Community
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseCommunity" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">Menu1</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Menu2 </a>
+                        </nav>
+                    </div>
+
+                    <div class="sb-sidenav-menu-heading">Account</div>
+                    <a class="nav-link" href="charts.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                        Profile
+                    </a>
+                    <a class="nav-link" href="tables.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Login
+                    </a>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                <p sec:authorize="isAnonymous()">undefined</p><!-- <= 로그인시 해당 유정의 닉네임으로 변경, 로그아웃시에는 undefined-->
+                <p sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">[[${user.name}]]</p>
+            </div>
+        </nav>
+    </div>
+
+    <div id="layoutSidenav_content">
+        <!--/*<div class="card border-primary mb-3 " style="max-width: 20rem;">
+            <div class="card-header d-flex justify-content-center">LOGIN</div>
+            <div class="card-body">
+                <form th:action="@{/user/login}" method="POST">
+
+                    <div class="row mt-5">
+                        <div class="col-12 text-danger" th:text="${errorMessage}">
+                            &lt;!&ndash; 에러 메세지 &ndash;&gt;
+                        </div>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="username" id="username" th:value="${username}" placeholder="name@example.com" required>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="form-floating mt-1">
+                        <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
+                        <label for="password">Password</label>
+                    </div>
+
+
+                    <button class="w-100 btn btn-lg btn-primary my-1 mt-3" type="submit">LOG IN</button>
+                    <a class="w-100 btn btn-lg btn-primary my-1" th:href="@{/user/register}">Register</a>
+
+                    &lt;!&ndash; OAuth 로그인 버튼 &ndash;&gt;
+                    <a class="btn btn-lg my-1" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
+                        <img th:src="@{/image/kakao_login_button.png}" width="260" height="45">
+                    </a>
+                    <a class="btn btn-lg my-1" th:href="@{/oauth2/authorization/google}">
+                        <img th:src="@{/image/google_login_button.png}" width="260" height="45">
+                    </a>
+                    <a class="btn btn-lg my-1" th:href="@{/oauth2/authorization/naver}">
+                        <img th:src="@{/image/naver_login_button.png}" width="260" height="45">
+                    </a>
+                    &lt;!&ndash; OAuth 로그인 버튼 &ndash;&gt;
+
+                </form>
+            </div>
+          </div>
+
+        <p class="codepen" data-height="265" data-theme-id="light" data-default-tab="js,result" data-user="Mamboleoo" data-slug-hash="XWJPxpZ" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="Walkers - How to">
+  <span>See the Pen <a href="https://codepen.io/Mamboleoo/pen/XWJPxpZ">
+  Walkers - How to</a> by Louis Hoebregts (<a href="https://codepen.io/Mamboleoo">@Mamboleoo</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+        </p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>*/-->
+        <div style="height: 10%;">
+        </div>
+    <!-- 로그인 터미널 부분-->
+
+    <div>
+        <a id="Kakao" class="visually-hidden" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
+        </a>
+        <div class="loginHeader text-center mb-3">
+            <div id="welcome" style="display: inline-block;">
+
+            </div>
+            <div class="statement">
+
+            </div>
+        </div>
+        <div class="loginBody d-flex justify-content-center">
+            <div class="card border-primary mb-3 col-10 cardBody" style="max-width: 576px; height: 500px;">
+                <div class="card-header"><i class="fa-solid fa-terminal"></i>&nbsp;Longin Terminal</div>
+                <div class="card-body">
+                    <p class="card-text mb-0">Undefined Website [Version 1.0.0]</p>
+                    <p class="card-text">&copy; Undefined. All rights reserved.</p>
+
+                    <p class="card-text mb-0" id="commandRoot">
+                        C:&#8361;Undefined&#8361;Login&#8361;Select&#8361;Options > </p>
+                    <div class="selectLoginOption">
+                        <p class="card-text mb-0" id="loginText0"></p>
+                        <p class="card-text mb-0" id="loginText1"></p>
+                        <p class="card-text mb-0" id="loginText2"></p>
+                        <p class="card-text mb-0" id="loginText3"></p>
+                        <p class="card-text mb-0" id="loginText4"></p>
+                        <p class="card-text" id="loginText5"></p>
+
+                        <p class="card-text mb-0" id="loginText6" style="display: inline-block;"></p>
+                        <input type="text" class="hidden" name="loginOption" id="loginOption"
+                               style="border-width: 0; outline: none;"> <br>
+                        <p class="card-text text-danger" id="wrongOption"></p>
+                    </div>
+
+                    <div class="userInput visually-hidden">
+                        <form name="login" th:action="@{/user/login}" method="post">
+                            <p class="card-text mb-0 text-info" id="selectComment">If you want to go back(option
+                                page), Click 'ESC' or 'Ctl+C'</p>
+                            <p class="card-text mb-0" id="userText0" style="display: inline-block;"></p>
+                            <input type="text" class="hidden" name="username" id="username"
+                                   style="border-width: 0; outline: none;"> <br>
+                            <p class="card-text mb-0" id="userText1" style="display: inline-block;"></p>
+                            <input type="password" class="hidden" name="password" id="password"
+                                   style="border-width: 0; outline: none;"> <br>
+                            <p class="card-text mb-0 text-danger" id="failText"></p>
+                        </form>
+                    </div>
+
+
+
+                    <div class="register visually-hidden">
+                        <form name="register" th:action="@{/user/register}" method="post">
+                            <p class="card-text mb-0 text-info" id="selectComment1">If you want to go
+                                back(option
+                                page), Click 'ESC' or 'Ctl+C'</p>
+                            <p class="card-text mb-0" id="registerText0" style="display: inline-block;"></p>
+                            <input type="text" class="hidden" name="username"
+                                   style="border-width: 0; outline: none;"> <br>
+                            <p class="card-text mb-0 text-danger visually-hidden" id="duplicateId"></p>
+                            <p class="card-text mb-0 text-success visually-hidden" id="availableId"></p>
+
+                            <p class="card-text mb-0" id="registerText01" style="display: inline-block;"></p>
+                            <input type="text" class="hidden" name="name" id="name" th:value="${name}"
+                                   style="border-width: 0; outline: none;" > <br>
+                            <p class="card-text mb-0 text-danger visually-hidden" id="duplicateName"></p>
+                            <p class="card-text mb-0 text-success visually-hidden" id="availableName"></p>
+
+                            <p class="card-text mb-0" id="registerText1" style="display: inline-block;"></p>
+                            <input type="password" class="hidden" name="password"
+                                   style="border-width: 0; outline: none;"> <br>
+                            <p class="card-text mb-0" id="registerText2" style="display: inline-block;"></p>
+                            <input type="password" class="hidden" name="re_password" id="re_password"
+                                   style="border-width: 0; outline: none;"> <br>
+                            <p class="card-text mb-0 text-danger visually-hidden" id="notMatchPw">Password is not matched.</p>
+                            <p class="card-text mb-0 text-success visually-hidden" id="matchPw">Password is matched.</p>
+                            <br>
+                            <p class="card-text mb-0" style="display: inline-block" id="registerText3"></p>
+                            <input type="email" class = "hidden" name="email" id="email" style="width:200px; border-width: 0; outline: none;" value="">
+
+
+                        </form>
+                        <p class="card-text mb-0" style="display: inline-block" id="registerText4"></p>
+                        <input type="password" class = "hidden" name="verify" id="verify" style="border-width: 0; outline: none;">
+                        <p class="card-text mb-0 text-danger visually-hidden" id="notMatchCode">Code is not matched.</p>
+                        <p class="card-text mb-0 text-success visually-hidden" id="matchCode">Code Verified! Press Enter to REGISTER!</p>
+                    </div>
+
+                    <div th:if ="${info}"
+                         class="Kakao visually-hidden">
+                        <form name="Kakao" th:action="@{/oauth2/register}" >
+                            <input type="text" class="form-control visually-hidden" name="username" placeholder="사용자아이디" th:value="${info.username}">
+                            <input type="text" class="form-control visually-hidden" name="name" placeholder="사용자 이름" th:value="${info.name}">
+                            <input type="password" class="form-control visually-hidden" name="password" placeholder="비밀번호" th:value="${info.password}">
+                            <p class="card-text mb-0" style="display: inline-block" id="registerText5"></p>
+                            <input type="text" class="visually-hidden" name="email" style="width:200px; border-width: 0; outline: none;" th:value="${info.email}">
+                            <input type="text" class="visually-hidden" id="provider" name="provider" th:value="${info.provider}">
+                            <input type="text" class="visually-hidden" id="providerId" name="providerId" th:value="${info.providerId}">
+                        </form>
+                        <p class="card-text mb-0" style="display: inline-block" id="registerText6"></p>
+                        <input type="password" class = "visually-hidden" name="verify" style="border-width: 0; outline: none;">
+                        <p class="card-text mb-0 text-danger visually-hidden" id="notMatchKakao">Code is not matched.</p>
+                        <p class="card-text mb-0 text-success visually-hidden" id="matchKakao">Code Verified! Press Enter to see Login Option!</p>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Undefined Website 2023</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+</div>
+</body>
+
+</html>
