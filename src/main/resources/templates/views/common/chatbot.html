@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <div sec:authorize="isAuthenticated()" class="popout">
+    <div class="btn" id="toggleBtn">
+      <img src="https://firebasestorage.googleapis.com/v0/b/nflmyproject.appspot.com/o/chatGpt.svg?alt=media&token=f2778dc0-14fb-47d0-a35c-c0f26214bfa4" width="45px">
+    </div>
+    <div class="card border-primary mb-3" style="max-width: 20rem; display: none;" id="chatCard">
+      <div class="card-header">Talk to ChatGPT!</div>
+      <div class="card-body overflow-auto" id="chatbox" style="max-height: 300px">
+      </div>
+      <div class="answeringSign">ChatGPT is answering...</div>
+      <div class="card-footer d-flex justify-content-between">
+        <input type="text" class="form-control mt-3" id="message-input" placeholder="Type your message...">
+        <button type="submit" class="btn btn-secondary my-2 my-sm-0" id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+</html>
