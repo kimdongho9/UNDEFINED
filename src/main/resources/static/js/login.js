@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         const inputOption = document.getElementById('loginOption');
         inputOption.classList.remove("hidden");
         inputOption.focus();
-        inputOption.addEventListener('keyup', function (event) {
+        inputOption.addEventListener('keyup', async function (event) {
             if (event.key == `Enter`) {
                 inputOption.removeEventListener('keyup', arguments.callee);
                 switch (inputOption.value) {
@@ -74,15 +74,36 @@ window.addEventListener('DOMContentLoaded', async () => {
                         break;
                     }
                     case '2': {
+
+                        let loginText = document.querySelector(`#oAuthOption`);
+                        loginText.textContent = "";
+                        for (let c of "Kakao Login oAuth Processing...") {
+                            loginText.textContent += c;
+                            await sleep(20);
+                        }
+
                         $("#Kakao").get(0).click();
                         break;
                     }
                     case '3': {
+                        let loginText = document.querySelector(`#oAuthOption`);
+                        loginText.textContent = "";
+                        for (let c of "Google Login oAuth Processing...") {
+                            loginText.textContent += c;
+                            await sleep(20);
+                        }
+
                         window.location.href = '/oauth2/authorization/google';
                         break;
 
                     }
                     case '4': {
+                        let loginText = document.querySelector(`#oAuthOption`);
+                        loginText.textContent = "";
+                        for (let c of "Naver Login oAuth Processing...") {
+                            loginText.textContent += c;
+                            await sleep(20);
+                        }
                         window.location.href = '/oauth2/authorization/naver';
                         break;
 
@@ -198,11 +219,34 @@ window.addEventListener('DOMContentLoaded', async () => {
                             username: $('.userInput input[name="username"]').val(),
                             password: $('.userInput input[name="password"]').val()
                         },
-                        success: function (data, b, c) {
-                            if(data == "Failed"){
+                        success: async function (data, b, c) {
+                            if (data == "Failed") {
                                 failUserLogin();
 
-                            }else{
+                            } else {
+                                let successText = document.querySelector(`#successText`);
+
+                                successText.textContent = "";
+                                for (let c of "Now You Are Loggined!") {
+                                    successText.textContent += c;
+                                    await sleep(20);
+                                }
+                                await sleep(1000);
+
+                                // reset
+                                successText.textContent = "";
+                                document.querySelector(`#userText1`).textContent = "";
+                                document.querySelector(`#userText0`).textContent = "";
+
+                                const userId = document.querySelector('.userInput input[name="username"]');
+                                userId.value = "";
+                                userId.classList.add("hidden");
+
+                                const userPw = document.querySelector('.userInput input[name="password"]');
+                                userPw.value = "";
+                                userPw.classList.add("hidden");
+
+
                                 location.href = "/";
                             }
                         },
@@ -788,8 +832,13 @@ window.addEventListener('DOMContentLoaded', async () => {
                             provider: provider,
                             providerId: providerId
                         },
-                        success: function (data) {
-                            console.log('성공');
+                        success: async function (data) {
+                            let loginText = document.querySelector(`#KakaoNotice`);
+                            loginText.textContent = "";
+                            for (let c of "You Are Loggined IN!! directing to the Main Page...") {
+                                loginText.textContent += c;
+                                await sleep(20);
+                            }
                             location.href = "/";
                         }
                     })
