@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div id="layoutSidenav">
+  <div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+      <div class="sb-sidenav-menu">
+        <div class="nav">
+          <!--Home-->
+          <div class="sb-sidenav-menu-heading">Home</div>
+          <a class="nav-link" href="/">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            Dashboard
+          </a>
+
+          <!--Category-->
+          <div class="sb-sidenav-menu-heading">Category</div>
+
+
+          <!--화상 채팅-->
+          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVideo" aria-expanded="false" aria-controls="collapseVideo"
+             sec:authorize="isAuthenticated()">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-video"></i></div>
+            Instance VideoChat
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+          </a>
+          <div  class="collapse" id="collapseVideo" aria-labelledby="headingOne"
+                data-bs-parent="#sidenavAccordion" sec:authorize="isAuthenticated()">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link" th:href="@{/user/videocall}" target="_blank">CREATE</a>
+              <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#inputUrl " aria-expanded="false" aria-controls="collapseVideo">JOIN
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+              <div class="collapse" id="inputUrl" aria-labelledby="headingOne">
+                <input id="URLjoin" type="text" value ="" >
+                <button id="JointoChat">JOIN</button>
+              </div>
+            </nav>
+          </div>
+
+
+          <!--Study-->
+          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+            Study
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+          </a>
+          <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+               data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link" href="layout-static.html">Menu1</a>
+              <a class="nav-link" href="layout-sidenav-light.html">Menu2</a>
+            </nav>
+          </div>
+
+          <!--Project-->
+          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+             data-bs-target="#collapseProject" aria-expanded="false" aria-controls="collapseProject">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-p"></i></div>
+            &nbsp;Portfolio
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+          </a>
+          <div class="collapse" id="collapseProject" aria-labelledby="headingOne"
+               data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link" href="layout-static.html">Menu1</a>
+              <a class="nav-link" href="layout-sidenav-light.html">Menu2 </a>
+            </nav>
+          </div>
+
+          <!--Community-->
+          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+             data-bs-target="#collapseCommunity" aria-expanded="false" aria-controls="collapseCommunity">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-users-between-lines"></i></div>
+            Community
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+          </a>
+          <div class="collapse" id="collapseCommunity" aria-labelledby="headingOne"
+               data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link" href="layout-static.html">Menu1</a>
+              <a class="nav-link" href="layout-sidenav-light.html">Menu2 </a>
+            </nav>
+          </div>
+
+
+
+          <div class="sb-sidenav-menu-heading">Account</div>
+          <div sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="#">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></i></div>
+              MyPage
+            </a>
+            <a class="nav-link" th:href="@{/user/logout}">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+              LOG OUT
+            </a>
+          </div>
+          <div sec:authorize="isAnonymous()">
+            <a class="nav-link" th:href="@{/user/login}">
+              <div class="sb-nav-link-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+              Login & Register
+            </a>
+          </div>
+
+        </div>
+      </div>
+      <div class="sb-sidenav-footer">
+        <div class="small">Logged in as:</div>
+        <p sec:authorize="isAnonymous()">undefined</p><!-- <= 로그인시 해당 유정의 닉네임으로 변경, 로그아웃시에는 undefined-->
+        <p sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">[[${user.name}]]</p>
+      </div>
+    </nav>
+  </div>
+</html>
