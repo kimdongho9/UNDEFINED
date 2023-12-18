@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lec.spring.repository.community.CommentRepository">
+
+    <sql id="SELECT_BASE_USER_COMMENT">
+        SELECT
+            c.comment_id,
+            c.feed_id,
+            c.content,
+            c.parent_id,
+            c.regdate,
+            u.id,
+            u.username,
+            u.password,
+            u.name
+        FROM
+            feed_comments c JOIN user u
+            ON c.user_id = u.id
+    </sql>
+
+    <resultMap id="mapUser" type="com.lec.spring.domain.user.User">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <resultMap id="mapComment" type="com.lec.spring.domain.community.FeedComment">
+        <result column="comment_id" property="commentId"/>
+        <result column="feed_id" property="commentFeedId"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="regdate" property="regDate"/>
+        <result column="content" property="commentContent"/>
+        <association property="user" resultMap="mapUser"/>
+    </resultMap>
+
+    <select id="findCommentsByFeedId" resultMap="mapComment">
+        <include refid="SELECT_BASE_USER_COMMENT"/>
+        WHERE feed_id = #{id} AND parent_id is null
+        ORDER BY regdate DESC
+    </select>
+
+    <select id="findRepliesByFeedId" resultMap="mapComment">
+        <include refid="SELECT_BASE_USER_COMMENT"/>
+        WHERE parent_id = #{commentId}
+        ORDER BY regdate DESC
+    </select>
+
+    <insert id="addComment" flushCache="true" useGeneratedKeys="true" keyColumn="comment_id" keyProperty="commentId" parameterType="com.lec.spring.domain.community.FeedComment">
+        INSERT INTO feed_comments (feed_id, user_id, parent_id, content)
+        VALUES (#{commentFeedId}, #{user.id}, #{parentId}, #{commentContent})
+    </insert>
+
+    <delete id="deleteComment" flushCache="true">
+        DELETE FROM feed_comments WHERE comment_id = #{commentId}
+    </delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

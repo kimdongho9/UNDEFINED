@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lec.spring.repository.community.TagRepository">
+
+    <select id="feedIdListByTag" resultType="java.lang.Long">
+        SELECT
+            feed_id
+        FROM
+            feed_tag_table f, feed_tags t
+        WHERE
+            f.tag_id = t.tag_id AND t.tag_name = #{tag}
+    </select>
+
+    <select id="findTagByName" resultType="com.lec.spring.domain.community.FeedTag">
+        SELECT
+            tag_id "tagId",
+            tag_name "tagName"
+        FROM
+            feed_tags
+        WHERE
+            tag_name = #{tag}
+    </select>
+
+    <select id="findTagIdByFeedIDd" resultType="java.lang.Long">
+        SELECT tag_id FROM feed_tag_table WHERE feed_id = #{feedId}
+    </select>
+
+    <insert id="addTag" flushCache="true" parameterType="com.lec.spring.domain.community.FeedTag" useGeneratedKeys="true" keyColumn="tag_id" keyProperty="tagId">
+        INSERT INTO feed_tags (tag_name) VALUES ( #{tagName} )
+    </insert>
+
+    <insert id="addTagAndFeed" flushCache="true">
+        INSERT INTO feed_tag_table (tag_id, feed_id) VALUES ( #{tagId}, #{feedId} )
+    </insert>
+
+    <delete id="deleteTagAndFeed" flushCache="true">
+        DELETE FROM feed_tag_table WHERE feed_id = #{feedId} AND tag_id = #{tagId}
+    </delete>
+
+</mapper>

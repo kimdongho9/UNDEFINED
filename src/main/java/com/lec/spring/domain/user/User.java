@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 @Builder
 public class User {
     private Long id;
-    private String username;
+    private String username; // user 아이디
     @JsonIgnore
     private String password;
     @ToString.Exclude  // toString() 결과에서 뺌.
     @JsonIgnore
     private String re_password;  // 비밀번호 확인 입력
-    private String name;
+    private String name;  // user nickname
     private String email;
     @JsonIgnore
     private LocalDateTime regDate;

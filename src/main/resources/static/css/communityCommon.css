@@ -1,0 +1,176 @@
+.scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #646464;
+    border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: #c8c8c8;
+    border-radius: 10px;
+}
+
+#menubar::-webkit-scrollbar {
+    display: none;
+}
+
+button, .cursor-pointer {
+    cursor: pointer;
+}
+
+.swiper {
+    width: 95%;
+    height: 180px;
+    margin: auto;
+}
+
+.swiper-slide {
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.swiper-button-next,
+.swiper-button-prev{
+    color: black;
+    top: 100px;
+}
+
+.swiper-button-next{
+    right: -8px;
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    transform: rotate(45deg);
+}
+
+.swiper-button-prev{
+    left: -8px;
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    transform: rotate(225deg);
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+    display: none;
+}
+
+.swiper-pagination {
+    bottom: -20px !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: black !important;
+}
+
+img {
+    object-fit: cover
+}
+
+[id^="img"]:hover {
+    opacity: 0.7;
+}
+
+.modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1050; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.modal-content {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+[id^="closeModal"] {
+    position: absolute;
+    top: 35px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+[id^="closeModal"]:hover,
+[id^="closeModal"]:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-swiper {
+    width: 100%;
+    height: 500px;
+}
+
+.modal-swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-swiper {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modalNext,
+.modalPrev {
+    top: 50px;
+}
+
+.modalNext {
+    right : 10px
+}
+
+.modalPrev {
+    left : 10px
+}
+

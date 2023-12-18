@@ -2,6 +2,8 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block th:fragment="chatbot">
   <div sec:authorize="isAuthenticated()" class="popout">
     <div class="btn" id="toggleBtn">
       <img src="https://firebasestorage.googleapis.com/v0/b/nflmyproject.appspot.com/o/chatGpt.svg?alt=media&token=f2778dc0-14fb-47d0-a35c-c0f26214bfa4" width="45px">
@@ -17,5 +19,5 @@
       </div>
     </div>
   </div>
-
+</th:block>
 </html>
