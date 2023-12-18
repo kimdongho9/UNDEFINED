@@ -36,4 +36,23 @@ public class MvcConfiguration {
         });
         return restTemplate;
     }
+
+    @Configuration
+    public static class LocalMvcConfiguration implements WebMvcConfigurer {
+        @Value("${app.upload.path}")
+        private String uploadDir;
+
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            System.out.println("\taddResourceHandlers() 호출");
+
+            //  /upload/** URL 로 request 가 들어오면
+            // upload/ 경로의 resource 가 동작케 함.
+            // IntelliJ 의 경우 이 경로를 module 이 아닌 project 이하에 생성해야 한다.
+            // 기가 맥히네
+            registry
+                    .addResourceHandler("/upload/**")
+                    .addResourceLocations("file:" + uploadDir + "/");
+        }
+    }
 }

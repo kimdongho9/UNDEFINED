@@ -20,24 +20,23 @@
     <link th:href="@{/css/chatbot/floatingactionbutton.css}" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/chatbot/chatGPT.css}">
 </head>
-<body>
-<th:block th:insert="~{common/menuTop}"></th:block>
-<th:block th:insert="~{common/sidebar}"></th:block>
+
+<body class="sb-nav-fixed">
+<th:block th:insert="~{common/menubar::menubar}"></th:block>
+
+<div id="layoutSidenav">
+
+    <th:block th:insert="~{common/sidebar::sidebar}"></th:block>
 
     <!--오른쪽 메뉴바가 아닌 부분에 대한 내용-->
     <div id="layoutSidenav_content">
 
 
 
-        <th:block th:insert="~{common/chatbot}"></th:block>
-        <th:block th:insert="~{common/footer}"></th:block>
+        <th:block th:insert="~{common/chatbot::chatbot}"></th:block>
+        <th:block th:insert="~{common/footer::footer}"></th:block>
     </div>
 </div>
 
 </body>
-
-<script>
-
-</script>
-
 </html>

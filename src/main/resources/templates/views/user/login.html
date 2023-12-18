@@ -21,10 +21,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/sketchy/bootstrap.min.css">
 </head>
 
-<body>
+<body class="sb-nav-fixed">
+<th:block th:insert="~{common/menubar::menubar}"></th:block>
 
-<th:block th:insert="~{common/menuTop}"></th:block>
-<th:block th:insert="~{common/sidebar}"></th:block>
+<div id="layoutSidenav">
+    <th:block th:insert="~{common/sidebar::sidebar}"></th:block>
 
     <div id="layoutSidenav_content">
         <!--/*<div class="card border-primary mb-3 " style="max-width: 20rem;">
@@ -81,10 +82,7 @@
         <a id="Kakao" class="visually-hidden" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
         </a>
         <div class="loginHeader text-center mb-3">
-            <div id="welcome" style="display: inline-block;">
-
-            </div>
-            <div class="statement">
+            <div id="welcome" style="display: inline-block; font-size: 2em">
 
             </div>
         </div>

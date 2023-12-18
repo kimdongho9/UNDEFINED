@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lec.spring.repository.community.FeedRepository">
+
+    <sql id="SELECT_BASE_USER_FEED">
+        SELECT
+            f.feed_id,
+            f.user_id,
+            f.feed_title,
+            f.feed_content,
+            f.feed_state,
+            f.feed_regdate,
+            u.id,
+            u.name,
+            (SELECT
+                 COUNT(*)
+             FROM
+                 feed_likes l
+             WHERE
+                 l.feed_id = f.feed_id
+             ) "likeCnt"
+        FROM
+            feeds f JOIN user u
+        ON f.user_id = u.id
+    </sql>
+
+    <resultMap id="mapUser" type="com.lec.spring.domain.user.User">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <resultMap id="mapFeed" type="com.lec.spring.domain.community.Feed">
+        <result column="feed_id" property="feedId"/>
+        <result column="user_id" property="userId"/>
+        <result column="feed_title" property="feedTitle"/>
+        <result column="feed_content" property="feedContent"/>
+        <result column="feed_state" property="feedState"/>
+        <result column="feed_regdate" property="feedRegdate"/>
+        <result column="likeCnt" property="likeCnt"/>
+        <association property="user" resultMap="mapUser"/>
+    </resultMap>
+
+    <select id="findAllCompFeedFromRow" resultMap="mapFeed">
+        <include refid="SELECT_BASE_USER_FEED"/>
+        WHERE feed_state = 'comp'
+        ORDER BY feed_regdate DESC
+        LIMIT #{param1}, #{param2}
+    </select>
+
+    <select id="listByNicknameFromRow" resultMap="mapFeed">
+        <include refid="SELECT_BASE_USER_FEED"/>
+        WHERE nickname = #{param1}
+        AND feed_state = 'comp'
+        ORDER BY feed_regdate DESC
+        LIMIT #{param2}, #{param3}
+    </select>
+
+    <select id="listByTagFromRow" resultMap="mapFeed">
+        <include refid="SELECT_BASE_USER_FEED"/>
+        WHERE f.feed_id IN (
+        <foreach collection="feedIdList" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+        AND f.feed_state = 'comp'
+        ORDER BY feed_regdate DESC
+        LIMIT #{param2}, #{param3}
+    </select>
+
+    <select id="listByAllFromRow" resultMap="mapFeed">
+        <include refid="SELECT_BASE_USER_FEED"/>
+        WHERE f.feed_id IN (
+        <foreach collection="feedIdList" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+        AND f.feed_state = 'comp'
+        ORDER BY
+        feed_regdate DESC
+        LIMIT #{param2}, #{param3}
+    </select>
+
+    <select id="myFeedFromRow" resultMap="mapFeed">
+        <include refid="SELECT_BASE_USER_FEED"/>
+        WHERE feed_state = #{state} AND f.user_id = #{userId}
+        ORDER BY feed_regdate DESC
+        LIMIT #{param2}, #{param3}
+    </select>
+
+    <select id="findAllCompFeedByUserId" resultMap="mapFeed">
+        <include refid="SELECT_BASE_USER_FEED"/>
+        WHERE feed_state = 'comp' AND f.user_id = #{userId}
+        ORDER BY feed_regdate DESC
+    </select>
+
+    <select id="findAllTempFeedByUserId" resultMap="mapFeed">
+        <include refid="SELECT_BASE_USER_FEED"/>
+        WHERE feed_state = 'temp' AND f.user_id = #{userId}
+        ORDER BY feed_regdate DESC
+    </select>
+
+    <select id="findDelFeedByUserId" resultType="com.lec.spring.domain.community.Feed">
+        <include refid="SELECT_BASE_USER_FEED"/>
+        WHERE feed_state = 'del' AND f.user_id = #{userId}
+    </select>
+
+    <select id="findTagsByFeedId" resultType="java.lang.String">
+        SELECT
+            t.tag_name
+        FROM
+            feed_tags t JOIN feed_tag_table f
+            ON t.tag_id = f.tag_id
+        WHERE
+            feed_id = #{feedId}
+    </select>
+
+    <select id="findFeedById" resultMap="mapFeed">
+        <include refid="SELECT_BASE_USER_FEED"/>
+        WHERE feed_id = #{id}
+    </select>
+
+
+    <select id="feedIdListByNickname" resultType="java.lang.Long">
+        SELECT
+            f.feed_id
+        FROM
+            feeds f, user u
+        WHERE
+            f.user_id = u.id AND u.name = #{keyword}
+    </select>
+
+    <select id="countAll" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM feeds
+        WHERE feed_state = 'comp';
+    </select>
+
+    <select id="countAllByNickname" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM feeds f, user u
+        WHERE f.user_id = u.id AND f.feed_state = 'comp' AND u.name = #{nickname};
+    </select>
+
+    <select id="countAllByTag" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM feeds
+        WHERE feed_id IN (
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+        AND feed_state = 'comp'
+        ORDER BY feed_regdate DESC
+    </select>
+
+    <select id="countFeedByUserId" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM feeds f, user u
+        WHERE f.user_id = u.id AND u.id = #{userId} AND f.feed_state = #{state}
+        ORDER BY feed_regdate DESC
+    </select>
+
+    <insert id="saveFeed" flushCache="true" useGeneratedKeys="true" keyColumn="feed_id" keyProperty="feedId" parameterType="com.lec.spring.domain.community.Feed">
+        INSERT INTO feeds (user_id, feed_title, feed_content, feed_state)
+        VALUES (#{user.id}, #{feedTitle}, #{feedContent}, #{feedState})
+    </insert>
+
+    <delete id="deleteFeedById" flushCache="true">
+        DELETE FROM feeds WHERE feed_id = #{feedId}
+    </delete>
+
+    <update id="updateFeed" flushCache="true" parameterType="com.lec.spring.domain.community.Feed">
+        UPDATE feeds
+        SET feed_title = #{feedTitle}, feed_state = #{feedState}, feed_content = #{feedContent}
+        WHERE feed_id = #{feedId}
+    </update>
+
+</mapper>
