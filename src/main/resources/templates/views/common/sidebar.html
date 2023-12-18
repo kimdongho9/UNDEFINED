@@ -2,7 +2,10 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<div id="layoutSidenav">
+
+
+<th:block th:fragment="sidebar">
+
   <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
       <div class="sb-sidenav-menu">
@@ -70,17 +73,31 @@
           </div>
 
           <!--Community-->
-          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-             data-bs-target="#collapseCommunity" aria-expanded="false" aria-controls="collapseCommunity">
+          <a aria-controls="collapseCommu" aria-expanded="false" class="nav-link collapsed"
+             data-bs-target="#collapseCommu"
+             data-bs-toggle="collapse" href="#">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-users-between-lines"></i></div>
             Community
             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
           </a>
-          <div class="collapse" id="collapseCommunity" aria-labelledby="headingOne"
-               data-bs-parent="#sidenavAccordion">
-            <nav class="sb-sidenav-menu-nested nav">
-              <a class="nav-link" href="layout-static.html">Menu1</a>
-              <a class="nav-link" href="layout-sidenav-light.html">Menu2 </a>
+          <div aria-labelledby="headingTwo" class="collapse" data-bs-parent="#sidenavAccordion"
+               id="collapseCommu">
+            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+              <a class="nav-link" th:href="@{/community/list}">Main</a>
+              <a class="nav-link" th:href="@{/community/write}">Write</a>
+              <a aria-controls="collapseMyFeed" aria-expanded="false" class="nav-link collapsed"
+                 data-bs-target="#collapseMyFeed" data-bs-toggle="collapse" href="#">
+                My Feed
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+              </a>
+              <div aria-labelledby="headingOne" class="collapse" data-bs-parent="#sidenavAccordionPages"
+                   id="collapseMyFeed">
+                <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link" th:href="@{/comp/list}">완료글</a>
+                  <a class="nav-link" th:href="@{/temp/list}">임시저장</a>
+                  <a class="nav-link" th:href="@{/trash/list}">휴지통</a>
+                </nav>
+              </div>
             </nav>
           </div>
 
@@ -113,4 +130,8 @@
       </div>
     </nav>
   </div>
+
+</th:block>
+
+
 </html>

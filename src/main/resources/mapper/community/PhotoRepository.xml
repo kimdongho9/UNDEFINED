@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lec.spring.repository.community.PhotoRepository">
+
+    <sql id="PHOTO_BASE">
+        SELECT
+            photo_id "id",
+            file_name "filename",
+            source_name "sourcename"
+        FROM
+            feed_photos
+        WHERE
+            1=1
+    </sql>
+
+    <insert id="save" flushCache="true" useGeneratedKeys="true"
+        keyColumn="photo_id" keyProperty="id">
+        INSERT INTO feed_photos (feed_id, source_name, file_name)
+        VALUES ( #{feedId}, #{sourcename}, #{filename} )
+    </insert>
+
+    <delete id="delete" flushCache="true">
+        DELETE FROM feed_photos WHERE photo_id = #{id}
+    </delete>
+
+    <select id="findByFeed" resultType="com.lec.spring.domain.community.Photo">
+        <include refid="PHOTO_BASE"/>
+        AND feed_id = #{feedId}
+    </select>
+
+    <select id="findById" resultType="com.lec.spring.domain.community.Photo">
+        <include refid="PHOTO_BASE"/>
+        AND photo_id = #{fileId}
+    </select>
+</mapper>
