@@ -1,0 +1,111 @@
+<!--최종작성본-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Board Detail</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- 가져온 template의 css-->
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
+  <!--sidebar + chatbot + 동작 시키는 js-->
+  <script th:src="@{/js/sidebar.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/sketchy/bootstrap.min.css">
+  <link th:href="@{/css/chatbot/floatingactionbutton.css}" rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/css/chatbot/chatGPT.css}">
+  <style>
+    p {
+      margin-bottom: -0.1rem;
+    }
+  </style>
+</head>
+
+<body>
+<th:block th:insert="~{common/menubar::menubar}"></th:block>
+
+<div id="layoutSidenav">
+  <th:block th:insert="~{common/sidebar::sidebar}"></th:block>
+
+<!--오른쪽 메뉴바가 아닌 부분에 대한 내용-->
+<div id="layoutSidenav_content">
+  <br>
+  <th:block th:if="${portfolio}">
+  <main class="main_box align-self-center">
+    <a onclick="history.back()"><i class="fa-solid fa-arrow-left" type="button" style="color: #aaaaaa; font-size: 30px;">
+    </i></a> <!-- 이전 히스토리로 리로드 -->
+
+    <div class="portfolio_detail " style="width: 576px">
+      <form name="frmDelete" th:action="@{/portfolio/delete}" method="post">
+        <input type="hidden" name="id" th:value="${portfolio.postId}">
+      </form>
+      <div class="card mb-3">
+        <div class="card-header" >
+          <h6 class="card-title" style="float:left" >
+            <!--  DB에서 데이터를 끌어와 Thymeleaf로 화면에 표시하는 방법  -->
+
+            <h3 class="mb-0 pt-2" th:text=" ${portfolio.title}"></h3>
+            <p class="card-text" th:text=" 'PR(한줄소개) : ' + ${portfolio.userPr}"></p>
+            <p class="card-text mb-3" th:text=" 'Experiece(경력사항) : ' + ${portfolio.experience}"></p>
+          </h6>
+          <h3 class="title col-11 justify-content-center" style="margin-bottom: -12px">
+          </h3>
+        </div>
+
+        <div class="card-body py-1">
+            <h6 class="card-title" style="float: right" >
+              <div style="float:right;" th:text="${portfolio.user.name} + ' | ' + ${#temporals.format(portfolio.regDate, 'yyyy-MM-dd')}"></div>
+                        <!--     DB에서 데이터를 끌어와 Thymeleaf로 화면에 표시하는 방법    -->
+            </h6>
+        </div>
+
+        <div class="card-body" style="min-height: 150px;">
+
+          <p class="card-text" th:utext="${portfolio.content}" >
+          </p>
+        </div>
+
+
+        <div class="list_bottom_box mb-2" > <!-- button이 여러개 일 경우 오른쪽으로 정렬 가능 -->
+          <div class="list box d-flex justify-content-end me-3" sec:authorize="isAuthenticated()" th:with="logged_user=${#authentication.getPrincipal().getUser()}">
+
+            <a  class="card-link" th:href=" @{'/portfolio/update/' + ${portfolio.postId}}"  th:if="${logged_user.id == portfolio.user.id}">Edit</a> <!-- 작성자만 해당 버튼 활성화 -->
+            <a class="card-link" id="btnDel" style="color: red"  th:if="${logged_user.id == portfolio.user.id}">Delete</a> <!-- 작성자만 해당 버튼 활성화 -->
+          </div>
+          <div class="viewcnt_box ms-3" style="font-size: 15px; margin-top: -23px;" th:utext="'<i class=\'fa-solid fa-eye\'></i> ' + ${portfolio.increaseViewCount}">
+<!--            <i class="view_eye fas fa-eye"></i>-->
+<!--            <a class="view_cnt text-decoration-none">123</a>-->
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </main>
+  </th:block>
+
+  <th:block th:insert="~{common/chatbot}"></th:block>
+  <th:block th:insert="~{common/footer}"></th:block>
+</div>
+</div>
+
+<script>
+  $("#btnDel").click(function(){
+    let answer = confirm("삭제하시겠습니까?");
+    if(answer){
+      $("form[name='frmDelete']").submit();
+    }
+  });
+</script>
+
+</body>
+
+</html>
