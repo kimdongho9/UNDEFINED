@@ -3,7 +3,8 @@
       xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="news">
 <div class="NewsContainer">
-  <h1>News Section</h1>
+  <h1 class="text-center mb-5">News Section</h1>
+  <h3 class="text-success text-center mb-5">Naver News By Keyword Order By Correctness!</h3>
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
@@ -83,6 +84,7 @@
           </div>
         </div>
       </div>
+    </div>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingTwo">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -405,6 +407,5 @@
       </div>
     </div>
   </div>
-</div>
 </th:block>
 </html>
