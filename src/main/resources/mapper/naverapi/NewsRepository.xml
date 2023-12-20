@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lec.spring.repository.naverapi.NewsRepository">
+
+
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.naverapi.News"
+            keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO news (keyword, title, originallink, link, description, pubDate)
+        VALUES(#{keyword}, #{title}, #{originallink}, #{link},#{description}, #{pubDate})
+    </insert>
+    <delete id="delete" flushCache="true">
+        DELETE FROM news WHERE keyword = #{keyword}
+    </delete>
+
+
+</mapper>

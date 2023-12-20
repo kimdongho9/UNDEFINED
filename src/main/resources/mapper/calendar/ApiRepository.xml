@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.calendar.ApiRepository">
+
+    <!-- 반복해서 사용될 쿼리문은 sql 태그로 정의 하고, include 태그로 가져다 쓸수 있다 -->
+    <sql id="SELECT_BASE">
+        SELECT
+            docexamenddt "docexamenddt",
+            docexamstartdt "docexamstartdt",
+            docpassdt "docpassdt",
+            docregenddt "docregenddt",
+            docregstartdt "docregstartdt",
+            implplannm "implplannm",
+            jmfldnm "jmfldnm",
+            pracexamenddt "pracexamenddt",
+            pracexamstartdt "pracexamstartdt",
+            pracpassenddt "pracpassenddt",
+            pracpassstartdt "pracpassstartdt",
+            pracregenddt "pracregenddt",
+            pracregstartdt "pracregstartdt",
+            fee "fee"
+        FROM
+            api
+        WHERE
+            1=1
+    </sql>
+
+    <resultMap id="mapApi" type="com.lec.spring.domain.calendar.Api">
+        <result column="docexamenddt" property="docexamenddt"/>
+        <result column="docexamstartdt" property="docexamstartdt"/>
+        <result column="docpassdt" property="docpassdt"/>
+        <result column="docregenddt" property="docregenddt"/>
+        <result column="docregstartdt" property="docregstartdt"/>
+        <result column="implplannm" property="implplannm"/>
+        <result column="jmfldnm" property="jmfldnm"/>
+        <result column="pracexamenddt" property="pracexamenddt"/>
+        <result column="pracexamstartdt" property="pracexamstartdt"/>
+        <result column="pracpassenddt" property="pracpassenddt"/>
+        <result column="pracpassstartdt" property="pracpassstartdt"/>
+        <result column="pracregenddt" property="pracregenddt"/>
+        <result column="pracregstartdt" property="pracregstartdt"/>
+        <result column="fee" property="fee"/>
+    </resultMap>
+
+    <insert id="save" flushCache="true"
+    parameterType="com.lec.spring.domain.calendar.Api">
+        insert into api
+        (docexamenddt,
+         docexamstartdt,
+         docpassdt,
+         docregenddt,
+         docregstartdt,
+         implplannm,
+         jmfldnm,
+         pracexamenddt,
+         pracexamstartdt,
+         pracpassenddt,
+         pracpassstartdt,
+         pracregenddt,
+         pracregstartdt,
+         fee)
+        values (#{docexamenddt}, #{docexamstartdt}, #{docpassdt}, #{docregenddt}, #{docregstartdt}, #{implplannm},
+                #{jmfldnm}, #{pracexamenddt}, #{pracexamstartdt}, #{pracpassenddt}, #{pracpassstartdt}, #{pracregenddt},
+                #{pracregstartdt}, #{fee})
+    </insert>
+
+    <select id="findAll" resultMap="mapApi">
+        <include refid="SELECT_BASE"/>
+        order by docregstartdt DESC;
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+

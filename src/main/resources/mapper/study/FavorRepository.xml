@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.study.FavorRepository">
+
+    <select id="findByPostId" resultType="com.lec.spring.domain.study.Favor">
+        SELECT
+            post_id "postid",
+            user_id "userid"
+        FROM
+            study_favor
+        WHERE
+            post_id = #{postid}
+    </select>
+
+    <select id = "findByUserId" resultType="com.lec.spring.domain.study.Favor">
+        SELECT
+            post_id "postid",
+            user_id "userid"
+        FROM
+            study_favor
+        WHERE
+            user_id = #{userid}
+    </select>
+
+    <select id="isFavor" resultType="com.lec.spring.domain.study.Favor">
+        SELECT
+            post_id "postid",
+            user_id "userid"
+        FROM
+            study_favor
+        WHERE
+            post_id = #{param1} AND user_id = #{param2}
+    </select>
+
+    <insert id = "save" flushCache="true"
+            parameterType="com.lec.spring.domain.study.Favor">
+    INSERT INTO study_favor (user_id, post_id)
+    VALUE (#{userid}, #{postid})
+    </insert>
+
+    <delete id="delete" flushCache="true"
+            parameterType="com.lec.spring.domain.study.Favor">
+        DELETE FROM study_favor
+        WHERE post_id = #{postid}
+        AND user_id = #{userid}
+    </delete>
+
+</mapper>

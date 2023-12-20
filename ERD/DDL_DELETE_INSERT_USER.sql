@@ -42,4 +42,31 @@ ALTER TABLE chatbot AUTO_INCREMENT = 1;
 
 SELECT * FROM chatbot;
 
+-- portfolio
+drop table if exists portfolio;
+
+CREATE TABLE portfolio
+(
+    postId int PRIMARY KEY auto_increment,
+    userId int,
+    content text NOT NULL ,
+    title text NOT NULL,
+    experience varchar(50),  # 경력 (내가 일한 년수)
+    userPr varchar (75), #나를 어필할수있는 한문장
+    increaseViewCount int DEFAULT 0,
+    regdate datetime DEFAULT NOW()
+);
+
+DELETE FROM portfolio;
+ALTER TABLE portfolio AUTO_INCREMENT = 1;
+
+INSERT INTO portfolio( userId, content, title, experience, userPr, increaseViewCount, regdate)
+VALUES
+    ( 1,'나를 소개하지','내이름은 코난탐정이죠', '10년','나 노래잘해(최지은)','40',  '2023-12-13'),
+    ( 2,'너를 소개하지','내이름은 코난탐정이죠', '11년','나 노래잘해(킴동호)','42',  '2023-12-14'),
+    ( 3,'얘를 소개하지','내이름은 코난탐정이죠', '12년','나 노래잘해(유상곤)','43',  '2023-12-15'),
+    ( 4,'자기를 소개하지','내이름은 코난탐정이죠', '13년','나 노래잘해(강준우)','44',  '2023-12-12');
+
+SELECT * FROM portfolio;
+
 

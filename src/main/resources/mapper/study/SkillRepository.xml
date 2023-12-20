@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.study.SkillRepository">
+    <delete id="delSkills" flushCache="true">
+        DELETE from study_skills
+        WHERE skill_id =  #{skillId}
+        AND post_id = #{postId}
+    </delete>
+
+    <select id="findByName" resultType="com.lec.spring.domain.study.Skill">
+        SELECT
+            skill_id "skillId",
+            skill_name "skillName",
+            skill_img_url "imageUrl"
+        FROM
+            skills
+        WHERE
+            skill_name = #{skillName}
+    </select>
+
+
+    <select id="findSkillsByPostId" resultType="com.lec.spring.domain.study.Skill">
+        SELECT
+            s.skill_id "skillId",
+            s.skill_name "skillName",
+            s.skill_img_url "imageUrl"
+        FROM
+            skills s, study_skills k
+        WHERE
+            s.skill_id = k.skill_id AND k.post_id = #{id}
+    </select>
+
+    <select id="findSkillIdsByName" resultType="java.lang.Long">
+        SELECT
+            p.post_id
+        FROM
+            skills s, study_skills p
+        WHERE
+            s.skill_id = p.skill_id AND skill_name IN
+        <foreach collection="skillList" item="item" separator="," open="(" close=")">
+                #{item}
+        </foreach>
+    </select>
+
+
+    <insert id="saveSkills" flushCache="true">
+        INSERT INTO study_skills (post_id, skill_id)
+        VALUES (#{id}, #{skillId})
+    </insert>
+
+
+</mapper>
