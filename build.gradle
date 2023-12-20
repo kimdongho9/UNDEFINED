@@ -32,12 +32,9 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
-<<<<<<< HEAD
-
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-=======
     implementation group: 'org.json', name: 'json', version: '20230227'
->>>>>>> 2bfdc763685c2b96e9c27fcac9963e692581d1d7
+
 }
 
 tasks.named('test') {
