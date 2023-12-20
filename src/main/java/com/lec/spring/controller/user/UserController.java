@@ -1,7 +1,9 @@
 package com.lec.spring.controller.user;
 
 import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.domain.calendar.Api;
 import com.lec.spring.domain.user.User;
+import com.lec.spring.service.calendar.ApiService;
 import com.lec.spring.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,6 +15,8 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -78,9 +82,20 @@ public class UserController {
     }
 
 
-    /*@InitBinder
-    public void initBinder(WebDataBinder binder){
-        binder.setValidator(userValidator);
-    }*/
+
+
+    @Autowired
+    private ApiService apiService;
+
+    @GetMapping("/calendar")
+    public String Calendar(Model model){
+        List<Api> list = apiService.list();
+//        System.out.println("list : " + list);
+        model.addAttribute("list", list);
+
+        //index0 => 0번째 있는 데이터
+        return "user/calendar";
+    }
+
 
 }
