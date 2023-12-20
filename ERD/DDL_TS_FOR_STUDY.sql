@@ -87,3 +87,25 @@ VALUES
     (6,6),
     (7,7);
 SELECT * FROM study_skills;
+
+
+
+DROP TABLE IF EXISTS study_chat;
+CREATE TABLE study_chat
+(
+    post_id int ,
+    user_id int ,
+    content text,
+    regdate datetime DEFAULT NOW()
+
+);
+
+DELETE FROM study_chat;
+
+INSERT INTO study_chat(post_id, user_id, content, regdate)
+VALUES
+    ( 9, 4,'자바 스터디 구해영!', '2023-12-12'),
+    ( 8, 4,'스프링 스터디 구해영!', '2023-12-10'),
+    ( 7, 4,'css 스터디 구해영!', '2023-12-05'),
+    ( 6, 4,'html 스터디 구해영!', '2023-12-07');
+SELECT * FROM study_chat;

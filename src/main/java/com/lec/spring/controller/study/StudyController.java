@@ -1,14 +1,13 @@
 package com.lec.spring.controller.study;
 
 import com.lec.spring.config.PrincipalDetails;
-import com.lec.spring.domain.study.Favor;
-import com.lec.spring.domain.study.Post;
-import com.lec.spring.domain.study.PostValidator;
-import com.lec.spring.domain.study.Skill;
+import com.lec.spring.domain.study.*;
+import com.lec.spring.service.study.ChatService;
 import com.lec.spring.service.study.StudyService;
 import com.lec.spring.util.U;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,22 +15,29 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import lombok.extern.log4j.Log4j2;
 
 @Controller
+@Log4j2
 @RequestMapping("/study") // repository 보면서
 public class StudyController {
 
-    // 3가지 DI
-    // setter, field, constructor
-    // 스프링은 field DI 를 권장하지 않는다.
     public StudyService studyService;
+    private ChatService chatService;
+    private Map<String, String> userSessions = new ConcurrentHashMap<>(); // 각 세션에 사용자 이름을 매핑하는 맵
 
-    // 생성자가 하나만 있을 때는 Autowired 안 해줘도 자동으로 주입한다.
-    //한 번만 사용 할 때
-    public StudyController(StudyService studyService) {
+    @Autowired
+    public StudyController(StudyService studyService, ChatService chatService) {
         this.studyService = studyService;
+        this.chatService = chatService;
         System.out.println("스터디 컨트롤러 생성");
     }
 
@@ -41,7 +47,6 @@ public class StudyController {
 
     @PostMapping("/write")
     public String writeOK(@Valid Post post
-
             , BindingResult results    //Model을 binding보다는 뒤에 있어야 함.
             , Model model
             , RedirectAttributes redirectAttrs
@@ -49,8 +54,11 @@ public class StudyController {
         if (results.hasErrors()) {
 
             redirectAttrs.addFlashAttribute("title", post.getTitle());
-            redirectAttrs.addFlashAttribute("dataForStartdate", post.getStartdate());
-            redirectAttrs.addFlashAttribute("dataForEnddate", post.getEnddate());
+            redirectAttrs.addFlashAttribute("dataForStartdate", post.getDataForStartdate());
+            redirectAttrs.addFlashAttribute("dataForEnddate", post.getDataForEnddate());
+            redirectAttrs.addFlashAttribute("content", post.getContent());
+            redirectAttrs.addFlashAttribute("member", post.getMember());
+            redirectAttrs.addFlashAttribute("position", post.getPosition());
 
 
             for (var err : results.getFieldErrors()) {
@@ -66,10 +74,60 @@ public class StudyController {
 
 
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable Long id, Model model) {
-        model.addAttribute("post", studyService.detail(id));
+    public String detail(@AuthenticationPrincipal PrincipalDetails userDetails, @PathVariable Long id, Model model) {
+        Post post = studyService.detail(id);
+        model.addAttribute("post", post);
+
+        List<Chat> list = chatService.findChatByPostId(id.intValue());
+        System.out.println(list);
+        model.addAttribute("chatlist", list);
+
+        if(userDetails != null)
+            model.addAttribute("user", userDetails.getUser());
+
         return "study/detail";
     }
+
+    @PostMapping("/sendMessage")
+    public ResponseEntity<String> sendMessage(@RequestParam("message") String message, HttpSession session) {
+        log.info("@ChatController, sendMessage(), Message: {}", message); // 메시지 전송 요청에 대한 로그 출력
+
+        String sessionId = session.getId(); // 현재 세션의 ID를 가져옴
+        String username = userSessions.get(sessionId); // 세션 ID를 기반으로 사용자 이름을 가져옴
+
+
+        // 세션에 연결된 사용자가 없는 경우, 새로운 사용자 이름 생성 및 맵에 추가
+        if (username == null) {
+            username = generateUniqueUserName(); // 유니크한 사용자 이름 생성
+            userSessions.put(sessionId, username); // 맵에 사용자 이름 추가
+        }
+
+        // 현재 시간을 기반으로 타임스탬프 생성
+        String timestamp = generateTimestamp(); // 타임스탬프 생성
+
+        // 메시지에 사용자 이름과 타임스탬프를 추가하여 생성
+        String messageWithTimestamp = username + ": " + message + " - " + timestamp;
+
+        return ResponseEntity.ok(messageWithTimestamp); // 메시지 반환
+    }
+
+
+    // 유니크한 사용자 이름 생성
+    private String generateUniqueUserName() {
+        LocalDateTime now = LocalDateTime.now(); // 현재 시간 정보를 가져옴
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm"); // 패턴 지정
+        return "user" + now.format(formatter) + "_" + userCounter++; // 사용자 이름 반환
+
+    }
+
+    // 현재 시간을 기반으로 타임스탬프 생성 (날짜와 시간 표시)
+    private String generateTimestamp() {
+        LocalDateTime now = LocalDateTime.now(); // 현재 시간 정보를 가져옴
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm"); // 패턴 지정
+        return "User" + userCounter + " : d - " + now.format(formatter); // 타임스탬프 반환
+    }
+
+    private int userCounter = 0; // 사용자 수 카운트
 
     @GetMapping("/list")
     public void list(Integer page, Model model) {
@@ -167,9 +225,9 @@ public class StudyController {
         if (results.hasErrors()) {
 
             redirectAttrs.addFlashAttribute("title", post.getTitle());
-            redirectAttrs.addFlashAttribute("dataForStartdate", post.getStartdate());
-            redirectAttrs.addFlashAttribute("dataForEnddate", post.getEnddate());
-
+            redirectAttrs.addFlashAttribute("dataForStartdate", post.getDataForStartdate());
+            redirectAttrs.addFlashAttribute("dataForEnddate", post.getDataForEnddate());
+            redirectAttrs.addFlashAttribute("content", post.getContent());
 
             for (var err : results.getFieldErrors()) {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
