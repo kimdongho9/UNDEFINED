@@ -1,6 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<th:block sec:authorize="isAnonymous()">
+    <script>
+        alert("로그인이 필요한 서비스입니다.");
+        history.back();
+    </script>
+</th:block>
+
+<th:block sec:authorize="isAuthenticated()">
 
 <script th:unless="${post}">
     alert("해당 정보가 삭제되거나 없습니다")
@@ -38,7 +47,7 @@
 
     <body class="sb-nav-fixed">
     <script th:inline="javascript">
-        var arr = /*[[${list}]]*/ [(${list})];
+        var arr = [[${list}]];
     </script>
     <th:block th:insert="~{common/menubar::menubar}"></th:block>
     <div id="layoutSidenav">
@@ -49,43 +58,45 @@
             <main>
                 <form method="post" name="sanggon" th:action="@{/study/update}">
                     <input name="id" th:value="${post.id}" type="hidden"/>
-                    <div class="container text-center">
-                        <div class="row mb-4">
-                            <div class="col-md-2 d-flex justify-content-center">
+
+
+                    <div class="container col-12 px-0 mt-6" style="max-width: 1200px">
+                        <div class="row" style="font-size: 0.8em;">
+
+                            <div class="col-lg-2 col-2  ps-lg-4 pe-lg-0 ps-4">
                                 <div class="form-group">
-                                    <label class="form-label mt-6" for="member">모집 인원</label>
+                                    <label class="form-label" for="member">모집 인원</label>
                                     <select class="form-select form-select-sm mb-3" id="member" name="member"
-                                            style="max-width: 100px;"
-                                            th:value="${post.member}">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                            style="max-width: 100px;">
+                                        <option th:selected="${post.member == 1}">1</option>
+                                        <option th:selected="${post.member == 2}">2</option>
+                                        <option th:selected="${post.member == 3}">3</option>
+                                        <option th:selected="${post.member == 4}">4</option>
+                                        <option th:selected="${post.member == 5}">5</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-md-2 d-flex justify-content-center">
+                            <div class="col-lg-2 col-4 ps-lg-0 pe-lg-4 ps-1">
                                 <div class="form-group">
-                                    <label class="form-label mt-6" for="position">포지션</label>
+                                    <label class="form-label" for="position">포지션</label>
                                     <select class="form-select form-select-sm mb-3 multiple" id="position"
                                             name="position"
-                                            style="min-width: 100px;"
-                                            th:value="${post.position}">
-                                        <option>프론트앤드</option>
-                                        <option>백앤드</option>
-                                        <option>안드로이드</option>
-                                        <option>IOS</option>
-                                        <option>디자이너</option>
+                                            style="min-width: 100px;">
+                                        <option th:selected="${#strings.equals(post.position, '프론트엔드')}">프론트앤드</option>
+                                        <option th:selected="${#strings.equals(post.position, '백앤드')}">백앤드</option>
+                                        <option th:selected="${#strings.equals(post.position, '안드로이드')}">안드로이드</option>
+                                        <option th:selected="${#strings.equals(post.position, 'IOS')}">IOS</option>
+                                        <option th:selected="${#strings.equals(post.position, '디자이너')}">디자이너</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-4">
-                                <div class="text-start">language</div>
+                            <div class="col-lg-4 col-6 pe-4">
+                                <div class="text-start mb-2">language</div>
                                 <div class="dropdown row py-0">
                                     <input id="skills" name="skills" type="hidden" value="">
+
                                     <div class="navbar navbar-expand-lg bg-light overflow-auto col-10 d-flex justify-content-start my-0 py-0"
                                          data-bs-theme="light"
                                          id="selectedSkillList">
@@ -94,56 +105,52 @@
 
                                     </button>
                                     <div class="dropdown-menu" id="skillList">
-                                        <div class="dropdown-item skill" id="C">C</div>
-                                        <div class="dropdown-item skill" id="Java">Java</div>
-                                        <div class="dropdown-item skill" id="Javascript">Javascript</div>
-                                        <div class="dropdown-item skill" id="Python">Python</div>
-                                        <div class="dropdown-item skill" id="React">React.js</div>
-                                        <div class="dropdown-item skill" id="Node">Node.js</div>
+                                        <div class="dropdown-item" id="C">C</div>
+                                        <div class="dropdown-item" id="Java">Java</div>
+                                        <div class="dropdown-item" id="Javascript">Javascript</div>
+                                        <div class="dropdown-item" id="Python">Python</div>
+                                        <div class="dropdown-item" id="React">React.js</div>
+                                        <div class="dropdown-item" id="Node">Node.js</div>
                                     </div>
                                     <span class="text-danger" th:if="${error_skills}" th:utext="${error_skills}"></span>
                                 </div>
                             </div>
 
-                            <div class="col-md-2 d-flex justify-content-center">
-                                <div class="form-group">
-                                    <label class="form-label mt-6" for="enddate">마감 예정일</label>
-                                    <input class="form-control datepicker" id="enddate" name="dataForEnddate"
-                                           style="min-width: 100px;"
-                                           th:value="${#temporals.format(post.enddate,'yyyy-MM-dd')}"
-                                           type="text">
+                            <div class="col-lg-2 pe-lg-0 col-6 ps-4">
+                                <div class="form-group col-12 ps-0">
+                                    <label class="form-label" for="enddate">마감 예정일</label>
+                                    <input autocomplete="off" class="form-control datepicker" id="enddate"
+                                           name="dataForEnddate" th:value="${dataForEnddate} ? ${dataForEnddate} : ${#temporals.format(post.enddate,'yyyy-MM-dd')}" type="text">
                                     <span class="text-danger" th:if="${error_dataForEnddate}"
                                           th:utext="${error_dataForEnddate}"></span>
                                 </div>
                             </div>
 
-                            <div class="col-md-2 d-flex justify-content-center">
-                                <div class="form-group">
-                                    <label class="form-label mt-6" for="startdate">시작 예정일</label>
-                                    <input class="form-control datepicker" id="startdate" name="dataForStartdate"
-                                           style="min-width: 200px;"
-                                           th:value="${#temporals.format(post.startdate,'yyyy-MM-dd')}"
-                                           type="text">
+                            <div class="col-lg-2 ps-lg-0 col-6 ps-0">
+                                <div class="form-group col-12 ps-0">
+                                    <label class="form-label" for="startdate">시작 예정일</label>
+                                    <input autocomplete="off" class="form-control datepicker" id="startdate"
+                                           name="dataForStartdate" th:value="${dataForStartdate} ? ${dataForStartdate} : ${#temporals.format(post.startdate,'yyyy-MM-dd')}" type="text">
                                     <span class="text-danger" th:if="${error_dataForStartdate}"
-                                          th:utext="${error_dataForStartdate}"></span>
+                                          th:utext="${error_dataForStartdate}">
+                                    </span>
                                 </div>
                             </div>
 
-
-                            <div class="col-md-10 mt-5">
-                                <div class="form-group">
-                                    <label class="d-flex justify-content-start" for="title">제목</label>
-                                    <input class="form-control form-control-lg" id="title" name="title"
-                                           placeholder="글 제목을 입력해 주세요!"
-                                           style="max-width: 1080px;"
-                                           th:value="${post.title}" type="text">
-                                    <span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span>
+                            <!--제목-->
+                            <div class="col-12 mt-3" style="max-width: 1200px">
+                                <div class="form-group d-flex mb-0">
+                                    <input class="form-control form-control-lg px-0" id="title" maxlength="30"
+                                           name="title"
+                                           placeholder="스터디 제목" style="max-width: 1080px;"
+                                           th:value="${title} ? ${title} : ${post.title}" type="text">
                                 </div>
+                                <span class="text-danger ms-2" th:if="${error_title}" th:utext="${error_title}"></span>
                             </div>
+                            <!--제목-->
 
-
-                            <div class="col-md-10 d-flex justify-content-center">
-                                <textarea class="summernote" name="content" th:utext="${post.content}"></textarea>
+                            <div class="col-12 d-flex justify-content-center mt-2">
+                                <textarea class="summernote" name="content" th:utext="${content} ? ${content} : ${post.content}"></textarea>
                                 <script>
                                     $('.summernote').summernote({
                                         width: 1200,
@@ -199,5 +206,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     </body>
 </th:block>
-
+</th:block>
 </html>

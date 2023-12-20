@@ -1,5 +1,8 @@
 package com.lec.spring.domain.study;
 
+import com.lec.spring.controller.community.CommunityController;
+import com.lec.spring.domain.community.Feed;
+import com.lec.spring.domain.user.User;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -9,9 +12,12 @@ public class PostValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
         System.out.println("supports(" + clazz.getName() + ")");
-        boolean result = Post.class.isAssignableFrom(clazz);
-        System.out.println(result);
-        return result;
+//        boolean result = Post.class.isAssignableFrom(clazz);
+
+        boolean result1 = Post.class.isAssignableFrom(clazz);
+        boolean result2 = User.class.isAssignableFrom(clazz);
+//        System.out.println(result);
+        return result1 || result2;
     }
 
     @Override
@@ -52,9 +58,5 @@ public class PostValidator implements Validator {
         if(skills == null || skills.trim().isEmpty()){
             errors.rejectValue("skills", "스터디 언어는 필수 입니다.");
         }
-
-
-
     }
-
 }

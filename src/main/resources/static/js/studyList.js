@@ -101,15 +101,6 @@ $(document).ready(function(){
         })
     });
 
-    $('.writeBtn').click(function() {
-        if(logged_id === 0) {
-            alert("로그인이 되어있지 않습니다.")
-            return;
-        }
-
-        location.href="/study/write";
-    })
-
     $('#favorList').click(function(){
         // 가지고 있으면 즐겨찾기 리스트를 보여주고 있는 상태
         if(logged_id === 0) {

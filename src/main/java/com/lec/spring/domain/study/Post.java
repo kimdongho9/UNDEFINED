@@ -31,6 +31,8 @@ public class Post {
 
     private List<Skill> skillList;
 
+    private List<Chat> chatList;
+
     @ToString.Exclude
     String skills;
     @ToString.Exclude
