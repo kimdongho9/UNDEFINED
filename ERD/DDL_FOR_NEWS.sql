@@ -39,3 +39,21 @@ CREATE TABLE api
 );
 
 SELECT * FROM api;
+
+
+
+
+DROP TABLE IF EXISTS youtube;
+CREATE TABLE youtube
+(
+    id int NOT NULL AUTO_INCREMENT,
+    keyword varchar(100) NOT NULL,
+    title varchar(1000) NOT NULL,
+    videoId varchar(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+DELETE FROM youtube;
+ALTER TABLE youtube AUTO_INCREMENT = 1;
+
+SELECT * FROM youtube;
+

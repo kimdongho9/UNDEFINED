@@ -9,6 +9,14 @@
         INSERT INTO news (keyword, title, originallink, link, description, pubDate)
         VALUES(#{keyword}, #{title}, #{originallink}, #{link},#{description}, #{pubDate})
     </insert>
+
+    <insert id="saveYoutue"  flushCache="true" parameterType="com.lec.spring.domain.naverapi.YoutubeDTO"
+            keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO youtube (keyword, title, videoId)
+        VALUES (#{keyword},#{title},#{videoId})
+    </insert>
+
+
     <delete id="delete" flushCache="true">
         DELETE FROM news WHERE keyword = #{keyword}
     </delete>
@@ -24,6 +32,17 @@
         FROM
             news
         WHERE keyword = #{keyword}
+    </select>
+    <select id="listYoutube" resultType="com.lec.spring.domain.naverapi.YoutubeDTO">
+        SELECT
+            id,
+            keyword,
+            title,
+            videoId
+        FROM
+            youtube
+        WHERE keyword = #{keyword}
+        LIMIT 4
     </select>
 
 

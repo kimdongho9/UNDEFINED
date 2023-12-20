@@ -2,8 +2,10 @@ package com.lec.spring.controller.user;
 
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.naverapi.News;
+import com.lec.spring.domain.naverapi.YoutubeDTO;
 import com.lec.spring.domain.user.User;
 import com.lec.spring.service.naverapi.NaverApiService;
+import com.lec.spring.service.portfolio.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +26,9 @@ public class HomeController {
     @Autowired
     private NaverApiService naverApiService;
 
+    @Autowired
+    private PortfolioService portfolioService;
+
     @RequestMapping("/")
     public String login(Model model){
         model.addAttribute("infoFirst", naverApiService.list("개발자채용").get(0));
@@ -40,6 +45,8 @@ public class HomeController {
 
         model.addAttribute("AI2First", naverApiService.list("인공지능").get(0));
         model.addAttribute("AI2", naverApiService.list("인공지능").subList(1, 6));
+
+        model.addAttribute("portfolio", portfolioService.forMainPage());
 
         return "/home";
     }
@@ -80,6 +87,12 @@ public class HomeController {
         return naverApiService.list(keyword).subList(start, start+5);
     }
 
+    @GetMapping("/youtube/list")
+    @ResponseBody
+    public List<YoutubeDTO> listYoutube(String keyword){
+        System.out.println(keyword.trim());
+        return naverApiService.listYoutube(keyword.trim());
+    }
 
 
 }

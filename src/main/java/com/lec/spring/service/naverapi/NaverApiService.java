@@ -2,9 +2,11 @@ package com.lec.spring.service.naverapi;
 
 
 import com.lec.spring.domain.naverapi.News;
+import com.lec.spring.domain.naverapi.YoutubeDTO;
 import com.lec.spring.repository.naverapi.NewsRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
@@ -21,7 +23,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 @Service
 public class NaverApiService {
 
@@ -31,6 +32,9 @@ public class NaverApiService {
     @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
     private String naver_secret;
 
+    @Value("${youtube.apikey}")
+    private String youtuekey;
+
     private NewsRepository newsRepository;
 
     public NaverApiService(SqlSession sqlSession){
@@ -39,7 +43,7 @@ public class NaverApiService {
 
     //@Scheduled(fixedDelay = 3600000)
 
-    @Scheduled(cron = "0 0 1 * * *") // 매일 새벽 1시에
+/*    @Scheduled(cron = "0 0 1 * * *") // 매일 새벽 1시에
     public void navernews(){
         newsRepository.delete("개발자채용");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -85,9 +89,45 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    }
+    }*/
 
-    @Scheduled(cron = "0 0 1 * * *")
+/*    @Scheduled(fixedDelay = 3600000)
+    public void saveYoutube1(){
+        RestTemplate restTemplate =new RestTemplate();
+        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
+                + "&maxResults=10&q=개발자채용";
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String resBody = response.getBody();
+        JSONObject jsonObject = new JSONObject(resBody);
+        JSONArray items = jsonObject.getJSONArray("items");
+        List<YoutubeDTO> YList = new ArrayList<>();
+
+            for (int i = 0; i < items.length(); i++) {
+                try {
+                JSONObject videoItem = (JSONObject) items.get(i);
+                JSONObject snippet = videoItem.getJSONObject("snippet");
+                String videoId = videoItem.getJSONObject("id").getString("videoId");
+                String title = snippet.getString("title");
+                YoutubeDTO youtubeDTO = new YoutubeDTO();
+                youtubeDTO.setKeyword("개발자채용");
+                youtubeDTO.setTitle(title);
+                youtubeDTO.setVideoId(videoId);
+                YList.add(youtubeDTO);
+                }catch(JSONException e){
+
+                }
+            }
+
+
+        for (YoutubeDTO youtubeDTO : YList) {
+            newsRepository.saveYoutue(youtubeDTO);
+        }
+
+    }*/
+
+
+
+/*    @Scheduled(cron = "0 0 1 * * *")
     public void navernews2(){
         newsRepository.delete("백엔드");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -133,10 +173,43 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    }
+    }*/
+
+/*    @Scheduled(fixedDelay = 3600000)
+    public void saveYoutube2(){
+        RestTemplate restTemplate =new RestTemplate();
+        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
+                + "&maxResults=10&q=백엔드";
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String resBody = response.getBody();
+        JSONObject jsonObject = new JSONObject(resBody);
+        JSONArray items = jsonObject.getJSONArray("items");
+        List<YoutubeDTO> YList = new ArrayList<>();
+
+            for (int i = 0; i < items.length(); i++) {
+                try {
+                JSONObject videoItem = (JSONObject) items.get(i);
+                JSONObject snippet = videoItem.getJSONObject("snippet");
+                String videoId = videoItem.getJSONObject("id").getString("videoId");
+                String title = snippet.getString("title");
+                YoutubeDTO youtubeDTO = new YoutubeDTO();
+                youtubeDTO.setKeyword("백엔드");
+                youtubeDTO.setTitle(title);
+                youtubeDTO.setVideoId(videoId);
+                YList.add(youtubeDTO);
+                }catch(JSONException e){
+
+                }
+            }
 
 
-    @Scheduled(cron = "0 0 1 * * *")
+        for (YoutubeDTO youtubeDTO : YList) {
+            newsRepository.saveYoutue(youtubeDTO);
+        }
+
+    }*/
+
+/*    @Scheduled(cron = "0 0 1 * * *")
     public void navernews3(){
         newsRepository.delete("프론트엔드");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -182,9 +255,44 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    }
+    }*/
 
-    @Scheduled(cron = "0 0 1 * * *")
+/*    @Scheduled(fixedDelay = 3600000)
+    public void saveYoutube3(){
+        RestTemplate restTemplate =new RestTemplate();
+        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
+                + "&maxResults=10&q=프론트엔드";
+
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String resBody = response.getBody();
+        JSONObject jsonObject = new JSONObject(resBody);
+        JSONArray items = jsonObject.getJSONArray("items");
+        List<YoutubeDTO> YList = new ArrayList<>();
+
+            for (int i=0; i<items.length(); i++) {
+                try{
+                JSONObject videoItem = (JSONObject) items.get(i);
+                JSONObject snippet = videoItem.getJSONObject("snippet");
+                String videoId = videoItem.getJSONObject("id").getString("videoId");
+                String title = snippet.getString("title");
+                YoutubeDTO youtubeDTO = new YoutubeDTO();
+                youtubeDTO.setKeyword("프론트엔드");
+                youtubeDTO.setTitle(title);
+                youtubeDTO.setVideoId(videoId);
+                YList.add(youtubeDTO);
+                }
+                catch (JSONException e){
+
+                }
+            }
+
+        for (YoutubeDTO youtubeDTO : YList) {
+            newsRepository.saveYoutue(youtubeDTO);
+        }
+
+    }*/
+
+/*    @Scheduled(cron = "0 0 1 * * *")
     public void navernews4(){
         newsRepository.delete("AI");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -230,10 +338,43 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    }
+    }*/
 
+/*    @Scheduled(fixedDelay = 3600000)
+    public void saveYoutube4(){
+        RestTemplate restTemplate =new RestTemplate();
+        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
+                + "&maxResults=10&q=AI";
 
-    @Scheduled(cron = "0 0 1 * * *")
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String resBody = response.getBody();
+        JSONObject jsonObject = new JSONObject(resBody);
+        JSONArray items = jsonObject.getJSONArray("items");
+        List<YoutubeDTO> YList = new ArrayList<>();
+
+            for (int i=0; i<items.length(); i++) {
+            try{
+                JSONObject videoItem = (JSONObject) items.get(i);
+                JSONObject snippet = videoItem.getJSONObject("snippet");
+                String videoId = videoItem.getJSONObject("id").getString("videoId");
+                String title = snippet.getString("title");
+                YoutubeDTO youtubeDTO = new YoutubeDTO();
+                youtubeDTO.setKeyword("AI");
+                youtubeDTO.setTitle(title);
+                youtubeDTO.setVideoId(videoId);
+                YList.add(youtubeDTO);
+            }catch(JSONException e){
+
+            }
+        }
+
+        for (YoutubeDTO youtubeDTO : YList) {
+            newsRepository.saveYoutue(youtubeDTO);
+        }
+
+    }*/
+
+ /*   @Scheduled(cron = "0 0 1 * * *")
     public void navernews5(){
         newsRepository.delete("인공지능");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -279,9 +420,41 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    }
+    }*/
 
-    @Scheduled(cron = "0 0 1 * * *")
+/*    @Scheduled(fixedDelay = 3600000)
+    public void saveYoutube5(){
+        RestTemplate restTemplate =new RestTemplate();
+        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
+                + "&maxResults=10&q=인공지능";
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String resBody = response.getBody();
+        JSONObject jsonObject = new JSONObject(resBody);
+        JSONArray items = jsonObject.getJSONArray("items");
+        List<YoutubeDTO> YList = new ArrayList<>();
+        for (int i=0; i<items.length(); i++) {
+            try {
+                JSONObject videoItem = (JSONObject) items.get(i);
+                JSONObject snippet = videoItem.getJSONObject("snippet");
+                String videoId = videoItem.getJSONObject("id").getString("videoId");
+                String title = snippet.getString("title");
+                YoutubeDTO youtubeDTO = new YoutubeDTO();
+                youtubeDTO.setKeyword("인공지능");
+                youtubeDTO.setTitle(title);
+                youtubeDTO.setVideoId(videoId);
+                YList.add(youtubeDTO);
+            }catch(JSONException e){
+
+            }
+        }
+
+        for (YoutubeDTO youtubeDTO : YList) {
+            newsRepository.saveYoutue(youtubeDTO);
+        }
+
+    }*/
+
+    /*@Scheduled(cron = "0 0 1 * * *")
     public void navernews6(){
         newsRepository.delete("보안");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -327,11 +500,51 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    }
+    }*/
+ /*   @Scheduled(fixedDelay = 3600000)
+    public void saveYoutube6(){
+        RestTemplate restTemplate =new RestTemplate();
+        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
+                + "&maxResults=10&q=보안";
+
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        String resBody = response.getBody();
+        JSONObject jsonObject = new JSONObject(resBody);
+        JSONArray items = jsonObject.getJSONArray("items");
+        List<YoutubeDTO> YList = new ArrayList<>();
+
+            for (int i=0; i<items.length(); i++) {
+                try{
+                JSONObject videoItem = (JSONObject) items.get(i);
+                JSONObject snippet = videoItem.getJSONObject("snippet");
+                String videoId = videoItem.getJSONObject("id").getString("videoId");
+                String title = snippet.getString("title");
+                YoutubeDTO youtubeDTO = new YoutubeDTO();
+                youtubeDTO.setKeyword("보안");
+                youtubeDTO.setTitle(title);
+                youtubeDTO.setVideoId(videoId);
+                YList.add(youtubeDTO);
+                }catch(JSONException e){
+
+                }
+            }
+
+
+        for (YoutubeDTO youtubeDTO : YList) {
+            newsRepository.saveYoutue(youtubeDTO);
+        }
+
+    }*/
 
     public List<News> list(String keyword){
         return newsRepository.list(keyword);
     }
+
+    public List<YoutubeDTO> listYoutube(String keyword){
+        return newsRepository.listYoutube(keyword);
+    }
+
+
 
 
 }// end service
