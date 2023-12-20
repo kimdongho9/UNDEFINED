@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/sketchy/bootstrap.min.css">
     <link th:href="@{/css/chatbot/floatingactionbutton.css}" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/chatbot/chatGPT.css}">
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css">
     <script th:inline="javascript">
         var arr = [
             /*[# th:each="item : ${list}"]*/
@@ -111,38 +112,37 @@
 
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                eventClick: function (info) { //click에 대한 이벤트 추가
-                    var eventObj = info.event;
 
-                    if (eventObj.end) { // end date가 있는 경우 해당 내용으로 alert
-                        alert(eventObj.title + '\n' +
-                            'Date of Detail : ' + eventObj.start.getFullYear() + '년 ' + (eventObj.start.getMonth() + 1) + '월 '
-                            + eventObj.start.getDate() + '일 ' + ' ~ ' +
-                            eventObj.end.getFullYear() + '년 ' + (eventObj.end.getMonth() + 1) + '월 '
-                            + eventObj.end.getDate() + '일 ' + '\n응시료 [' + eventObj.extendedProps.fee + '] (1차 : 필기 / 2차 : 실기)'
-                        );
-                    } else { // end date가 없다면 해당내용으로 alert
-                        alert(eventObj.title + '\n' +
-                            'Date of Detail : ' + eventObj.start.getFullYear() + '년 ' + (eventObj.start.getMonth() + 1) + '월 '
-                            + eventObj.start.getDate() + '일 ');
-                    }
-                },
-                initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-                contentHeight: 750,
-                editable: false,
-                dayMaxEvents: true, // 일정 갯수 이상의 일정 시 "+n개"로 표시
 
-                events: events
-            });
+    <style>
+        /* 테이블 스타일 설정 */
+        table {
+            width: 20%; /* 테이블을 3분의 1 크기로 설정 */
+            height: auto;
+            outline: 2px solid blueviolet;
+            float: right; /* 오른쪽에 플로팅 */
+            margin-left: 1%; /* 캘린더와의 간격 조정 */
+            text-align: center;
+        }
 
-            calendar.render();
-        });
+        #calendar {
+            width: 75%; /* 캘린더 영역 크기 조정 */
+            outline: 2px solid tomato;
+            float: left; /* 왼쪽에 플로팅 */
+        }
+             /* 일요일 날짜 빨간색 */
+         .fc-day-sun {
+             color: red;
+             text-decoration: none;
+         }
 
-    </script>
+        /* 토요일 날짜 파란색 */
+        .fc-day-sat {
+            color: blue;
+            text-decoration: none;
+        }
+
+    </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -155,14 +155,157 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4" style="text-align: center">Certification Calendar</h1>
             </div>
-            <div id='calendar'></div>
+            <label for="eventSearch">이벤트 검색:</label>
+            <input type="text" id="eventSearch">
+            <button onclick="searchAndNavigate()">검색</button>
+            <div class="info_box d-flex justify-content-center" >
+                <div id='calendar'></div>
+                <table>
+                    <tr class="table-light" style="border-bottom: 2px solid lightgray">
+                        <th scope="row" style="border: 2px solid lightgray;">No</th>
+                        <td style="border: 2px solid lightgray;">구분</td>
+                        <td>시험명</td>
+                    </tr>
+
+                    <tr class="table-light" style="border-bottom: 2px solid lightgray">
+                        <th scope="row">1</th>
+                        <td>실기</td>
+                        <td>정보처리기사</td>
+                    </tr>
+
+                    <tr class="table-light" style="border-bottom: 2px solid lightgray">
+                        <th scope="row">2</th>
+                        <td>필기</td>
+                        <td>컴퓨터시스템응용기술사</td>
+                    </tr>
+
+                    <tr class="table-light" style="border-bottom: 2px solid lightgray">
+                        <th scope="row">3</th>
+                        <td>시험결과</td>
+                        <td>정보처리산업기사</td>
+                    </tr>
+
+                    <tr class="table-light" style="border-bottom: 2px solid lightgray">
+                        <th scope="row">3</th>
+                        <td>시험결과</td>
+                        <td>정보처리산업기사</td>
+                    </tr>
+
+                </table>
+            </div>
         </main>
+
+        <h1 id="booktext" class="text-center text-success visually-hidden">Related Books Your Search Keyword!</h1><br>
+        <div id="booksinfo" class="row row-cols-1 row-cols-md-2 w-100 m-lg-5 d-flex justify-content-center">
+
+        </div>
+
 
         <th:block th:insert="~{common/chatbot::chatbot}"></th:block>
         <th:block th:insert="~{common/footer::footer}"></th:block>
     </div>
 </div>
+<script>
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        eventClick: function (info) { //click에 대한 이벤트 추가
+            var eventObj = info.event;
 
+            if (eventObj.end) { // end date가 있는 경우 해당 내용으로 alert
+                alert(eventObj.title + '\n' +
+                    'Date of Detail : ' + eventObj.start.getFullYear() + '년 ' + (eventObj.start.getMonth() + 1) + '월 '
+                    + eventObj.start.getDate() + '일 ' + ' ~ ' +
+                    eventObj.end.getFullYear() + '년 ' + (eventObj.end.getMonth() + 1) + '월 '
+                    + eventObj.end.getDate() + '일 ' + '\n응시료 [' + eventObj.extendedProps.fee + '] (1차 : 필기 / 2차 : 실기)'
+                );
+            } else { // end date가 없다면 해당내용으로 alert
+                alert(eventObj.title + '\n' +
+                    'Date of Detail : ' + eventObj.start.getFullYear() + '년 ' + (eventObj.start.getMonth() + 1) + '월 '
+                    + eventObj.start.getDate() + '일 ');
+            }
+        },
+        initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+        contentHeight: 750,
+        editable: false,
+        dayMaxEvents: true, // 일정 갯수 이상의 일정 시 "+n개"로 표시
+
+        events: events
+    });
+
+    calendar.render();
+
+    function searchAndNavigate() {
+        // 검색어 가져오기
+        var searchQuery = $('#eventSearch').val();
+        console.log(searchQuery);
+        // 검색어와 일치하는 이벤트 찾기
+        var event = calendar.getEvents().find(function (event) {
+            return event.title.includes(searchQuery);
+        });
+
+        // 이벤트가 있으면 해당 날짜로 캘린더 이동
+        if (event) {
+            calendar.gotoDate(event.start);
+        } else {
+            alert('일치하는 이벤트가 없습니다.');
+        }
+        $('#booktext').removeClass('visually-hidden');
+        $('#booksinfo').html('');
+        $.ajax({
+            url: "/naver/book",
+            type: "GET",
+            data: {
+                keyword: searchQuery.trim()
+            },
+            success: function(response) {
+                // Assuming response is an array of Book objects
+                if (response && response.length > 0) {
+                    var booksInfo = $('#booksinfo'); // Select the div where you want to display book info
+
+                    response.forEach(function(book) {
+                        // Create HTML elements to display book information
+                        var bookDiv = `
+                        <div class="card mb-3">
+                            <h3 class="card-header">${book.title}</h3>
+                            <div class="card-body">
+                                <h5 class="card-title">${book.author}</h5>
+                                <h6 class="card-subtitle text-muted">${book.publisher}</h6>
+                            </div>
+                            <img src="${book.image}" alt="no image">
+                            <div class="card-body">
+                                <p class="card-text">${book.description}</p>
+                            </div>
+                            <div class="card-body">
+                                <a href="${book.link}" class="card-link text-success" target="_blank">To Naver Shopping Link</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                PUBLISHED DATE : ${book.pubdate}
+                                <p class="float-end">PRICE : ₩${book.discount}</p>
+                            </div>
+                        </div>
+                        `;
+
+                        // Append elements to the bookDiv
+
+
+                        // Append the bookDiv to the booksinfo div
+                        booksInfo.append(bookDiv);
+                    });
+                } else {
+                    // Handle case where no books are found
+                    $('#booksinfo').html('No books found.');
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle error case
+                console.error(status + ": " + error);
+            }
+        });
+    }
+
+
+
+</script>
 </body>
 
 

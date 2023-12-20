@@ -68,3 +68,42 @@ function handleYoutube(keyword){
         }
     });
 }
+
+$(document).ready(function () {
+    $('.pagination .page-link').on('click', function (e) {
+        e.preventDefault();
+
+        // If the clicked item is already active, do nothing
+        if (!$(this).parent().hasClass('active')) {
+            $(this).closest('.pagination').find('.page-item').removeClass('active');
+            $(this).parent().addClass('active');
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    $('.accordion-item').on('hide.bs.collapse', function(e) {
+        var accordionItem = $(this);
+        e.stopPropagation();
+        var accordionName = accordionItem.find('.accordion-header button').text();
+        console.log('Accordion deactivated:', accordionName);
+        // Do something when accordion is deactivated
+        $('.youtubeWord').addClass('visually-hidden');
+        $('#youtubeSection').hide();
+    });
+
+
+    $('.accordion-item').on('show.bs.collapse', function(e) {
+        var accordionItem = $(this);
+        $('.accordion-item.show').collapse('hide');
+        setTimeout(function() {
+            e.stopPropagation();
+            var accordionName = accordionItem.find('.accordion-header button').text();
+            console.log('Accordion activated:', accordionName);
+            // Do something when accordion is activated
+            handleYoutube(accordionName);
+            $('.youtubeWord').removeClass('visually-hidden');
+        }, 100);
+    });
+});

@@ -1,6 +1,7 @@
 package com.lec.spring.service.naverapi;
 
 
+import com.lec.spring.domain.naverapi.Book;
 import com.lec.spring.domain.naverapi.News;
 import com.lec.spring.domain.naverapi.YoutubeDTO;
 import com.lec.spring.repository.naverapi.NewsRepository;
@@ -545,6 +546,103 @@ public class NaverApiService {
     }
 
 
+    public int saveBook(Book book){
+        return newsRepository.saveBooks(book);
+    }
+
+    public int deleteBook(Book book){
+        return newsRepository.deleteBooks(book);
+    }
+    public List<Book> likeBooks(Long id){
+        return newsRepository.likeBooks(id);
+    }
+    public List<Book> getbooks(String keyword) {
 
 
+        URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com")
+                .path("/v1/search/book_adv.json")
+                .queryParam("d_titl", keyword.trim())
+                .queryParam("display", "10")
+                .queryParam("start", "1")
+                .queryParam("sort", "sim")
+                .encode()
+                .build()
+                .toUri();
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        RequestEntity<Void> requestEntity =
+                RequestEntity.get(uri)
+                        .header("X-Naver-Client-ID", naver_client_id)
+                        .header("X-Naver-Client-Secret", naver_secret)
+                        .build();
+
+        //헤더값을 채워서 넣기 위해서 exchange이용
+        ResponseEntity<String> res = restTemplate.exchange(requestEntity, String.class);
+        String response = res.getBody();
+        JSONObject jsonObject = new JSONObject(response);
+        JSONArray items = jsonObject.getJSONArray("items");
+        List<Book> BookList = new ArrayList<>();
+        for (int i = 0; i < items.length(); i++) {
+            JSONObject itemJson = (JSONObject) items.get(i);
+            Book book = new Book();
+            book.setTitle(itemJson.getString("title"));
+            book.setAuthor(itemJson.getString("author"));
+            book.setLink(itemJson.getString("link"));
+            book.setImage(itemJson.getString("image"));
+            book.setDescription(itemJson.getString("description"));
+            book.setPublisher(itemJson.getString("publisher"));
+            book.setIsbn(itemJson.getString("isbn"));
+            book.setDiscount(itemJson.getInt("discount"));
+            book.setPubdate(itemJson.getString("pubdate"));
+
+            // Add constructed Book object to the list
+            BookList.add(book);
+        }
+        return BookList;
+    }
+
+    public List<Book> getBooksInCalendar(String keyword) {
+
+        URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com")
+                .path("/v1/search/book_adv.json")
+                .queryParam("d_titl", keyword.trim())
+                .queryParam("display", "5")
+                .queryParam("sort", "sim")
+                .encode()
+                .build()
+                .toUri();
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        RequestEntity<Void> requestEntity =
+                RequestEntity.get(uri)
+                        .header("X-Naver-Client-ID", naver_client_id)
+                        .header("X-Naver-Client-Secret", naver_secret)
+                        .build();
+
+        //헤더값을 채워서 넣기 위해서 exchange이용
+        ResponseEntity<String> res = restTemplate.exchange(requestEntity, String.class);
+        String response = res.getBody();
+        JSONObject jsonObject = new JSONObject(response);
+        JSONArray items = jsonObject.getJSONArray("items");
+        List<Book> BookList = new ArrayList<>();
+        for (int i = 0; i < items.length(); i++) {
+            JSONObject itemJson = (JSONObject) items.get(i);
+            Book book = new Book();
+            book.setTitle(itemJson.getString("title"));
+            book.setAuthor(itemJson.getString("author"));
+            book.setLink(itemJson.getString("link"));
+            book.setImage(itemJson.getString("image"));
+            book.setDescription(itemJson.getString("description"));
+            book.setPublisher(itemJson.getString("publisher"));
+            book.setIsbn(itemJson.getString("isbn"));
+            book.setDiscount(itemJson.getInt("discount"));
+            book.setPubdate(itemJson.getString("pubdate"));
+
+            // Add constructed Book object to the list
+            BookList.add(book);
+        }
+        return BookList;
+    }
 }// end service

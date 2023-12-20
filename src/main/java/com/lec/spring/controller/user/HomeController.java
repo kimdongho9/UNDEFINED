@@ -1,6 +1,7 @@
 package com.lec.spring.controller.user;
 
 import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.domain.naverapi.Book;
 import com.lec.spring.domain.naverapi.News;
 import com.lec.spring.domain.naverapi.YoutubeDTO;
 import com.lec.spring.domain.user.User;
@@ -94,6 +95,17 @@ public class HomeController {
         return naverApiService.listYoutube(keyword.trim());
     }
 
+    @GetMapping("/naver/book")  //5개 for calendar
+    @ResponseBody
+    public List<Book> listbook(String keyword){
+        return naverApiService.getBooksInCalendar(keyword.trim());
+    }
+
+    @GetMapping("/naver/books") //10개
+    @ResponseBody
+    public List<Book> listbooks(String keyword){
+        return naverApiService.getbooks(keyword.trim());
+    }
 
 }
 

@@ -15,11 +15,21 @@
         INSERT INTO youtube (keyword, title, videoId)
         VALUES (#{keyword},#{title},#{videoId})
     </insert>
+    <insert id="saveBooks" flushCache="true" parameterType="com.lec.spring.domain.naverapi.Book"
+            keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO books (user_id, title, link, image, author, discount, publisher, pubdate, isbn, description)
+        VALUES (#{userId}, #{title}, #{link}, #{image}, #{author}, #{discount}, #{publisher}, #{pubdate}, #{isbn}, #{description})
+    </insert>
 
 
     <delete id="delete" flushCache="true">
         DELETE FROM news WHERE keyword = #{keyword}
     </delete>
+
+    <delete id="deleteBooks" flushCache="true">
+        DELETE FROM books WHERE user_id = #{userId} AND isbn = #{isbn} AND title = #{title}
+    </delete>
+
     <select id="list" resultType="com.lec.spring.domain.naverapi.News">
         SELECT
             id,
@@ -43,6 +53,11 @@
             youtube
         WHERE keyword = #{keyword}
         LIMIT 4
+    </select>
+    <select id="likeBooks" resultType="com.lec.spring.domain.naverapi.Book">
+        SELECT *
+        FROM books
+        WHERE user_id = #{userId}
     </select>
 
 

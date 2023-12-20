@@ -46,11 +46,10 @@
                         <p class="card-text" th:utext="${port.content}" ></p>
                     </div>
                     <div class="card-footer">
-                        <div class="viewcnt_box ms-3" style="font-size: 15px; float: right;" th:utext="'<i class=\'fa-solid fa-eye\'></i> ' + ${port.increaseViewCount}">
+                        <div class="viewcnt_box ms-3" style="font-size: 15px; float: right;" th:utext="'<i class=\'fa-solid fa-eye\'></i> ' + ${port.increaseViewCount}"></div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <br>
@@ -70,44 +69,4 @@
 </div>
 
 </body>
-<script>
-    $(document).ready(function () {
-        $('.pagination .page-link').on('click', function (e) {
-            e.preventDefault();
-
-            // If the clicked item is already active, do nothing
-            if (!$(this).parent().hasClass('active')) {
-                $(this).closest('.pagination').find('.page-item').removeClass('active');
-                $(this).parent().addClass('active');
-            }
-        });
-    });
-
-
-    $(document).ready(function() {
-        $('.accordion-item').on('hide.bs.collapse', function(e) {
-            var accordionItem = $(this);
-            e.stopPropagation();
-            var accordionName = accordionItem.find('.accordion-header button').text();
-            console.log('Accordion deactivated:', accordionName);
-            // Do something when accordion is deactivated
-            $('.youtubeWord').addClass('visually-hidden');
-            $('#youtubeSection').hide();
-        });
-
-
-        $('.accordion-item').on('show.bs.collapse', function(e) {
-            var accordionItem = $(this);
-            $('.accordion-item.show').collapse('hide');
-            setTimeout(function() {
-                e.stopPropagation();
-                var accordionName = accordionItem.find('.accordion-header button').text();
-                console.log('Accordion activated:', accordionName);
-                // Do something when accordion is activated
-                handleYoutube(accordionName);
-                $('.youtubeWord').removeClass('visually-hidden');
-            }, 100);
-        });
-        });
-</script>
 </html>

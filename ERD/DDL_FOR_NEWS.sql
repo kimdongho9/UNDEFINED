@@ -57,3 +57,25 @@ ALTER TABLE youtube AUTO_INCREMENT = 1;
 
 SELECT * FROM youtube;
 
+
+DROP TABLE IF EXISTS books;
+CREATE TABLE books
+(
+    id int NOT NULL AUTO_INCREMENT,
+    user_id int NOT NULL,
+    title varchar(1000) NOT NULL,
+    link varchar(1000) NOT NULL,
+    image varchar(1000) NOT NULL,
+    author varchar(10) NOT NULL,
+    discount int NOT NULL,
+    publisher varchar(1000),
+    pubdate varchar(20) NOT NULL,
+    isbn varchar(1000) NOT NULL,
+    description text,
+    PRIMARY KEY (id)
+);
+DELETE FROM books;
+ALTER TABLE books AUTO_INCREMENT = 1;
+
+SELECT * FROM books;
+
