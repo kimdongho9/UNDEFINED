@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.study.TitleSearchRepository">
+
+    <sql id="POST_USER">
+        SELECT
+            p.post_id "p_id",
+            p.post_title "p_title",
+            p.post_content "p_content",
+            p.post_member "p_member",
+            p.post_enddate "p_enddate",
+            p.post_startdate "p_startdate",
+            p.post_viewCnt "p_viewCnt",
+            p.post_regDate "p_regDate",
+            p.post_position "p_position",
+            u.id "u_id",
+            u.name "u_name"
+        FROM
+            study_posts p, user u
+        WHERE
+            p.user_id = u.id
+    </sql>
+
+    <resultMap id="userMap" type="com.lec.spring.domain.user.User">
+        <result column="u_id" property="id"/>
+        <result column="u_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="postMap" type="com.lec.spring.domain.study.Post">
+        <result column="p_id" property="id"/>
+        <result column="p_title" property="title"/>
+        <result column="p_content" property="content"/>
+        <result column="p_member" property="member"/>
+        <result column="p_viewCnt" property="viewCnt"/>
+        <result column="p_position" property="position"/>
+        <result column="p_regDate" property="regDate"/>
+        <result column="p_enddate" property="enddate"/>
+        <result column="p_startdate" property="startdate"/>
+        <collection property="user" resultMap="userMap"/>
+    </resultMap>
+
+    <select id="selectFromRow" resultMap="postMap">
+        <include refid="POST_USER"/>
+        AND post_title LIKE '%${keyword}%'
+        ORDER BY post_id DESC
+        LIMIT #{param1}, #{param2}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM study_posts
+        WHERE post_title LIKE '%${keyword}%'
+    </select>
+
+</mapper>
