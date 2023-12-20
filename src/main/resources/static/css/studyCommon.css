@@ -1,0 +1,71 @@
+.datepicker-days {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.datepicker > div {
+    cursor: pointer;
+}
+
+.datepicker-months,
+.datepicker-years,
+.datepicker-decades,
+.datepicker-centuries{
+    text-align: center;
+}
+
+.datepicker-months span,
+.datepicker-years span,
+.datepicker-decades span,
+.datepicker-centuries span {
+    margin: 0 4px;
+}
+
+.datepicker-days .dow:first-child,
+.datepicker-days tbody tr td:first-child {
+    color: red;
+}
+
+.datepicker-days .dow:last-child,
+.datepicker-days tbody tr td:last-child {
+    color: blue;
+}
+
+.datepicker-days .new,
+.datepicker-days .old {
+    color: gray !important;
+}
+
+.datepicker-days .dow,
+.datepicker-days .day {
+    border-spacing: 1px 4px;
+}
+
+#selectedSkillList::-webkit-scrollbar {
+    height: 5px;
+}
+
+#selectedSkillList::-webkit-scrollbar-thumb {
+    background: #6c757d;
+    opacity: 0.2;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#selectedSkillList::-webkit-scrollbar-track {
+    background: inherit;
+    border: none;
+    border-radius: 8px;
+}
+
+#selectedSkillList::-webkit-scrollbar-button:horizontal:end:decrement {
+    display: block;
+    width: 8%;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

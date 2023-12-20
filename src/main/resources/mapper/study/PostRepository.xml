@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.repository.study.PostRepository">
+
+    <sql id="POST_USER">
+        SELECT
+            p.post_id "p_id",
+            p.post_title "p_title",
+            p.post_content "p_content",
+            p.post_member "p_member",
+            p.post_enddate "p_enddate",
+            p.post_startdate "p_startdate",
+            p.post_viewCnt "p_viewCnt",
+            p.post_regDate "p_regDate",
+            p.post_position "p_position",
+            u.id "u_id",
+            u.name "u_name"
+        FROM
+            study_posts p, user u
+        WHERE
+            p.user_id = u.id
+    </sql>
+
+    <resultMap id="userMap" type="com.lec.spring.domain.user.User">
+        <result column="u_id" property="id"/>
+        <result column="u_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="postMap" type="com.lec.spring.domain.study.Post">
+        <result column="p_id" property="id"/>
+        <result column="p_title" property="title"/>
+        <result column="p_content" property="content"/>
+        <result column="p_member" property="member"/>
+        <result column="p_viewCnt" property="viewCnt"/>
+        <result column="p_position" property="position"/>
+        <result column="p_regDate" property="regDate"/>
+        <result column="p_enddate" property="enddate"/>
+        <result column="p_startdate" property="startdate"/>
+        <collection property="user" resultMap="userMap"/>
+    </resultMap>
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.study.Post"
+            useGeneratedKeys="true" keyColumn="post_id" keyProperty="id">
+        INSERT INTO study_posts
+        (post_title,post_content,post_member,post_enddate,post_startdate,post_position,user_id)
+        VALUES
+            (#{title},#{content},#{member},#{enddate},#{startdate},#{position},#{user.id})
+    </insert>
+
+
+    <select id = "findById" resultMap="postMap">
+    <include refid="POST_USER"/>
+    AND post_id = #{id}
+    </select>
+
+    <update id = "incViewCnt" flushCache="true">
+        UPDATE study_posts
+        SET post_viewcnt = post_viewcnt + 1
+        WHERE post_id = #{param1}
+    </update>
+
+    <select id="findAll" resultMap="postMap">
+        <include refid="POST_USER"/>
+        ORDER BY post_id DESC
+    </select>
+
+
+    <update id = "update" flushCache="true"
+    parameterType="com.lec.spring.domain.study.Post">
+        UPDATE study_posts
+        SET post_title     = #{title},
+            post_content   = #{content},
+            post_member    = #{member},
+            post_enddate   = #{enddate},
+            post_startdate = #{startdate},
+            post_position  = #{position}
+        WHERE post_id      = #{id}
+    </update>
+
+    <delete id = "delete" flushCache="true"
+    parameterType="com.lec.spring.domain.study.Post">
+    DELETE FROM study_posts
+    WHERE post_id = #{id}
+    </delete>
+
+    <select id="selectFromRow" resultMap="postMap">
+        <include refid="POST_USER"/>
+        ORDER BY post_id DESC
+        LIMIT #{param1}, #{param2}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM study_posts
+    </select>
+
+    <select id="getSkillsByPostId" resultType="com.lec.spring.domain.study.Skill">
+        SELECT
+            sk.post_id  "postid",
+            s.skill_id "skillId",
+            s.skill_name "skillName",
+            s.skill_img_url "imageUrl"
+        FROM study_skills sk, skills s
+        WHERE s.skill_id = sk.skill_id
+          AND sk.post_id = #{id};
+    </select>
+
+    <select id="getAllSkills" resultType="com.lec.spring.domain.study.Skill">
+        SELECT
+            sk.post_id  "postid",
+             s.skill_id "skillId",
+             s.skill_name "skillName",
+             s.skill_img_url "imageUrl"
+        FROM study_skills sk, skills s
+        WHERE s.skill_id = sk.skill_id
+    </select>
+</mapper>
