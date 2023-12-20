@@ -12,6 +12,19 @@
     <delete id="delete" flushCache="true">
         DELETE FROM news WHERE keyword = #{keyword}
     </delete>
+    <select id="list" resultType="com.lec.spring.domain.naverapi.News">
+        SELECT
+            id,
+            keyword,
+            title,
+            originallink,
+            link,
+            description,
+            pubDate
+        FROM
+            news
+        WHERE keyword = #{keyword}
+    </select>
 
 
 </mapper>

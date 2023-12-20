@@ -329,6 +329,9 @@ public class NaverApiService {
         }
     }
 
+    public List<News> list(String keyword){
+        return newsRepository.list(keyword);
+    }
 
 
 }// end service
