@@ -31,4 +31,6 @@ public interface PortfolioRepository {
 
     int countAll();
 
+    List<Portfolio> forMainpage();
+
 }
