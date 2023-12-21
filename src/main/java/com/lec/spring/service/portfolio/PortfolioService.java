@@ -32,4 +32,5 @@ public interface PortfolioService {
 
     List<Portfolio> forMainPage();
 
+    List<Portfolio> findByUserId(Long id);
 }

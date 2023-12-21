@@ -19,8 +19,8 @@ function likeBook(button) {
             console.log('success');
         }
     });
-    $(button).addClass('d-none');
-    $(button).siblings('.btn-unlike').removeClass('d-none');
+    $(button).addClass('visually-hidden');
+    $(button).siblings('.btn-unlike').removeClass('visually-hidden');
 
 }
 
@@ -47,8 +47,8 @@ function unlikeBook(button) {
         }
     });
 
-    $(button).addClass('d-none');
-    $(button).siblings('.btn-like').removeClass('d-none');
+    $(button).addClass('visually-hidden');
+    $(button).siblings('.btn-like').removeClass('visually-hidden');
 
 }
 
@@ -73,7 +73,7 @@ function FindBooks() {
                         ?
                         `<div class="btn-group mt-2" role="group">
                             <button onclick="likeBook(this)" class="btn btn-outline-primary btn-like">좋아요</button>
-                            <button onclick="unlikeBook(this)" class="btn btn-outline-danger btn-unlike d-done">좋아요 취소</button>
+                            <button onclick="unlikeBook(this)" class="btn btn-outline-danger btn-unlike visually-hidden">좋아요 취소</button>
                         </div>`
                         : '';
 

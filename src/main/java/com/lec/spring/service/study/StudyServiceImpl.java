@@ -294,4 +294,14 @@ public class StudyServiceImpl implements StudyService {
 
     public int Favsave(Long postid, Long userid){return favorRepository.save(postid, userid);}
     public int Favdelete(Long postid, Long userid){return favorRepository.delete(postid, userid);}
+
+    @Override
+    public List<Post> listForMyPage(Long id) {
+        List<Post> list = postRepository.findAll()
+                .stream()
+                .filter(post -> favorRepository.isFavor(post.getId(), id) != null)
+                .toList();
+        setSkillList(list);
+        return list;
+    }
 }

@@ -114,4 +114,9 @@
         LIMIT 3
     </select>
 
+    <select id="findByUserId" resultMap="mapPortfolio">
+        <include refid="SELECT_BASE"/>
+        AND u.id = #{id}
+    </select>
+
 </mapper>

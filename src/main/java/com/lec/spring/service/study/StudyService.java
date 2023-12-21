@@ -41,5 +41,6 @@ public interface StudyService {
     int Favsave(Long postid, Long userid);
     int Favdelete(Long postid, Long userid);
 
+    List<Post> listForMyPage(Long id);
 }
 

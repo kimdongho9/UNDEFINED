@@ -23,7 +23,5 @@ public interface PostRepository extends SearchRepository {
     List<Skill> getSkillsByPostId(Long id);
 
 
-
-
-
+    List<Post> findAllByUserId(Long id);
 }

@@ -127,4 +127,9 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     public List<Portfolio> forMainPage(){return portfolioRepository.forMainpage();}
+
+    @Override
+    public List<Portfolio> findByUserId(Long id) {
+        return portfolioRepository.findByUserId(id);
+    }
 }
