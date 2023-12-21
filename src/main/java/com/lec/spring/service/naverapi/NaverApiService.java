@@ -36,6 +36,7 @@ public class NaverApiService {
     @Value("${youtube.apikey}")
     private String youtuekey;
 
+
     private NewsRepository newsRepository;
 
     public NaverApiService(SqlSession sqlSession){
@@ -44,7 +45,7 @@ public class NaverApiService {
 
     //@Scheduled(fixedDelay = 3600000)
 
-/*    @Scheduled(cron = "0 0 1 * * *") // 매일 새벽 1시에
+    /*@Scheduled(fixedDelay = 3600000)
     public void navernews(){
         newsRepository.delete("개발자채용");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -92,7 +93,9 @@ public class NaverApiService {
         }
     }*/
 
-/*    @Scheduled(fixedDelay = 3600000)
+
+
+    /*@Scheduled(fixedDelay = 3600000)
     public void saveYoutube1(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -128,7 +131,7 @@ public class NaverApiService {
 
 
 
-/*    @Scheduled(cron = "0 0 1 * * *")
+    /*@Scheduled(fixedDelay = 3600000)
     public void navernews2(){
         newsRepository.delete("백엔드");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -176,7 +179,7 @@ public class NaverApiService {
         }
     }*/
 
-/*    @Scheduled(fixedDelay = 3600000)
+   /*@Scheduled(fixedDelay = 3600000)
     public void saveYoutube2(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -210,7 +213,7 @@ public class NaverApiService {
 
     }*/
 
-/*    @Scheduled(cron = "0 0 1 * * *")
+    /*@Scheduled(fixedDelay = 3600000)
     public void navernews3(){
         newsRepository.delete("프론트엔드");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -258,7 +261,7 @@ public class NaverApiService {
         }
     }*/
 
-/*    @Scheduled(fixedDelay = 3600000)
+    /*@Scheduled(fixedDelay = 3600000)
     public void saveYoutube3(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -293,8 +296,9 @@ public class NaverApiService {
 
     }*/
 
-/*    @Scheduled(cron = "0 0 1 * * *")
+    /*@Scheduled(fixedDelay = 3600000)
     public void navernews4(){
+        System.out.println("시작");
         newsRepository.delete("AI");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
@@ -341,7 +345,7 @@ public class NaverApiService {
         }
     }*/
 
-/*    @Scheduled(fixedDelay = 3600000)
+    /*@Scheduled(fixedDelay = 3600000)
     public void saveYoutube4(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -375,7 +379,7 @@ public class NaverApiService {
 
     }*/
 
- /*   @Scheduled(cron = "0 0 1 * * *")
+    /*@Scheduled(fixedDelay = 3600000)
     public void navernews5(){
         newsRepository.delete("인공지능");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -423,7 +427,7 @@ public class NaverApiService {
         }
     }*/
 
-/*    @Scheduled(fixedDelay = 3600000)
+    /*@Scheduled(fixedDelay = 3600000)
     public void saveYoutube5(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -455,7 +459,7 @@ public class NaverApiService {
 
     }*/
 
-    /*@Scheduled(cron = "0 0 1 * * *")
+    /*@Scheduled(fixedDelay = 3600000)
     public void navernews6(){
         newsRepository.delete("보안");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -502,7 +506,7 @@ public class NaverApiService {
             newsRepository.save(news);
         }
     }*/
- /*   @Scheduled(fixedDelay = 3600000)
+    /*@Scheduled(fixedDelay = 3600000)
     public void saveYoutube6(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -590,7 +594,7 @@ public class NaverApiService {
             book.setAuthor(itemJson.getString("author"));
             book.setLink(itemJson.getString("link"));
             book.setImage(itemJson.getString("image"));
-            book.setDescription(itemJson.getString("description"));
+            book.setDescription(cutDesc(itemJson.getString("description")));
             book.setPublisher(itemJson.getString("publisher"));
             book.setIsbn(itemJson.getString("isbn"));
             book.setDiscount(itemJson.getInt("discount"));
@@ -600,6 +604,13 @@ public class NaverApiService {
             BookList.add(book);
         }
         return BookList;
+    }
+
+    private String cutDesc(String desc) {
+        if(desc.length() >= 100) {
+            desc = desc.substring(0, 100) + "...";
+        }
+        return desc;
     }
 
     public List<Book> getBooksInCalendar(String keyword) {
