@@ -116,4 +116,9 @@
         FROM study_skills sk, skills s
         WHERE s.skill_id = sk.skill_id
     </select>
+
+    <select id="findAllByUserId" resultMap="postMap">
+        <include refid="POST_USER"/>
+        AND user_id = #{id}
+    </select>
 </mapper>
