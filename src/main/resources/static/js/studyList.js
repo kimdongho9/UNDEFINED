@@ -21,17 +21,17 @@ $(document).ready(function(){
         var postId = this.id.slice("detail".length);
         console.log(postId, logged_id);
 
-        isLike(logged_id, postId)
-            .then(response => {
-                if (response) {
-                    //console.log('ㅇㅇ');
-                    $("[id^='detail" + postId + "'] .favorite:nth-child(1)").hide();
-                    $("[id^='detail" + postId + "'] .favorite:nth-child(2)").show();
-                } else {
-                    //console.log('ㄴㄴ');
-                    $("[id^='detail" + postId + "'] .favorite:nth-child(2)").hide();
-                }
-            })
+            isLike(logged_id, postId)
+                .then(response => {
+                    if (response) {
+                        //console.log('ㅇㅇ');
+                        $("[id^='detail" + postId + "'] .favorite:nth-child(1)").hide();
+                        $("[id^='detail" + postId + "'] .favorite:nth-child(2)").show();
+                    } else {
+                        //console.log('ㄴㄴ');
+                        $("[id^='detail" + postId + "'] .favorite:nth-child(2)").hide();
+                    }
+                })
     });
 
     async function isLike(userid, postid) {
@@ -58,7 +58,10 @@ $(document).ready(function(){
 
     $("[id^='detail'] .favorite").off('click').click(function(e){
         e.stopPropagation();
-
+        if(!logged_id){
+            alert('로그인이 필요한 서비스입니다.');
+            return;
+        }
         $(this).siblings(".favorite").show();
         $(this).hide();
 

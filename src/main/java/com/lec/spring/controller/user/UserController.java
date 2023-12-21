@@ -131,12 +131,10 @@ public class UserController {
 
     @PostMapping("/bookunlikes")
     @ResponseBody
-    public Book bookunlikes(Book book, @AuthenticationPrincipal PrincipalDetails userDetails){
+    public void bookunlikes(Book book, @AuthenticationPrincipal PrincipalDetails userDetails){
         System.out.println(book);
         book.setUserId(userDetails.getUser().getId());
         naverApiService.deleteBook(book);
-
-        return naverApiService.likeBooks(userDetails.getUser().getId()).get(4);
     }
 
     @GetMapping("/mypage")

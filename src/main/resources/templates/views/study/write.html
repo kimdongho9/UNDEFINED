@@ -2,14 +2,14 @@
 <html lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:th="http://www.thymeleaf.org">
 
-<!--<th:block sec:authorize="isAnonymous()">-->
-<!--    <script>-->
-<!--        alert("로그인이 필요한 서비스입니다.");-->
-<!--        history.back();-->
-<!--    </script>-->
-<!--</th:block>-->
-
 <th:block sec:authorize="isAnonymous()">
+    <script>
+        alert("로그인이 필요한 서비스입니다.");
+        history.back();
+    </script>
+</th:block>
+
+<th:block sec:authorize="isAuthenticated()">
 
     <head>
         <meta charset="utf-8"/>

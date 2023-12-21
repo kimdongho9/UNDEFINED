@@ -102,7 +102,7 @@
                             </div>
 
 
-                            <div class="card-body col-12" style="min-height: 150px">
+                            <div class="card-body col-12 pb-0" style="min-height: 150px">
                                 <h5 class="card-title" th:text="${feed.feedTitle}">feed title</h5>
                                 <p th:class="${'card-text col-12 feedText'+feed.feedId}" th:if="${feed.shortContent}"
                                    th:text="${feed.shortContent}">content</p>
@@ -111,7 +111,7 @@
 
                                 <button class="btn btn-link text-start ps-0 col-3" th:id="${'more'+feed.feedId}"
                                         th:if="${feed.shortContent}" type="button">
-                                    <span class="card-text text-muted ms-3">more...</span>
+                                    <span class="card-text text-muted">more...</span>
                                 </button>
 
                                 <div class="col-12 position-relative" th:if="${#arrays.length(feed.fileList) != 0}">
@@ -131,14 +131,14 @@
 
                                 </div>
 
-                                <div class="card-body col-12 tagList text-start mb-0" th:text="${feed.tagList}">
+                                <div class="card-body col-12 tagList text-start mb-0 px-0 pb-0" th:text="${feed.tagList}">
                                     #spring #java
                                 </div>
 
                             </div>
 
 
-                            <div class="card-body container pe-3 m-0">
+                            <div class="card-body container pe-3 pt-0 m-0">
                                 <div class="col-12 d-flex justify-content-between">
                                     <div class="col-7 col-sm-6 text-start mx-0 px-0">
                                         <button sec:authorize="isAuthenticated()" th:with="userId = ${#authentication.getPrincipal().getUser().getId()}" th:class="${#arrays.contains(feed.likeUserList, userId) ? 'btn btn-link col like  mx-0 px-0' : 'btn btn-link col  mx-0 px-0'}"

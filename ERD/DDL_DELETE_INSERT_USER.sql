@@ -49,7 +49,7 @@ CREATE TABLE portfolio
 (
     postId int PRIMARY KEY auto_increment,
     userId int,
-    content text NOT NULL ,
+    content longtext NOT NULL ,
     title text NOT NULL,
     experience varchar(50),  # 경력 (내가 일한 년수)
     userPr varchar (75), #나를 어필할수있는 한문장

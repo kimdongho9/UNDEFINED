@@ -2,6 +2,8 @@ drop table if exists study_posts;
 drop table if exists study_skills;
 drop table if exists study_favor;
 drop table if exists skills;
+drop table if exists posts_files;
+drop table if exists study_comments;
 
 CREATE TABLE study_posts
 (
@@ -111,3 +113,5 @@ VALUES
 SELECT * FROM study_chat;
 
 
+SELECT count(*) FROM study_posts
+WHERE post_id IN (8, 7, 5);

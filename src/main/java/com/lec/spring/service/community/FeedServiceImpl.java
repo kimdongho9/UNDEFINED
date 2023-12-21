@@ -281,6 +281,7 @@ public class FeedServiceImpl implements FeedService {
         session.setAttribute("page", page);
 
         Set<Long> feedIdList = tagRepository.feedIdListByTag(tag);
+        if(feedIdList.isEmpty()) feedIdList.add(0L);
         long cnt = feedRepository.countAllByTag(feedIdList);   // 글 목록 전체의 개수
         int totalPage = (int)Math.ceil(cnt / (double)pageRows);   // 총 몇 '페이지' ?
 
@@ -298,6 +299,7 @@ public class FeedServiceImpl implements FeedService {
             if (endPage >= totalPage) endPage = totalPage;
 
             LocalDateTime start = LocalDateTime.now();
+
             list = feedRepository.listByTagFromRow(feedIdList, fromRow, pageRows);
             if(list != null) {
                 setShortContentPerFeed(list);
@@ -352,7 +354,7 @@ public class FeedServiceImpl implements FeedService {
             feedIdList = feedRepository.feedIdListByNickname(keyword);
         }
 
-
+        if(feedIdList.isEmpty()) feedIdList.add(0L);
         long cnt = feedRepository.countAllByTag(feedIdList);   // 글 목록 전체의 개수
         int totalPage = (int)Math.ceil(cnt / (double)pageRows);   // 총 몇 '페이지' ?
 
@@ -370,6 +372,7 @@ public class FeedServiceImpl implements FeedService {
             if (endPage >= totalPage) endPage = totalPage;
 
             LocalDateTime start = LocalDateTime.now();
+
             list = feedRepository.listByAllFromRow(feedIdList, fromRow, pageRows);
             if(list != null) {
                 setShortContentPerFeed(list);
