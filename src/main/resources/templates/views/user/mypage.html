@@ -1,5 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block sec:authorize="isAnonymous()">
+  <script>
+    alert("로그인 후 이용가능한 서비스입니다.")
+    location.href = '/';
+  </script>
+</th:block>
+
+<th:block sec:authorize="isAuthenticated()">
 <head>
     <meta charset="UTF-8">
     <title>MYPAGE</title>
@@ -23,15 +34,10 @@
   <!--오른쪽 메뉴바가 아닌 부분에 대한 내용-->
   <div id="layoutSidenav_content">
 
-
-
-
-
-
-
+    <div style="height: 10%"></div>
     <!--개인정보 변경 부분-->
-    <!--<div class="d-flex justify-content-center mt-10">
-      <div class="card border-danger mb-3 w-50">
+    <div class="d-flex justify-content-center mt-10">
+      <div class="card border-primary mb-3 w-50" style="min-width: 600px">
         <div class="card-header">
           <p class="text-center display-4">INFO</p>
           <button type="button" id="btnForEdit"  class="btn btn-danger" style="float: right;">EDIT</button>
@@ -75,7 +81,7 @@
         </div>
       </div>
 
-    </div>-->
+    </div>
 
     <th:block th:insert="~{common/chatbot::chatbot}"></th:block>
     <th:block th:insert="~{common/footer::footer}"></th:block>
@@ -113,4 +119,5 @@
 
   });
 </script>
+</th:block>
 </html>
