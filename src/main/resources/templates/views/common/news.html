@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="news">
+<div class="NewsContainer">
+  <h1 class="text-center mb-5">News Section</h1>
+  <h3 class="text-success text-center mb-5">Naver News By Keyword Order By Correctness!</h3>
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          개발자채용
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+        <div class="accordion-body d-flex justify-content-between">
+          <div class="card w-20 me-5">
+            <div class="card-body">
+              <h3 class="card-title mt-3 mb-3" th:utext="'Title : ' + ${infoFirst.title}"></h3>
+              <h6 class="card-subtitle mb-3 text-muted" th:utext="'KeyWord : ' + ${infoFirst.keyword}"></h6>
+              <p class="card-text mt-3 mb-3" th:utext="'Desc :'  + ${infoFirst.description}"></p>
+              <a th:href="${infoFirst.originallink}" target="_blank"  class="card-link">Original Link</a>
+              <a th:href="${infoFirst.link}" target="_blank" class="card-link text-success">Naver Link</a>
+            </div>
+            <div class="card-footer text-muted" th:utext="'Published Date : ' + ${#temporals.format(infoFirst.pubDate, 'yyyy-MM-dd HH:mm')}"></div>
+          </div> <!--end infoFirst-->
+          <div class="float-end w-60">
+            <table class="table table-hover">
+              <thead>
+              <tr class="text-center">
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">PubDate</th>
+                <th scope="col">Link</th>
+              </tr>
+              </thead>
+              <tbody class="infoTable">
+              <tr th:each="info : ${info}"  class="table-primary text-center align-middle">
+                <td th:utext="${info.title}"></td>
+                <td th:utext="${info.description}"></td>
+                <td th:utext="${#temporals.format(info.pubDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td>
+                  <a th:href="${info.originallink}" target="_blank"  class="card-link">Original</a>
+                  <br>
+                  <a th:href="${info.link}" target="_blank" class="card-link text-success">Naver</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+              <ul class="pagination">
+                <li class="page-item active">
+                  <a class="page-link" onclick="handlePagination('개발자채용', 1, 'infoTable')">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('개발자채용', 7,'infoTable')">2</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('개발자채용', 13, 'infoTable')">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('개발자채용', 19, 'infoTable')">4</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('개발자채용', 25, 'infoTable')">5</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('개발자채용', 31, 'infoTable')">6</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('개발자채용', 37, 'infoTable')">7</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('개발자채용', 43,'infoTable')">8</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link"onclick="handlePagination('개발자채용', 49, 'infoTable')">9</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('개발자채용', 55, 'infoTable')">10</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            백엔드
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
+          <div class="accordion-body d-flex justify-content-between">
+            <div class="card w-20 me-5">
+              <div class="card-body">
+                <h3 class="card-title mt-3 mb-3" th:utext="'Title : ' + ${backFirst.title}"></h3>
+                <h6 class="card-subtitle mb-3 text-muted" th:utext="'KeyWord : ' + ${backFirst.keyword}"></h6>
+                <p class="card-text mt-3 mb-3" th:utext="'Desc :'  + ${backFirst.description}"></p>
+                <a th:href="${backFirst.originallink}" target="_blank"  class="card-link">Original Link</a>
+                <a th:href="${backFirst.link}" target="_blank" class="card-link text-success">Naver Link</a>
+              </div>
+              <div class="card-footer text-muted" th:utext="'Published Date : ' + ${#temporals.format(backFirst.pubDate, 'yyyy-MM-dd HH:mm')}"></div>
+            </div> <!--end infoFirst-->
+            <div class="float-end w-60">
+              <table class="table table-hover">
+                <thead>
+                <tr class="text-center">
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">PubDate</th>
+                  <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody class="backTable">
+                <tr th:each="back : ${back}"  class="table-primary text-center align-middle">
+                  <td th:utext="${back.title}"></td>
+                  <td th:utext="${back.description}"></td>
+                  <td th:utext="${#temporals.format(back.pubDate, 'yyyy-MM-dd HH:mm')}"></td>
+                  <td>
+                    <a th:href="${back.originallink}" target="_blank"  class="card-link">Original</a>
+                    <br>
+                    <a th:href="${back.link}" target="_blank" class="card-link text-success">Naver</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-center">
+                <ul class="pagination">
+                  <li class="page-item active">
+                    <a class="page-link" onclick="handlePagination('백엔드', 1, 'backTable')">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('백엔드', 7, 'backTable')">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('백엔드', 13, 'backTable')">3</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('백엔드', 19, 'backTable')">4</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('백엔드', 25, 'backTable')">5</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('백엔드', 31, 'backTable')">6</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('백엔드', 37, 'backTable')">7</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('백엔드', 43, 'backTable')">8</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link"onclick="handlePagination('백엔드', 49, 'backTable')">9</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('백엔드', 55, 'backTable')">10</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            프론트엔드
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample" style="">
+          <div class="accordion-body d-flex justify-content-between">
+            <div class="card w-20 me-5">
+              <div class="card-body">
+                <h3 class="card-title mt-3 mb-3" th:utext="'Title : ' + ${frontFirst.title}"></h3>
+                <h6 class="card-subtitle mb-3 text-muted" th:utext="'KeyWord : ' + ${frontFirst.keyword}"></h6>
+                <p class="card-text mt-3 mb-3" th:utext="'Desc :'  + ${frontFirst.description}"></p>
+                <a th:href="${frontFirst.originallink}" target="_blank"  class="card-link">Original Link</a>
+                <a th:href="${frontFirst.link}" target="_blank" class="card-link text-success">Naver Link</a>
+              </div>
+              <div class="card-footer text-muted" th:utext="'Published Date : ' + ${#temporals.format(frontFirst.pubDate, 'yyyy-MM-dd HH:mm')}"></div>
+            </div> <!--end infoFirst-->
+            <div class="float-end w-60">
+              <table class="table table-hover">
+                <thead>
+                <tr class="text-center">
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">PubDate</th>
+                  <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody class="frontTable">
+                <tr th:each="front : ${front}"  class="table-primary text-center align-middle">
+                  <td th:utext="${front.title}"></td>
+                  <td th:utext="${front.description}"></td>
+                  <td th:utext="${#temporals.format(front.pubDate, 'yyyy-MM-dd HH:mm')}"></td>
+                  <td>
+                    <a th:href="${front.originallink}" target="_blank"  class="card-link">Original</a>
+                    <br>
+                    <a th:href="${front.link}" target="_blank" class="card-link text-success">Naver</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-center">
+                <ul class="pagination">
+                  <li class="page-item active">
+                    <a class="page-link" onclick="handlePagination('프론트엔드', 1, 'frontTable')">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('프론트엔드', 7, 'frontTable')">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('프론트엔드', 13, 'frontTable')">3</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('프론트엔드', 19, 'frontTable')">4</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('프론트엔드', 25, 'frontTable')">5</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('프론트엔드', 31, 'frontTable')">6</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('프론트엔드', 37, 'frontTable')">7</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('프론트엔드', 43, 'frontTable')">8</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link"onclick="handlePagination('프론트엔드', 49, 'frontTable')">9</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('프론트엔드', 55, 'frontTable')">10</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            AI
+          </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample" style="">
+          <div class="accordion-body d-flex justify-content-between">
+            <div class="card w-20 me-5">
+              <div class="card-body">
+                <h3 class="card-title mt-3 mb-3" th:utext="'Title : ' + ${AIFirst.title}"></h3>
+                <h6 class="card-subtitle mb-3 text-muted" th:utext="'KeyWord : ' + ${AIFirst.keyword}"></h6>
+                <p class="card-text mt-3 mb-3" th:utext="'Desc :'  + ${AIFirst.description}"></p>
+                <a th:href="${AIFirst.originallink}" target="_blank"  class="card-link">Original Link</a>
+                <a th:href="${AIFirst.link}" target="_blank" class="card-link text-success">Naver Link</a>
+              </div>
+              <div class="card-footer text-muted" th:utext="'Published Date : ' + ${#temporals.format(AIFirst.pubDate, 'yyyy-MM-dd HH:mm')}"></div>
+            </div> <!--end infoFirst-->
+            <div class="float-end w-60">
+              <table class="table table-hover">
+                <thead>
+                <tr class="text-center">
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">PubDate</th>
+                  <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody class="AITable">
+                <tr th:each="AI : ${AI}"  class="table-primary text-center align-middle">
+                  <td th:utext="${AI.title}"></td>
+                  <td th:utext="${AI.description}"></td>
+                  <td th:utext="${#temporals.format(AI.pubDate, 'yyyy-MM-dd HH:mm')}"></td>
+                  <td>
+                    <a th:href="${AI.originallink}" target="_blank"  class="card-link">Original</a>
+                    <br>
+                    <a th:href="${AI.link}" target="_blank" class="card-link text-success">Naver</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-center">
+                <ul class="pagination">
+                  <li class="page-item active">
+                    <a class="page-link" onclick="handlePagination('AI', 1, 'AITable')">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('AI', 7, 'AITable')">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('AI', 13, 'AITable')">3</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('AI', 19, 'AITable')">4</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('AI', 25, 'AITable')">5</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('AI', 31, 'AITable')">6</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('AI', 37, 'AITable')">7</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('AI', 43, 'AITable')">8</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link"onclick="handlePagination('AI', 49, 'AITable')">9</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('AI', 55, 'AITable')">10</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFifth">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFifth" aria-expanded="false" aria-controls="collapseFifth">
+            인공지능
+          </button>
+        </h2>
+        <div id="collapseFifth" class="accordion-collapse collapse" aria-labelledby="headingFifth" data-bs-parent="#accordionExample" style="">
+          <div class="accordion-body d-flex justify-content-between">
+            <div class="card w-20 me-5">
+              <div class="card-body">
+                <h3 class="card-title mt-3 mb-3" th:utext="'Title : ' + ${AI2First.title}"></h3>
+                <h6 class="card-subtitle mb-3 text-muted" th:utext="'KeyWord : ' + ${AI2First.keyword}"></h6>
+                <p class="card-text mt-3 mb-3" th:utext="'Desc :'  + ${AI2First.description}"></p>
+                <a th:href="${AI2First.originallink}" target="_blank"  class="card-link">Original Link</a>
+                <a th:href="${AI2First.link}" target="_blank" class="card-link text-success">Naver Link</a>
+              </div>
+              <div class="card-footer text-muted" th:utext="'Published Date : ' + ${#temporals.format(AI2First.pubDate, 'yyyy-MM-dd HH:mm')}"></div>
+            </div> <!--end infoFirst-->
+            <div class="float-end w-60">
+              <table class="table table-hover">
+                <thead>
+                <tr class="text-center">
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">PubDate</th>
+                  <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody class="AI2Table">
+                <tr th:each="AI2 : ${AI2}"  class="table-primary text-center align-middle">
+                  <td th:utext="${AI2.title}"></td>
+                  <td th:utext="${AI2.description}"></td>
+                  <td th:utext="${#temporals.format(AI2.pubDate, 'yyyy-MM-dd HH:mm')}"></td>
+                  <td>
+                    <a th:href="${AI2.originallink}" target="_blank"  class="card-link">Original</a>
+                    <br>
+                    <a th:href="${AI2.link}" target="_blank" class="card-link text-success">Naver</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-center">
+                <ul class="pagination">
+                  <li class="page-item active">
+                    <a class="page-link" onclick="handlePagination('인공지능', 1, 'AI2Table')">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('인공지능', 7, 'AI2Table')">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('인공지능', 13, 'AI2Table')">3</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('인공지능', 19, 'AI2Table')">4</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('인공지능', 25, 'AI2Table')">5</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('인공지능', 31, 'AI2Table')">6</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('인공지능', 37, 'AI2Table')">7</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('인공지능', 43, 'AI2Table')">8</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link"onclick="handlePagination('인공지능', 49, 'AI2Table')">9</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" onclick="handlePagination('인공지능', 55, 'AI2Table')">10</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+</html>

@@ -30,6 +30,6 @@ public interface PortfolioService {
 
     Portfolio detail(Long id);
 
-
+    List<Portfolio> forMainPage();
 
 }

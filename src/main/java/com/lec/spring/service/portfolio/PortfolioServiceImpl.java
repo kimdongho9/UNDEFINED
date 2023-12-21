@@ -126,5 +126,5 @@ public class PortfolioServiceImpl implements PortfolioService {
         return portfolioRepository.detail(id);
     }
 
-
+    public List<Portfolio> forMainPage(){return portfolioRepository.forMainpage();}
 }

@@ -108,5 +108,10 @@
     <select id="countAll" resultType="int">
         SELECT count(*) from portfolio
     </select>
+    <select id="forMainpage" resultMap="mapPortfolio">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p.increaseViewCount DESC
+        LIMIT 3
+    </select>
 
 </mapper>
