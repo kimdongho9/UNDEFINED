@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8" />
@@ -19,9 +18,84 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/sketchy/bootstrap.min.css">
     <link th:href="@{/css/chatbot/floatingactionbutton.css}" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/chatbot/chatGPT.css}">
+    <style>
+        .text {
+            margin-left: .6rem;
+        }
+
+
+        .text::after {
+            content: '';
+            margin-left: .4rem;
+            border-right: 2px solid #2f2f2f;
+            animation: cursor .9s infinite steps(2);
+        }
+
+        @keyframes cursor {
+            from { border-right: 2px solid #FFFFFF; }
+            to { border-right: 2px solid #2f2f2f; }
+        }
+    </style>
+    <script>
+        $(function(){
+            $('.heading').hide();
+
+            // heading 요소를 서서히 나타나도록 효과 적용
+            $('.heading').slideDown(2000); // 2000ms(2초) 동안 서서히 나타남
+
+            const $text = document.querySelector(".typing .text");
+
+            // 글자 모음
+            const letters = [
+                "WEB DEVELOPERS",
+                "FRONTEND DEVELOPERS",
+                "BACKEND DEVELOPERS",
+                "AI DEVELOPERS",
+                "DATA ENGINEER"
+            ];
+
+            // 글자 입력 속도
+            const speed = 100;
+            let i = 0;
+
+            // 타이핑 효과
+            const typing = async () => {
+                const letter = letters[i].split("");
+
+                while (letter.length) {
+                    await wait(speed);
+                    $text.innerHTML += letter.shift();
+                }
+                await wait(800);
+
+                remove();
+            }
+
+            const remove = async () => {
+                const letter = letters[i].split("");
+
+                while (letter.length) {
+                    await wait(speed);
+
+                    letter.pop();
+                    $text.innerHTML = letter.join("");
+                }
+
+                i = !letters[i+1] ? 0 : i + 1;
+                typing();
+            }
+
+            function wait(ms) {
+                return new Promise(res => setTimeout(res, ms))
+            }
+            setTimeout(typing, 1500);
+        });
+
+    </script>
 </head>
 
 <body class="sb-nav-fixed">
+<script th:src="@{/js/homeNewsEvent.js}"></script>
 <th:block th:insert="~{common/menubar::menubar}"></th:block>
 
 <div id="layoutSidenav">
@@ -29,9 +103,46 @@
     <!--오른쪽 메뉴바가 아닌 부분에 대한 내용-->
     <div id="layoutSidenav_content">
 
+        <div class="w-100 h-25 mb-5 text-center text-center align-middle">
+            <h1 class="heading mt-5 mb-10" style="font-size: 100px">WELCOME TO UNDEFINED!</h1>
+            <h1>OUR WEBSITE IS FOR</h1>
+            <div class='typing d-inline-flex'><h1>"</h1> <h1 class="text"></h1> <h1>"</h1></div>
 
+        </div>
 
+        <div class="w-100 align-middle">
+            <h2 class="text-center">Most Viewd Portfolio TOP 3</h2>
+            <div class="d-flex justify-content-center">
+                <div th:each="port : ${portfolio}" class="card border-warning mb-3 m-lg-5" style="max-width: 30rem;">
+                    <div class="card-header">
+                        <h3 class="mb-0 pt-2" th:text="'Title : '+ ${port.title}"></h3>
+                    </div>
+                    <div class="card-body" style="min-height: 100px; overflow: auto;">
+                        <div style="float:right;" th:text="${port.user.name} + ' | ' + ${#temporals.format(port.regDate, 'yyyy-MM-dd')}"></div>
+                        <!--     DB에서 데이터를 끌어와 Thymeleaf로 화면에 표시하는 방법    -->
+                        <br><br>
+                        <p class="card-text" th:utext="${port.content}" ></p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="viewcnt_box ms-3" style="font-size: 15px; float: right;" th:utext="'<i class=\'fa-solid fa-eye\'></i> ' + ${port.increaseViewCount}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <br>
+
+        <br>
+        <div class="d-flex justify-content-center">
+            <th:block th:insert="~{common/news::news}"></th:block>
+        </div>
+
+        <div class="w-100 mt-5 align-middle youtubeWord visually-hidden">
+            <h3 class="text-center">YOUTUBE</h3>
+            <div id="youtubeSection" class="mt-5 d-flex justify-content-center">
+
+            </div>
+        </div>
 
         <th:block th:insert="~{common/chatbot::chatbot}"></th:block>
         <th:block th:insert="~{common/footer::footer}"></th:block>

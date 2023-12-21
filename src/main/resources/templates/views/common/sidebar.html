@@ -52,25 +52,17 @@
           <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                data-bs-parent="#sidenavAccordion">
             <nav class="sb-sidenav-menu-nested nav">
-              <a class="nav-link" href="layout-static.html">Menu1</a>
-              <a class="nav-link" th:href="@{/user/calendar}">SCHEDULE FOR CERTIFICATION</a>
+              <a class="nav-link" th:href="@{/study/list}">Main</a>
+              <a class="nav-link" th:href="@{/study/write}">Write</a>
+            <a class="nav-link" th:href="@{/user/calendar}">SCHEDULE FOR CERTIFICATION</a>
             </nav>
           </div>
 
-          <!--Project-->
-          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-             data-bs-target="#collapseProject" aria-expanded="false" aria-controls="collapseProject">
+          <!--Portfolio-->
+          <a class="nav-link collapsed" th:href="@{/portfolio/list}">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-p"></i></div>
             &nbsp;Portfolio
-            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
           </a>
-          <div class="collapse" id="collapseProject" aria-labelledby="headingOne"
-               data-bs-parent="#sidenavAccordion">
-            <nav class="sb-sidenav-menu-nested nav">
-              <a class="nav-link" href="layout-static.html">Menu1</a>
-              <a class="nav-link" href="layout-sidenav-light.html">Menu2 </a>
-            </nav>
-          </div>
 
           <!--Community-->
           <a aria-controls="collapseCommu" aria-expanded="false" class="nav-link collapsed"
@@ -100,12 +92,17 @@
               </div>
             </nav>
           </div>
+          <!--books-->
+          <a class="nav-link collapsed" th:href="@{/user/books}">
+            <div class="sb-nav-link-icon"><i class="fa-solid fa-b"></i></div>
+            &nbsp;Books
+          </a>
 
 
 
           <div class="sb-sidenav-menu-heading">Account</div>
           <div sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="#">
+            <a class="nav-link" th:href="@{/user/mypage}">
               <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></i></div>
               MyPage
             </a>

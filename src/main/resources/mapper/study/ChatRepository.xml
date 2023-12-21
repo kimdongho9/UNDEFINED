@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- MyBatis 매퍼 선언 -->
+<mapper namespace="com.lec.spring.repository.study.ChatRepository">
+<!-- 매퍼에 대한 namespace를 com.lec.spring.repository.chat.ChatRepository로 지정 -->
+
+    <!-- 공통 SQL 쿼리 정의 -->
+    <sql id="SELECT_BASE">
+        <!-- 기본적인 SELECT 구문 정의 -->
+        SELECT
+            post_id "postId",
+            user_id "userId",
+            content "content",
+            regdate "regdate"
+        FROM
+            study_chat
+        WHERE
+            1=1
+-- "동적" 인 쿼리를 만들 때, 조건이 추가되는 경우를 대비해 "WHERE 1=1"과 같은 형태를 사용
+--  ↓
+-- 실행되는 상황에 따라 조건이 추가되거나 변경되는 쿼리를 의미
+    </sql>
+
+
+    <!-- save - 데이터베이스에 새로운 채팅 데이터를 저장하는 쿼리를 추가합니다.   -->
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.domain.study.Chat">
+        INSERT INTO study_chat(post_id, user_id, content)
+        VALUES (#{postId}, #{userId}, #{content})
+    </insert>
+
+    <!--  update - 채팅 데이터를 업데이트하는 쿼리를 추가합니다.  -->
+    <update id="update">
+        UPDATE study_chat
+        SET content = #{content}
+        WHERE post_id = #{post_id}
+    </update>
+
+    <!--  delete - 특정 채팅 데이터를 삭제하는 쿼리를 추가합니다.  -->
+    <delete id="delete">
+        DELETE FROM study_chat
+        WHERE post_id = #{post_id}
+    </delete>
+
+    <!--  findById - 특정 ID의 채팅 데이터를 조회하는 쿼리를 추가합니다.  -->
+    <select id="findById" resultType="com.lec.spring.domain.study.Chat">
+        <include refid="SELECT_BASE"/>
+        AND post_id = #{post_id}
+    </select>
+
+    <!--  findAll - 모든 채팅 데이터를 조회하는 쿼리를 추가합니다.  -->
+    <select id="findAll" resultType="com.lec.spring.domain.study.Chat">
+        SELECT
+            s.post_id "postId",
+            s.user_id "userId",
+            u.name "username",
+            s.content "content",
+            s.regdate "regDate"
+        FROM
+            study_chat s, user u
+        WHERE
+            s.user_id = u.id
+            <!-- 추가적인 정렬 등의 조건이 있다면 여기에 추가 -->
+            AND post_id = #{post_id}
+        ORDER BY regdate
+    </select>
+
+</mapper>

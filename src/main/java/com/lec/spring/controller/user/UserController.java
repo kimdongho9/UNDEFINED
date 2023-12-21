@@ -2,8 +2,12 @@ package com.lec.spring.controller.user;
 
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.domain.calendar.Api;
+import com.lec.spring.domain.naverapi.Book;
 import com.lec.spring.domain.user.User;
 import com.lec.spring.service.calendar.ApiService;
+import com.lec.spring.service.naverapi.NaverApiService;
+import com.lec.spring.service.portfolio.PortfolioService;
+import com.lec.spring.service.study.StudyService;
 import com.lec.spring.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,14 +25,31 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
+
     private UserService userService;
+    private NaverApiService naverApiService;
+    private StudyService studyService;
+    private PortfolioService portfolioService;
 
     @Value("${zeomeeting.appID}")
     private int appID;
 
     @Value("${zeomeeting.serverSecret}")
     private String serverSecret;
+
+    @Autowired
+    public UserController(
+            UserService userService,
+            NaverApiService naverApiService,
+            StudyService studyService,
+            PortfolioService portfolioService
+    ) {
+        this.userService = userService;
+        this.naverApiService = naverApiService;
+        this.studyService = studyService;
+        this.portfolioService = portfolioService;
+    }
+
     @GetMapping("/login")
     public void login(){};
 
@@ -97,5 +118,35 @@ public class UserController {
         return "user/calendar";
     }
 
+    @GetMapping("/books")
+    public void books(){}
+
+    @PostMapping("/booklikes")
+    @ResponseBody
+    public void booklikes(Book book, @AuthenticationPrincipal PrincipalDetails userDetails){
+        System.out.println(book);
+        book.setUserId(userDetails.getUser().getId());
+        naverApiService.saveBook(book);
+    }
+
+    @PostMapping("/bookunlikes")
+    @ResponseBody
+    public Book bookunlikes(Book book, @AuthenticationPrincipal PrincipalDetails userDetails){
+        System.out.println(book);
+        book.setUserId(userDetails.getUser().getId());
+        naverApiService.deleteBook(book);
+
+        return naverApiService.likeBooks(userDetails.getUser().getId()).get(4);
+    }
+
+    @GetMapping("/mypage")
+    public String mypage(Model model,  @AuthenticationPrincipal PrincipalDetails userDetails){
+        if(userDetails == null) return "/user/login";
+        Long id = userDetails.getUser().getId();
+        model.addAttribute("bookList", naverApiService.likeBooks(id));    //이 유저가 좋아요 누른 책 정보
+        model.addAttribute("studyList", studyService.listForMyPage(id));
+        model.addAttribute("pfList", portfolioService.findByUserId(id));
+        return "user/mypage";
+    }
 
 }
