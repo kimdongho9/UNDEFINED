@@ -53,13 +53,10 @@ public class UserController {
     @GetMapping("/login")
     public void login(){};
 
-    //user/login.html
-    // onAuthenticationFailure 에서 로그인 실패시 forwarding 용
-    // request 에 담겨진 attribute 는 Thymeleaf 에서 그대로 표현 가능.
+
     @PostMapping("/loginError")
     @ResponseBody
     public String loginError(){
-
         return "Failed";
     }
 

@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', event => {
 $(document).ready(function(){
     $("#JointoChat").click(function () {
         var url = $("#URLjoin").val().trim();
-        if(url != null) window.open(url,"_self");
+        if(url != null) window.open(url,"_blank");
         $("#URLjoin").val("");
     });
 
@@ -26,7 +26,7 @@ $(document).ready(function(){
             if (e.which === 13) {
                 var url = $(this).val().trim();
                 if (url !== "") {
-                    window.open(url, "_self");
+                    window.open(url, "_blank");
                     $(this).val("");
                 }
             }
@@ -48,7 +48,6 @@ $(document).ready(function () {
                     $("#chatbox").append(`<div class="userask mt-3">${e.context}</div>`)
                 ;
             });
-
         },
         error: function (xhr, status, error) {
             // Handle errors (if needed)

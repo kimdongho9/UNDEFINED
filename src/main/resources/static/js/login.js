@@ -1,8 +1,6 @@
 window.addEventListener('DOMContentLoaded', async () => {
     var confirm_number;
     const target = document.querySelector('#welcome');
-    //카카오 Oauth2
-
 
     function blink() {
         target.classList.toggle("cursorEffect");
