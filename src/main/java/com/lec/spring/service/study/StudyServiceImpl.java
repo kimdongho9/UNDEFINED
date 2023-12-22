@@ -111,6 +111,7 @@ public class StudyServiceImpl implements StudyService {
         model.addAttribute("skillOption", skill);
 
         List<Long> postList = skillRepository.findSkillIdsByName(List.of(skill.trim().split(",")));
+        if(postList.isEmpty()) postList.add(0L);
         return listByOption(postSearchRepository, page, model, "", postList);
     }
 
@@ -126,11 +127,11 @@ public class StudyServiceImpl implements StudyService {
         model.addAttribute("skillOption", skill);
         model.addAttribute("favor", favor);
         List<Long> postList =
-                skillRepository.findSkillIdsByName(List.of(skill.trim().split(",")))
-                .stream()
-                .filter(postId -> favorRepository.isFavor(postId, userId) != null)
-                .toList();
-
+                new java.util.ArrayList<>(skillRepository.findSkillIdsByName(List.of(skill.trim().split(",")))
+                        .stream()
+                        .filter(postId -> favorRepository.isFavor(postId, userId) != null)
+                        .toList());
+        if(postList.isEmpty()) postList.add(0L);
         return listByOption(postSearchRepository, page, model, "", postList);
     }
 
@@ -140,14 +141,14 @@ public class StudyServiceImpl implements StudyService {
         model.addAttribute("skillOption", skill);
         model.addAttribute("favor", favor);
 
-        List<Long> list = postRepository.findAll()
+        List<Long> list = new java.util.ArrayList<>(postRepository.findAll()
                 .stream()
                 .map(Post::getId)
                 .filter(id -> favorRepository.isFavor(id, userId) != null)
-                .toList();
+                .toList());
 
         System.out.println("favor list : " + list);
-
+        if(list.isEmpty()) list.add(0L);
         return listByOption(postSearchRepository, page, model, "", list);
     }
 

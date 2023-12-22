@@ -113,7 +113,7 @@
         <div class="w-100 align-middle">
             <h2 class="text-center">Most Viewd Portfolio TOP 3</h2>
             <div class="d-flex justify-content-center">
-                <div th:each="port : ${portfolio}" class="card border-warning mb-3 m-lg-5" style="max-width: 30rem;">
+                <div th:each="port : ${portfolio}" class="card mb-3 m-lg-5" style="max-width: 30rem;">
                     <div class="card-header">
                         <h3 class="mb-0 pt-2" th:text="'Title : '+ ${port.title}"></h3>
                     </div>

@@ -53,13 +53,10 @@ public class UserController {
     @GetMapping("/login")
     public void login(){};
 
-    //user/login.html
-    // onAuthenticationFailure 에서 로그인 실패시 forwarding 용
-    // request 에 담겨진 attribute 는 Thymeleaf 에서 그대로 표현 가능.
+
     @PostMapping("/loginError")
     @ResponseBody
     public String loginError(){
-
         return "Failed";
     }
 
@@ -131,12 +128,10 @@ public class UserController {
 
     @PostMapping("/bookunlikes")
     @ResponseBody
-    public Book bookunlikes(Book book, @AuthenticationPrincipal PrincipalDetails userDetails){
+    public void bookunlikes(Book book, @AuthenticationPrincipal PrincipalDetails userDetails){
         System.out.println(book);
         book.setUserId(userDetails.getUser().getId());
         naverApiService.deleteBook(book);
-
-        return naverApiService.likeBooks(userDetails.getUser().getId()).get(4);
     }
 
     @GetMapping("/mypage")

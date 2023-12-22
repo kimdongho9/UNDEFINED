@@ -49,7 +49,7 @@
 
     <select id="listByNicknameFromRow" resultMap="mapFeed">
         <include refid="SELECT_BASE_USER_FEED"/>
-        WHERE nickname = #{param1}
+        WHERE  u.name = #{param1}
         AND feed_state = 'comp'
         ORDER BY feed_regdate DESC
         LIMIT #{param2}, #{param3}

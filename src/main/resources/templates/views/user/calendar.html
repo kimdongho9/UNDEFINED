@@ -119,7 +119,7 @@
         table {
             width: 20%; /* 테이블을 3분의 1 크기로 설정 */
             height: auto;
-            outline: 2px solid blueviolet;
+            outline: 2px solid black;
             float: right; /* 오른쪽에 플로팅 */
             margin-left: 1%; /* 캘린더와의 간격 조정 */
             text-align: center;
@@ -127,19 +127,22 @@
 
         #calendar {
             width: 75%; /* 캘린더 영역 크기 조정 */
-            outline: 2px solid tomato;
+            /*outline: 2px solid tomato;*/
             float: left; /* 왼쪽에 플로팅 */
         }
-             /* 일요일 날짜 빨간색 */
-         .fc-day-sun {
-             color: red;
-             text-decoration: none;
-         }
 
-        /* 토요일 날짜 파란색 */
-        .fc-day-sat {
-            color: blue;
-            text-decoration: none;
+        /* Add this to your existing CSS or a separate CSS file */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px; /* Adjust the margin as needed */
+        }
+
+        .search-container label,
+        .search-container input,
+        .search-container button {
+            margin-right: 10px; /* Adjust spacing between elements */
         }
 
     </style>
@@ -155,9 +158,11 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4" style="text-align: center">Certification Calendar</h1>
             </div>
-            <label for="eventSearch">이벤트 검색:</label>
-            <input type="text" id="eventSearch">
-            <button onclick="searchAndNavigate()">검색</button>
+            <div class="search-container">
+                <input class="form-control w-50" type="text" id="eventSearch">
+                <button onclick="searchAndNavigate()"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
             <div class="info_box d-flex justify-content-center" >
                 <div id='calendar'></div>
                 <table>
