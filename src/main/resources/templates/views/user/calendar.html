@@ -238,38 +238,44 @@
                     <tr class="table-light" >
                         <th scope="row">1</th>
                         <td>정보처리기사</td>
+                        <td><i class="fa-solid fa-book" style="color: #37a745;" onclick="forBooks('정보처리기사')"></i></td>
                     </tr>
 
                     <tr class="table-light" >
                         <th scope="row">2</th>
                         <td>정보처리산업기사</td>
+                        <td><i class="fa-solid fa-book" style="color: #37a745;" onclick="forBooks('정보처리산업기사')"></i></td>
                     </tr>
 
                     <tr class="table-light" >
                         <th scope="row">3</th>
                         <td>정보처리기능사</td>
+                        <td><i class="fa-solid fa-book" style="color: #37a745;" onclick="forBooks('정보처리기능사')"></i></td>
                     </tr>
 
                     <tr class="table-light" >
                         <th scope="row">4</th>
                         <td>컴퓨터시스템응용기술사</td>
+                        <td><i class="fa-solid fa-book" style="color: #37a745;" onclick="forBooks('컴퓨터시스템응용기술사')"></i></td>
                     </tr>
 
                     <tr class="table-light" >
                         <th scope="row">5</th>
                         <td>정보관리기술사</td>
+                        <td><i class="fa-solid fa-book" style="color: #37a745;" onclick="forBooks('정보관리기술사')"></i></td>
                     </tr>
 
                     <tr class="table-light" >
                         <th scope="row">6</th>
                         <td>전자산업기사</td>
+                        <td><i class="fa-solid fa-book" style="color: #37a745;" onclick="forBooks('전자산업기사')"></i></td>
                     </tr>
 
                 </table>
             </div>
         </main>
 
-        <h1 id="booktext" class="text-center text-success visually-hidden">Related Books Your Search Keyword!</h1><br>
+        <h1 id="booktext" class="text-center text-success mt-5 visually-hidden">Related Books Your Search Keyword!</h1><br>
         <div id="booksinfo" class="row row-cols-1 row-cols-md-2 w-100 m-lg-5 d-flex justify-content-center">
 
         </div>
@@ -332,13 +338,17 @@
         } else {
             alert('일치하는 이벤트가 없습니다.');
         }
+
+    }
+
+    function forBooks(keyword){
         $('#booktext').removeClass('visually-hidden');
         $('#booksinfo').html('');
         $.ajax({
             url: "/naver/book",
             type: "GET",
             data: {
-                keyword: searchQuery.trim()
+                keyword: keyword.trim()
             },
             success: function(response) {
                 // Assuming response is an array of Book objects
@@ -348,13 +358,14 @@
                     response.forEach(function(book) {
                         // Create HTML elements to display book information
                         var bookDiv = `
-                        <div class="card mb-3">
-                            <h3 class="card-header">${book.title}</h3>
+                        <div class="card col-11 col-sm-5 col-xl-3 my-2 mx-1 px-0" data-isbn="${book.isbn}" data-title="${book.title}" data-author="${book.author}" data-publisher="${book.publisher}" data-image="${book.image}" data-description="${book.description}" data-link="${book.link}" data-pubdate="${book.pubdate}" data-discount="${book.discount}">
+                            <h5 class="card-header">${book.title}</h5>
                             <div class="card-body">
-                                <h5 class="card-title">${book.author}</h5>
-                                <h6 class="card-subtitle text-muted">${book.publisher}</h6>
+                                <span class="card-title">${book.author}</span>
+                                <small class="card-subtitle text-muted">${book.publisher}</small>
+                                <br>
+                                <img src="${book.image}" alt="no image" height="300" width="100%" style="object-fit: cover">
                             </div>
-                            <img src="${book.image}" alt="no image">
                             <div class="card-body">
                                 <p class="card-text">${book.description}</p>
                             </div>
@@ -368,11 +379,8 @@
                         </div>
                         `;
 
-                        // Append elements to the bookDiv
-
-
-                        // Append the bookDiv to the booksinfo div
                         booksInfo.append(bookDiv);
+                        location.href = '#booksinfo';
                     });
                 } else {
                     // Handle case where no books are found
