@@ -110,7 +110,7 @@
                         <p class="card-text" th:utext="${post.content}">
                         </p>
                     </div>
-                    <div class="list_bottom_box mb-2">
+                    <div class="list_bottom_box mb-2 mt-5">
                         <div sec:authorize="isAuthenticated()" th:with="userId=${#authentication.getPrincipal().getUser().getId()}" class="list box d-flex justify-content-end me-3">
                             <th:block th:if="${userId == post.user.id}">
                                 <a class="card-link" th:href="@{'/study/update/'+${post.id}}" style="text-decoration: none;">Edit</a>
