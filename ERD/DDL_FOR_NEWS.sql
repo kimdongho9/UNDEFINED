@@ -71,7 +71,7 @@ CREATE TABLE books
     publisher varchar(1000),
     pubdate varchar(20) NOT NULL,
     isbn varchar(1000) NOT NULL,
-    description text,
+    description longtext,
     PRIMARY KEY (id)
 );
 DELETE FROM books;

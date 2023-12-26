@@ -43,13 +43,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int register(User user) {
-        // DB 에는 회원 username 을 대문자로 저장
         user.setUsername(user.getUsername().toUpperCase());
 
-        // password 는 암호화 해서 저장.  PasswordEncoder 객체 사용
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);  // 새로운 회원 (User) 저장.  id 값 받아옴.
+        userRepository.save(user);
 
         return 1;
+    }
+
+    @Override
+    public int update(User user) {
+        user.setUsername(user.getUsername().toUpperCase());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.update(user);
     }
 }

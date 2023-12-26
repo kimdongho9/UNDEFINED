@@ -103,7 +103,7 @@
                         <hr>
                     </div>
 
-                    <div class="card-body" style="margin-top: -30px;">
+                    <div class="card-body" style="margin-top: -30px; overflow: auto;">
                         <h3>
                             About our Study
                         </h3>
@@ -148,7 +148,7 @@
 
                             <th:block sec:authorize="isAuthenticated()" th:with="user=${#authentication.getPrincipal().getUser()}">
                                 <div th:each="chat : ${chatlist}">
-                                    <th:block th:if="${chat.userId == user.id}">
+                                    <th:block>
                                         <div th:class="${chat.userId == user.id ? 'text-end my-1 me-2' : 'my-1'}">
                                             <h6 class="card-subtitle text-muted"><span th:text="${chat.username}">username</span>
                                                 <small class="write_date" style="font-size: 12px; font-weight: lighter;" th:text="${#temporals.format(chat.regDate, 'yyyy/MM/dd HH:mm')}">regDate</small>

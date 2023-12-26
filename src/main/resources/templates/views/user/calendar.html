@@ -21,13 +21,6 @@
     <link rel="stylesheet" th:href="@{/css/chatbot/chatGPT.css}">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/@fullcalendar/core@5/main.min.css' rel='stylesheet' />
-    <script src='https://unpkg.com/@fullcalendar/core@5/main.min.js'></script>
-    <script src='https://unpkg.com/@fullcalendar/daygrid@5/main.min.js'></script>
-    <script src='https://unpkg.com/@fullcalendar/interaction@5/main.min.js'></script>
-
-
     <style>
         /* 모달창 기본 스타일 */
         .modal {
@@ -168,6 +161,8 @@
 
         });
 
+
+
     </script>
 
     <style>
@@ -220,7 +215,7 @@
             </div>
 
             <div class="info_box d-flex justify-content-center" >
-                <div id='calendar'></div>
+                <div class="me-5" id='calendar'></div>
                 <!-- 모달창 구조 -->
                 <div id="eventModal" class="modal">
                     <div class="modal-content">
@@ -285,13 +280,14 @@
     </div>
 </div>
 <script>
+    var calendar;
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
         var modal = document.getElementById("eventModal");
         var span = document.getElementsByClassName("close")[0];
         var modalText = document.getElementById("modalText");
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
+        calendar = new FullCalendar.Calendar(calendarEl, {
             eventClick: function (info) {
                 var eventObj = info.event;
                 var content = eventObj.title + '<br>구분 : ' + eventObj.extendedProps.categorise + '<br>' +
@@ -324,21 +320,18 @@
     });
 
     function searchAndNavigate() {
-        // 검색어 가져오기
-        var searchQuery = $('#eventSearch').val();
-        console.log(searchQuery);
-        // 검색어와 일치하는 이벤트 찾기
-        var event = calendar.getEvents().find(function (event) {
-            return event.title.includes(searchQuery);
+        var searchQuery = document.getElementById('eventSearch').value.trim().toLowerCase();
+
+        var matchingEvents = calendar.getEvents().filter(function(event) {
+            return event.title.toLowerCase().includes(searchQuery);
         });
 
-        // 이벤트가 있으면 해당 날짜로 캘린더 이동
-        if (event) {
-            calendar.gotoDate(event.start);
+        if (matchingEvents.length > 0) {
+            var firstMatchingEvent = matchingEvents[0];
+            calendar.gotoDate(firstMatchingEvent.start);
         } else {
-            alert('일치하는 이벤트가 없습니다.');
+            alert('No matching events found.');
         }
-
     }
 
     function forBooks(keyword){

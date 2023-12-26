@@ -405,6 +405,92 @@
           </div>
         </div>
       </div>
+
+
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading6">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+          보안
+        </button>
+      </h2>
+      <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#accordionExample" style="">
+        <div class="accordion-body d-flex justify-content-between">
+          <div class="card w-20 me-5">
+            <div class="card-body">
+              <h3 class="card-title mt-3 mb-3" th:utext="'Title : ' + ${SecFirst.title}"></h3>
+              <h6 class="card-subtitle mb-3 text-muted" th:utext="'KeyWord : ' + ${SecFirst.keyword}"></h6>
+              <p class="card-text mt-3 mb-3" th:utext="'Desc :'  + ${SecFirst.description}"></p>
+              <a th:href="${SecFirst.originallink}" target="_blank"  class="card-link">Original Link</a>
+              <a th:href="${SecFirst.link}" target="_blank" class="card-link text-success">Naver Link</a>
+            </div>
+            <div class="card-footer text-muted" th:utext="'Published Date : ' + ${#temporals.format(SecFirst.pubDate, 'yyyy-MM-dd HH:mm')}"></div>
+          </div> <!--end infoFirst-->
+          <div class="float-end w-60">
+            <table class="table table-hover">
+              <thead>
+              <tr class="text-center">
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">PubDate</th>
+                <th scope="col">Link</th>
+              </tr>
+              </thead>
+              <tbody class="SecTable">
+              <tr th:each="Sec : ${Sec}"  class="table-primary text-center align-middle">
+                <td th:utext="${Sec.title}"></td>
+                <td th:utext="${Sec.description}"></td>
+                <td th:utext="${#temporals.format(Sec.pubDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td>
+                  <a th:href="${Sec.originallink}" target="_blank"  class="card-link">Original</a>
+                  <br>
+                  <a th:href="${Sec.link}" target="_blank" class="card-link text-success">Naver</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+              <ul class="pagination">
+                <li class="page-item active">
+                  <a class="page-link" onclick="handlePagination('보안', 1, 'SecTable')">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('보안', 7, 'SecTable')">2</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('보안', 13, 'SecTable')">3</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('보안', 19, 'SecTable')">4</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('보안', 25, 'SecTable')">5</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('보안', 31, 'SecTable')">6</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('보안', 37, 'SecTable')">7</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('보안', 43, 'SecTable')">8</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link"onclick="handlePagination('보안', 49, 'SecTable')">9</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" onclick="handlePagination('보안', 55, 'SecTable')">10</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
     </div>
   </div>
 </th:block>

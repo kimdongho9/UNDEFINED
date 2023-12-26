@@ -31,7 +31,7 @@ CREATE TABLE chatbot
 (
     chatbot_id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL,
-    context text NOT NULL,
+    context longtext NOT NULL,
     isFromChat bit NOT NULL,
     reg_date datetime DEFAULT now(),
     PRIMARY KEY (chatbot_id)
@@ -50,9 +50,9 @@ CREATE TABLE portfolio
     postId int PRIMARY KEY auto_increment,
     userId int,
     content longtext NOT NULL ,
-    title text NOT NULL,
-    experience varchar(50),  # 경력 (내가 일한 년수)
-    userPr varchar (75), #나를 어필할수있는 한문장
+    title longtext NOT NULL,
+    experience longtext,  # 경력 (내가 일한 년수)
+    userPr longtext, #나를 어필할수있는 한문장
     increaseViewCount int DEFAULT 0,
     regdate datetime DEFAULT NOW()
 );

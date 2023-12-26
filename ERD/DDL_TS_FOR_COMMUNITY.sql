@@ -17,7 +17,7 @@ CREATE TABLE feeds
     feed_id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL,
     feed_title varchar(200) NOT NULL,
-    feed_content text NOT NULL,
+    feed_content longtext NOT NULL,
     feed_state varchar(50) NOT NULL check (feed_state in ('comp', 'temp', 'del')),
     feed_regdate datetime default now(),
     PRIMARY KEY (feed_id)
