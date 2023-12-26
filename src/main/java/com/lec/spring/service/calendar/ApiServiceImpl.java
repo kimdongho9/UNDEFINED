@@ -66,8 +66,8 @@ public class ApiServiceImpl implements ApiService {
     }
 
 
-/*
-    @Scheduled(fixedDelay = 3600000)
+
+    /*@Scheduled(fixedDelay = 3600000)
     public void get1320() {
         String url1_1 = url1 + 1320 +"&serviceKey="+ servicekey;
         String url2_1 = url2 + 1320 +"&serviceKey="+ servicekey;
@@ -158,7 +158,7 @@ public class ApiServiceImpl implements ApiService {
         }
     }*/
 
-  /*  @Scheduled(fixedDelay = 3600000)
+ /*   @Scheduled(fixedDelay = 3600000)
     public void get2290() {
         String url1_1 = url1 + 2290 +"&serviceKey="+ servicekey;
         String url2_1 = url2 + 2290 +"&serviceKey="+ servicekey;
@@ -249,7 +249,7 @@ public class ApiServiceImpl implements ApiService {
         }
     }*/
 
-/*    @Scheduled(fixedDelay = 3600000)
+  /*  @Scheduled(fixedDelay = 3600000)
     public void get6921() {
         String url1_1 = url1 + 6921 +"&serviceKey="+ servicekey;
         String url2_1 = url2 + 6921 +"&serviceKey="+ servicekey;

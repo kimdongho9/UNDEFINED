@@ -21,6 +21,64 @@
     <link rel="stylesheet" th:href="@{/css/chatbot/chatGPT.css}">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/@fullcalendar/core@5/main.min.css' rel='stylesheet' />
+    <script src='https://unpkg.com/@fullcalendar/core@5/main.min.js'></script>
+    <script src='https://unpkg.com/@fullcalendar/daygrid@5/main.min.js'></script>
+    <script src='https://unpkg.com/@fullcalendar/interaction@5/main.min.js'></script>
+
+
+    <style>
+        /* 모달창 기본 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; /* 기본 너비 */
+            max-width: 700px; /* 최대 너비 */
+            height: 80%; /* 기본 높이 */
+            max-height: 500px; /* 최대 높이 */
+        }
+
+        /* 모달창 내용 스타일 */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* 모달창 닫기 버튼 스타일 */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 미디어 쿼리 - 반응형 */
+        @media screen and (max-width: 768px) {
+            .modal {
+                width: 90%;
+                max-width: none;
+                height: 80%;
+                max-height: none;
+            }
+        }
+    </style>
+
     <script th:inline="javascript">
         var arr = [
             /*[# th:each="item : ${list}"]*/
@@ -47,16 +105,11 @@
                 eventColor = '#081F5C';
             } else {
                 eventColor = '#FFF9F0'
-            } // 종목별 색깔 지정 default color => '#1160ff'
-
-            //{
-            //     title : 'event2',
-            //     start : '2023-12-02',
-            //     end : '2023-12-05'
-            // },
+            }
 
             var element = { // 객체 생성
-                title: e.implplannm + "[" + e.jmfldnm + "]",   // 제목
+                title: e.implplannm + "[" + e.jmfldnm + "]", // 제목
+                categorise: "필기 원서 접수",
                 start: e.docregstartdt,   //객체 시작점
                 end: e.docregenddt,
                 fee: e.fee,
@@ -66,6 +119,7 @@
 
             var element2 = {
                 title: e.implplannm + "[" + e.jmfldnm + "]", // 제목
+                categorise: "필기",
                 start: e.docexamstartdt,   //객체 시작점
                 end: e.docexamenddt,
                 fee: e.fee,
@@ -75,6 +129,7 @@
 
             var element3 = { // 객체 생성
                 title: e.implplannm + "[" + e.jmfldnm + "]",   // 제목
+                categorise: "필기 결과",
                 start: e.docpassdt,   //객체 시작점
                 fee: e.fee,
                 color: eventColor
@@ -83,6 +138,7 @@
 
             var element4 = {    // 객체 생성
                 title: e.implplannm + "[" + e.jmfldnm + "]",   // 제목
+                categorise: "실기 원서 접수",
                 start: e.pracregstartdt,   //객체 시작점
                 end: e.pracregenddt,
                 fee: e.fee,
@@ -92,6 +148,7 @@
 
             var element5 = {    // 객체 생성
                 title: e.implplannm + "[" + e.jmfldnm + "]",   // 제목
+                categorise: "실기",
                 start: e.pracexamstartdt,   //객체 시작점
                 end: e.pracexamenddt,
                 fee: e.fee,
@@ -101,6 +158,7 @@
 
             var element6 = {    // 객체 생성
                 title : e.implplannm + "[" + e.jmfldnm + "]",  // 제목
+                categorise: "실기 결과",
                 start : e.pracpassstartdt,   //객체 시작점
                 end : e.pracpassenddt,
                 fee: e.fee,
@@ -112,14 +170,12 @@
 
     </script>
 
-
-
     <style>
         /* 테이블 스타일 설정 */
         table {
             width: 20%; /* 테이블을 3분의 1 크기로 설정 */
-            height: auto;
-            outline: 2px solid black;
+            height: 400px;
+            /*outline: 2px solid black;*/
             float: right; /* 오른쪽에 플로팅 */
             margin-left: 1%; /* 캘린더와의 간격 조정 */
             text-align: center;
@@ -165,35 +221,48 @@
 
             <div class="info_box d-flex justify-content-center" >
                 <div id='calendar'></div>
+                <!-- 모달창 구조 -->
+                <div id="eventModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p id="modalText"></p>
+                    </div>
+                </div>
+
                 <table>
                     <tr class="table-light" style="border-bottom: 2px solid lightgray">
-                        <th scope="row" style="border: 2px solid lightgray;">No</th>
-                        <td style="border: 2px solid lightgray;">구분</td>
+                        <th scope="row">No</th>
                         <td>시험명</td>
                     </tr>
 
-                    <tr class="table-light" style="border-bottom: 2px solid lightgray">
+                    <tr class="table-light" >
                         <th scope="row">1</th>
-                        <td>실기</td>
                         <td>정보처리기사</td>
                     </tr>
 
-                    <tr class="table-light" style="border-bottom: 2px solid lightgray">
+                    <tr class="table-light" >
                         <th scope="row">2</th>
-                        <td>필기</td>
+                        <td>정보처리산업기사</td>
+                    </tr>
+
+                    <tr class="table-light" >
+                        <th scope="row">3</th>
+                        <td>정보처리기능사</td>
+                    </tr>
+
+                    <tr class="table-light" >
+                        <th scope="row">4</th>
                         <td>컴퓨터시스템응용기술사</td>
                     </tr>
 
-                    <tr class="table-light" style="border-bottom: 2px solid lightgray">
-                        <th scope="row">3</th>
-                        <td>시험결과</td>
-                        <td>정보처리산업기사</td>
+                    <tr class="table-light" >
+                        <th scope="row">5</th>
+                        <td>정보관리기술사</td>
                     </tr>
 
-                    <tr class="table-light" style="border-bottom: 2px solid lightgray">
-                        <th scope="row">3</th>
-                        <td>시험결과</td>
-                        <td>정보처리산업기사</td>
+                    <tr class="table-light" >
+                        <th scope="row">6</th>
+                        <td>전자산업기사</td>
                     </tr>
 
                 </table>
@@ -205,39 +274,48 @@
 
         </div>
 
-
         <th:block th:insert="~{common/chatbot::chatbot}"></th:block>
         <th:block th:insert="~{common/footer::footer}"></th:block>
     </div>
 </div>
 <script>
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        eventClick: function (info) { //click에 대한 이벤트 추가
-            var eventObj = info.event;
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+        var modal = document.getElementById("eventModal");
+        var span = document.getElementsByClassName("close")[0];
+        var modalText = document.getElementById("modalText");
 
-            if (eventObj.end) { // end date가 있는 경우 해당 내용으로 alert
-                alert(eventObj.title + '\n' +
-                    'Date of Detail : ' + eventObj.start.getFullYear() + '년 ' + (eventObj.start.getMonth() + 1) + '월 '
-                    + eventObj.start.getDate() + '일 ' + ' ~ ' +
-                    eventObj.end.getFullYear() + '년 ' + (eventObj.end.getMonth() + 1) + '월 '
-                    + eventObj.end.getDate() + '일 ' + '\n응시료 [' + eventObj.extendedProps.fee + '] (1차 : 필기 / 2차 : 실기)'
-                );
-            } else { // end date가 없다면 해당내용으로 alert
-                alert(eventObj.title + '\n' +
-                    'Date of Detail : ' + eventObj.start.getFullYear() + '년 ' + (eventObj.start.getMonth() + 1) + '월 '
-                    + eventObj.start.getDate() + '일 ');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            eventClick: function (info) {
+                var eventObj = info.event;
+                var content = eventObj.title + '<br>구분 : ' + eventObj.extendedProps.categorise + '<br>' +
+                    '상세 날짜: ' + eventObj.start.getFullYear() + '년 ' + (eventObj.start.getMonth() + 1) + '월 ' +
+                    eventObj.start.getDate() + '일' +
+                    (eventObj.end ? (' ~ ' + eventObj.end.getFullYear() + '년 ' + (eventObj.end.getMonth() + 1) + '월 ' + eventObj.end.getDate() + '일') : '') +
+                    '<br>응시료: [' + eventObj.extendedProps.fee + '] (1차: 필기 / 2차: 실기)';
+
+                modalText.innerHTML = content;
+                modal.style.display = "block";
+            },
+            initialView: 'dayGridMonth',
+            contentHeight: 750,
+            editable: false,
+            dayMaxEvents: true,
+            events: events
+        });
+
+        // 모달창 닫기 이벤트 처리
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
-        },
-        initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-        contentHeight: 750,
-        editable: false,
-        dayMaxEvents: true, // 일정 갯수 이상의 일정 시 "+n개"로 표시
+        }
 
-        events: events
+        calendar.render();
     });
-
-    calendar.render();
 
     function searchAndNavigate() {
         // 검색어 가져오기
