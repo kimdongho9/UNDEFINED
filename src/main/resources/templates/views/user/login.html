@@ -28,54 +28,8 @@
     <th:block th:insert="~{common/sidebar::sidebar}"></th:block>
 
     <div id="layoutSidenav_content">
-        <!--/*<div class="card border-primary mb-3 " style="max-width: 20rem;">
-            <div class="card-header d-flex justify-content-center">LOGIN</div>
-            <div class="card-body">
-                <form th:action="@{/user/login}" method="POST">
 
-                    <div class="row mt-5">
-                        <div class="col-12 text-danger" th:text="${errorMessage}">
-                            &lt;!&ndash; 에러 메세지 &ndash;&gt;
-                        </div>
-                    </div>
-
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="username" id="username" th:value="${username}" placeholder="name@example.com" required>
-                        <label for="username">Username</label>
-                    </div>
-                    <div class="form-floating mt-1">
-                        <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
-                        <label for="password">Password</label>
-                    </div>
-
-
-                    <button class="w-100 btn btn-lg btn-primary my-1 mt-3" type="submit">LOG IN</button>
-                    <a class="w-100 btn btn-lg btn-primary my-1" th:href="@{/user/register}">Register</a>
-
-                    &lt;!&ndash; OAuth 로그인 버튼 &ndash;&gt;
-                    <a class="btn btn-lg my-1" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
-                        <img th:src="@{/image/kakao_login_button.png}" width="260" height="45">
-                    </a>
-                    <a class="btn btn-lg my-1" th:href="@{/oauth2/authorization/google}">
-                        <img th:src="@{/image/google_login_button.png}" width="260" height="45">
-                    </a>
-                    <a class="btn btn-lg my-1" th:href="@{/oauth2/authorization/naver}">
-                        <img th:src="@{/image/naver_login_button.png}" width="260" height="45">
-                    </a>
-                    &lt;!&ndash; OAuth 로그인 버튼 &ndash;&gt;
-
-                </form>
-            </div>
-          </div>
-
-        <p class="codepen" data-height="265" data-theme-id="light" data-default-tab="js,result" data-user="Mamboleoo" data-slug-hash="XWJPxpZ" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="Walkers - How to">
-  <span>See the Pen <a href="https://codepen.io/Mamboleoo/pen/XWJPxpZ">
-  Walkers - How to</a> by Louis Hoebregts (<a href="https://codepen.io/Mamboleoo">@Mamboleoo</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-        </p>
-        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>*/-->
-        <div style="height: 10%;">
-        </div>
+    <div style="height: 10%;"></div>
     <!-- 로그인 터미널 부분-->
 
     <div>

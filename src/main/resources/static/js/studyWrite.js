@@ -1,13 +1,5 @@
 $(function () {
 
-    const sidebarToggle = $('#sidebarToggle');
-    if (sidebarToggle) {
-        sidebarToggle.click(function (event) {
-            event.preventDefault();
-            $(`body`).toggleClass('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', $(`body`).hasClass('sb-sidenav-toggled'));
-        })
-    }
 
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd', // 연/월/일 형식으로 설정
