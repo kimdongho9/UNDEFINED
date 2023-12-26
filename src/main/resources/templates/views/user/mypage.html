@@ -36,14 +36,14 @@
 
 
             <!--개인정보 변경 부분-->
-            <div class="d-flex justify-content-center mt-4">
+            <div class="d-flex justify-content-center mt-4 userinfo" th:data-username="${user.username}" th:data-name="${user.name}" th:data-email="${user.email}">
                 <div class="card border-primary mb-3 col-10" style="max-width: 600px">
                     <div class="card-header">
                         <p class="text-center display-4">INFO</p>
                         <button type="button" id="btnForEdit" class="btn btn-danger" style="float: right;">EDIT</button>
                     </div>
                     <div class="card-body">
-                        <form name="sanggon">
+                        <form name="sanggon" action="/user/updateInfo" method="post">
                             <div class="mb-3 form-floating">
                                 <input type="text" class="form-control" name="username" id="username"
                                        placeholder="username" autocomplete="off" th:value="${user.username}" disabled>
@@ -57,37 +57,28 @@
 
                             <div class="password mb-3 form-floating visually-hidden">
                                 <input type="password" class="form-control" name="password" id="password"
-                                       placeholder="Password" autocomplete="off" disabled>
+                                       placeholder="Password" autocomplete="off">
                                 <label for="password">PASSWORD</label>
                             </div>
-
-                            <div class="repassword mb-3 form-floating visually-hidden">
-                                <input type="password" class="form-control" name="repassword" id="repassword"
-                                       placeholder="Re-Password" autocomplete="off" disabled>
-                                <label for="password">RE PASSWORD</label>
-                            </div>
-
                             <div class="form-floating d-flex align-items-center mb-3">
                                 <input type="email" class="form-control" name="email" id="email" placeholder=" "
                                        autocomplete="off" aria-label="email" aria-describedby="button-addon2"
-                                       style="width: 90%;" disabled>
-                                <label for="email">Email address</label>
+                                       style="width: 90%;" th:value="${user.email}" disabled>
+                                <label for="email">Email Address</label>
                                 <button class="btn btn-outline-secondary" name="emailBtn" type="button"
                                         id="button-addon2" style="height: 50px;" disabled>VERIFY
                                 </button>
                             </div>
-
-
                         </form>
-                        <p class="card-text mb-0 visually-hidden" style="display: inline-block">VERIFICATRION</p>
-                        <input type="password" class="form-control mb-3 visually-hidden" name="verify"
-                               placeholder="VERIFY CODE">
-                        <p class="card-text mb-0 text-danger visually-hidden">Code is not matched.</p>
-                        <p class="card-text mb-0 text-success visually-hidden">Code Verified! Now You Can Change Your
-                            INFO</p>
-                        <button type="submit" class="btn btn-outline-danger repassword visually-hidden"
-                                style="float: right;">SAVE
-                        </button>
+                        <div class="verify visually-hidden">
+                            <p class="card-text mb-0" style="display: inline-block">VERIFICATRION</p>
+                            <input type="password" class="form-control mb-3" name="verify"
+                                   placeholder="VERIFY CODE">
+                            <button type="submit" name="save" class="btn btn-outline-danger repassword"
+                                    style="float: right;" disabled>SAVE
+                            </button>
+                        </div>
+
                     </div>
                 </div>
 
@@ -189,41 +180,76 @@
     </body>
     <script th:inline="javascript">
         $(function () {
-
-            //edit and disable
-            $('#btnForEdit').click(function () {
-                $(this).text($(this).text() == "EDIT" ? 'CANCLE' : 'EDIT');
-                $('input[name="username"]').prop('disabled', function (i, val) {
-                    $(this).val([[${user.username}]]);
-                    return !val;
-                });
-                $('input[name="name"]').prop('disabled', function (i, val) {
-                    $(this).val([[${user.name}]])
-                    return !val;
-                });
-                $('input[name="password"]').prop('disabled', function (i, val) {
-                    return !val;
-                });
-                $('input[name="repassword"]').prop('disabled', function (i, val) {
-                    return !val;
-                });
-                $('input[name="email"]').prop('disabled', function (i, val) {
-                    $(this).val([[${user.email}]])
-                    return !val;
-                });
-
-                $('button[name="emailBtn"]').prop('disabled', function (i, val) {
-                    return !val;
-                });
-
-
-                $('.password').toggleClass('visually-hidden');
-                $('.repassword').toggleClass('visually-hidden');
+            $('button[name="save"]').click(function(){
+                alert('REDIRECT TO MAINPAGE, YOUR INFO UPDATED!');
+                $('form[name="sanggon"]').submit();
             });
 
-            $('#myActivity a').click(function(){
+            const userinfoElement = document.querySelector('.userinfo');
+
+
+            const username = userinfoElement.getAttribute('data-username');
+            const name = userinfoElement.getAttribute('data-name');
+            const email = userinfoElement.getAttribute('data-email');
+
+            $('#btnForEdit').click(function () {
+                var buttonText = $(this).text().trim();
+                var isEditMode = (buttonText === "EDIT");
+
+                $(this).text(isEditMode ? 'CANCEL' : 'EDIT');
+
+                if (isEditMode) {
+                    $('input[name="username"], input[name="name"], input[name="email"]').prop('disabled', false);
+                    $('.password').toggleClass('visually-hidden');
+                    $('button[name="emailBtn"]').prop('disabled', false);
+                } else {
+                    $('input[name="username"]').val(username);
+                    $('input[name="name"]').val(name);
+                    $('input[name="email"]').val(email);
+                    // Revert to disabled state without filling with initial values
+                    $('input[name="username"], input[name="name"], input[name="email"]').prop('disabled', true);
+                    $('.password').toggleClass('visually-hidden');
+                    $('button[name="emailBtn"]').prop('disabled', true);
+                }
+            });
+
+
+            $('#myActivity a').click(function () {
                 var offset = $(this).offset();
-                $('html').animate({scrollTop : offset.top}, 400);
+                $('html').animate({scrollTop: offset.top}, 400);
+            });
+
+
+            $("button[name='emailBtn']").click(function () {
+                var confirm_number = Math.floor(Math.random() * 1000000);
+                console.log(confirm_number);
+                $.ajax({
+                    url: "/verify",
+                    type: "post",
+                    data: {
+                        address: $("input[name='email']").val().trim(),
+                        title: "You ARE Editing INFO IN UNDEFINED! Please Confirm Your Security Code!",
+                        message: '<h1>Check Your Security Code!</h1>' +
+                            '<p>Please Confirm Your Security Code:</p>' +
+                            '<h2>' + confirm_number + '</h2>'
+                    }
+                });
+                $(this).closest('.card-body').find('.verify').removeClass('visually-hidden'); // Show the verification section
+
+                $('input[name="verify"]').blur(function () {
+                    var user_input = $(this).val().trim();
+                    var $saveButton = $(this).closest('.verify').find('.repassword');
+
+                    if (user_input === confirm_number.toString()) {
+                        // Enable the SAVE button
+                        $saveButton.prop('disabled', false);
+                    } else {
+                        // If input doesn't match, show an error or handle accordingly
+                        console.log('Verification code does not match.');
+                        // Optionally handle the mismatch case here
+                    }
+                });
+
             });
 
 

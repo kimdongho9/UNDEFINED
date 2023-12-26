@@ -459,7 +459,7 @@ public class NaverApiService {
 
     }*/
 
-   /* @Scheduled(fixedDelay = 3600000)
+    /*@Scheduled(fixedDelay = 3600000)
     public void navernews6(){
         newsRepository.delete("보안");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);

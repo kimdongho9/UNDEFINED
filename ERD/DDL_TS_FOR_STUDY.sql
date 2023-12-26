@@ -10,7 +10,7 @@ CREATE TABLE study_posts
     post_id int PRIMARY KEY AUTO_INCREMENT,
     user_id int NOT NULL,
     post_title varchar(200) NOT NULL,
-    post_content text,
+    post_content longtext,
     post_viewCnt int DEFAULT 0,
     post_regDate datetime DEFAULT NOW(),
     post_enddate datetime,

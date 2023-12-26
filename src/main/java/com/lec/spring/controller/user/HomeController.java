@@ -47,6 +47,9 @@ public class HomeController {
         model.addAttribute("AI2First", naverApiService.list("인공지능").get(0));
         model.addAttribute("AI2", naverApiService.list("인공지능").subList(1, 6));
 
+        model.addAttribute("SecFirst", naverApiService.list("보안").get(0));
+        model.addAttribute("Sec", naverApiService.list("보안").subList(1, 6));
+
         model.addAttribute("portfolio", portfolioService.forMainPage());
 
         return "/home";

@@ -11,4 +11,6 @@ public interface UserService {
 
     // 신규 회원 등록
     int register(User user);
+
+    int update(User user);
 }

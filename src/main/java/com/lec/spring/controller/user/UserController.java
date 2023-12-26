@@ -99,7 +99,16 @@ public class UserController {
         return userService.isExistName(name) ? 1 : 0;
     }
 
-
+    @PostMapping("/updateInfo")
+    public String updateInfo(String username, String name, String password, String email, @AuthenticationPrincipal PrincipalDetails userDetails){
+        User user = userDetails.getUser();
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setName(name);
+        user.setUsername(username);
+        userService.update(user);
+        return "redirect:/";
+    }
 
 
     @Autowired
