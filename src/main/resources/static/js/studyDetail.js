@@ -1,15 +1,5 @@
 $(document).ready(function () {
 
-    // sidebar toggle
-    const sidebarToggle = $('#sidebarToggle');
-    if (sidebarToggle) {
-        sidebarToggle.click(function (event) {
-            event.preventDefault();
-            $(`body`).toggleClass('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', $(`body`).hasClass('sb-sidenav-toggled'));
-        })
-    }
-
     isLike(logged_id, post_id)
         .then(response => {
             if (response) {
@@ -19,7 +9,8 @@ $(document).ready(function () {
             }
         })
 
-    $("#btnDel").click(function () {
+    $("#btnDel").click(function (event) {
+        event.preventDefault();
         let answer = confirm("삭제하시겠습니까?");
         if (answer) {
             $("form[name='frmDelete']").submit();

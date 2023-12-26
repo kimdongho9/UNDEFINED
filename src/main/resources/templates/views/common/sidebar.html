@@ -59,10 +59,19 @@
           </div>
 
           <!--Portfolio-->
-          <a class="nav-link collapsed" th:href="@{/portfolio/list}">
+          <a class="nav-link collapsed" data-bs-toggle="collapse"  data-bs-target="#collapseLayouts2"
+             aria-expanded="false" aria-controls="collapseLayouts2">
             <div class="sb-nav-link-icon"><i class="fa-solid fa-p"></i></div>
             &nbsp;Portfolio
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
           </a>
+          <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne"
+               data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+              <a class="nav-link" th:href="@{/portfolio/list}">Main</a>
+              <a class="nav-link" th:href="@{/portfolio/write}">Write</a>
+            </nav>
+          </div>
 
           <!--Community-->
           <a aria-controls="collapseCommu" aria-expanded="false" class="nav-link collapsed"

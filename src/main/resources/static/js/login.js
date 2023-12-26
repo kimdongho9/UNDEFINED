@@ -68,6 +68,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                 switch (inputOption.value) {
                     case '1': {  // user login
                         document.querySelector('#commandRoot').innerHTML = 'C:&#8361;Undefined&#8361;Login&#8361;User >';
+                        inputOption.value = '';
                         inputUserId();
                         break;
                     }
@@ -79,7 +80,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                             loginText.textContent += c;
                             await sleep(20);
                         }
-
+                        inputOption.value = '';
                         $("#Kakao").get(0).click();
                         break;
                     }
@@ -90,7 +91,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                             loginText.textContent += c;
                             await sleep(20);
                         }
-
+                        inputOption.value = '';
                         window.location.href = '/oauth2/authorization/google';
                         break;
 
@@ -102,12 +103,14 @@ window.addEventListener('DOMContentLoaded', async () => {
                             loginText.textContent += c;
                             await sleep(20);
                         }
+                        inputOption.value = '';
                         window.location.href = '/oauth2/authorization/naver';
                         break;
 
                     }
                     case '5': {
                         document.querySelector('#commandRoot').innerHTML = 'C:&#8361;Undefined&#8361;Login&#8361;Register >';
+                        inputOption.value = '';
                         register();
                         break;
 
@@ -710,13 +713,15 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     function resetRegister() {
         document.querySelector('.register').classList.add('visually-hidden');
-
+        $("input").prop('disabled', false);
         const registerId = document.querySelector('.register input[name="username"]');
         const rid = document.getElementById('registerText0');
         rid.textContent = "";
         registerId.value = "";
         registerId.classList.add("hidden");
-
+        $('#registerText01').text('');
+        $('#availableName').text('');
+        $('#duplicateName').text('');
         const registerName = document.querySelector('.register input[name="name"]');
         const rname = document.getElementById('registerText0');
         rname.textContent = "";
@@ -748,6 +753,12 @@ window.addEventListener('DOMContentLoaded', async () => {
         rpwa.textContent = "";
         if (registerPwAgain.value != null) registerPwAgain.value = "";
         registerPwAgain.classList.add("hidden");
+        $('#registerText3').text('');
+        $('input[name="email"]').val('');
+        $('input[name="email"]').addClass('hidden');
+        $('#registerText4').text('');
+        $('#verify').val('');
+        $('#verify').addClass('hidden');
     }
 
 

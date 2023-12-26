@@ -1,18 +1,6 @@
 //클릭 했을 때 디테일로
 $(document).ready(function(){
 
-    // sidebar toggle
-    const sidebarToggle = $('#sidebarToggle');
-    if (sidebarToggle) {
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-        //     document.body.classList.toggle('sb-sidenav-toggled');
-        // }
-        sidebarToggle.click(function (event) {
-            event.preventDefault();
-            $(`body`).toggleClass('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', $(`body`).hasClass('sb-sidenav-toggled'));
-        })
-    }
 
 
     $("[id^='detail'] .favorite:nth-child(2)").hide();

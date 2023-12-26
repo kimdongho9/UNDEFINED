@@ -111,16 +111,17 @@
                         </p>
                     </div>
                     <div class="list_bottom_box mb-2">
-                        <div sec:authorize="isAuthenticated()" class="list box d-flex justify-content-end me-3">
-                            <a class="card-link" th:href="@{'/study/update/'+${post.id}}" style="text-decoration: none;">Edit</a>
-                            <!-- 작성자만 해당 버튼 활성화 -->
-                            <form method="POST" name="frmDelete" th:action="@{/study/delete}">
-                                <input name="id" th:value="${post.id}" type="hidden">
-                                <button id="btnDel" style="color: red; border:none; background-color:white;"
-                                        type="submit">Delete
-                                    <!-- 작성자만 해당 버튼 활성화 -->
-                                </button>
-                            </form>
+                        <div sec:authorize="isAuthenticated()" th:with="userId=${#authentication.getPrincipal().getUser().getId()}" class="list box d-flex justify-content-end me-3">
+                            <th:block th:if="${userId == post.user.id}">
+                                <a class="card-link" th:href="@{'/study/update/'+${post.id}}" style="text-decoration: none;">Edit</a>
+                                <!-- 작성자만 해당 버튼 활성화 -->
+                                <form method="POST" name="frmDelete" th:action="@{/study/delete}">
+                                    <input name="id" th:value="${post.id}" type="hidden">
+                                    <button id="btnDel" style="color: red; border:none; background-color:white;"
+                                            type="submit">Delete
+                                    </button>
+                                </form>
+                            </th:block>
                         </div>
                         <div class="viewcnt_box ms-3" style="font-size: 15px; margin-top: -23px;">
                             <i class="view_eye fas fa-eye"></i>
@@ -158,20 +159,19 @@
 
                                 </div>
                             </th:block>
-
                         </div>
-                        <div class="input-group mb-3" sec:authorize="isAuthenticated()" th:with="userId=${#authentication.getPrincipal().getUser().getId()}" >
-                            <!-- 메시지를 입력할 필드 -->
-                            <input type="text" class="visually-hidden" name="postId" th:value="${post.id}">
-                            <input type="text" class="visually-hidden" name="userId" th:value="${userId}">
-                            <input type="text" id="msg" name="content"  class="form-control">
-                            <div class="input-group-append">
-                                <!-- 메시지를 전송하는 버튼 -->
-                                <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
-                                <!-- 채팅에서 나가는 버튼 -->
-                                <button class="btn btn-outline-secondary" type="button" id="button-close">나가기</button>
+                            <div class="input-group mb-3" sec:authorize="isAuthenticated()" th:with="userId=${#authentication.getPrincipal().getUser().getId()}" >
+                                <!-- 메시지를 입력할 필드 -->
+                                <input type="text" class="visually-hidden" name="postId" th:value="${post.id}">
+                                <input type="text" class="visually-hidden" name="userId" th:value="${userId}">
+                                <input type="text" id="msg" name="content"  class="form-control">
+                                <div class="input-group-append">
+                                    <!-- 메시지를 전송하는 버튼 -->
+                                    <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+                                    <!-- 채팅에서 나가는 버튼 -->
+                                    <button class="btn btn-outline-secondary" type="button" id="button-close">나가기</button>
+                                </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
