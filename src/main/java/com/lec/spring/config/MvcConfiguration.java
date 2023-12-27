@@ -52,7 +52,7 @@ public class MvcConfiguration {
             // 기가 맥히네
             registry
                     .addResourceHandler("/upload/**")
-                    .addResourceLocations("file:" + uploadDir + "/");
+                    .addResourceLocations("file:/home/ubuntu/" + uploadDir + "/");
         }
     }
 }
