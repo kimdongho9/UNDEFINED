@@ -30,8 +30,14 @@ public class HomeController {
     @Autowired
     private PortfolioService portfolioService;
 
+
     @RequestMapping("/")
-    public String login(Model model){
+    public String home(){
+        return "redirect:/home";
+    }
+
+    @RequestMapping("/home")
+    public void home(Model model){
         model.addAttribute("infoFirst", naverApiService.list("개발자채용").get(0));
         model.addAttribute("info", naverApiService.list("개발자채용").subList(1, 6));
 
@@ -51,8 +57,6 @@ public class HomeController {
         model.addAttribute("Sec", naverApiService.list("보안").subList(1, 6));
 
         model.addAttribute("portfolio", portfolioService.forMainPage());
-
-        return "/home";
     }
 
 

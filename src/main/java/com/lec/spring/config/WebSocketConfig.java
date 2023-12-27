@@ -20,6 +20,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
         // ChatHandler를 WebSocketHandler로 등록하고, "/ws/chat" 주소에 대한 핸들러를 추가함
         // 허용된 오리진은 모든 곳에서("*") 접근이 가능하도록 설정함
         registry.addHandler(chatHandler, "ws/chat")
-                .setAllowedOrigins("http://localhost:8080");
+                .setAllowedOrigins("http://ec2-43-203-27-225.ap-northeast-2.compute.amazonaws.com:8080");
     }
 }

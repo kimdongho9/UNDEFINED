@@ -92,6 +92,8 @@ SELECT * FROM study_skills;
 
 
 
+
+
 DROP TABLE IF EXISTS study_chat;
 CREATE TABLE study_chat
 (

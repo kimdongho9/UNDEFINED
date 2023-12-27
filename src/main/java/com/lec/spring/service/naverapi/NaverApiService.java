@@ -45,7 +45,7 @@ public class NaverApiService {
 
     //@Scheduled(fixedDelay = 3600000)
 
-    /*@Scheduled(fixedDelay = 3600000)
+/*    @Scheduled(fixedDelay = 3600000)
     public void navernews(){
         newsRepository.delete("개발자채용");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -95,7 +95,7 @@ public class NaverApiService {
 
 
 
-   /* @Scheduled(fixedDelay = 3600000)
+/*    @Scheduled(fixedDelay = 3600000)
     public void saveYoutube1(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -131,7 +131,7 @@ public class NaverApiService {
 
 
 
-/*    @Scheduled(fixedDelay = 3600000)
+    /*@Scheduled(fixedDelay = 3600000)
     public void navernews2(){
         newsRepository.delete("백엔드");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -179,7 +179,7 @@ public class NaverApiService {
         }
     }*/
 
- /*  @Scheduled(fixedDelay = 3600000)
+  /* @Scheduled(fixedDelay = 3600000)
     public void saveYoutube2(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -213,7 +213,7 @@ public class NaverApiService {
 
     }*/
 
-  /*  @Scheduled(fixedDelay = 3600000)
+/*    @Scheduled(fixedDelay = 3600000)
     public void navernews3(){
         newsRepository.delete("프론트엔드");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -259,9 +259,9 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    } */
+    }*/
 
-  /*  @Scheduled(fixedDelay = 3600000)
+ /*   @Scheduled(fixedDelay = 3600000)
     public void saveYoutube3(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -296,7 +296,7 @@ public class NaverApiService {
 
     }*/
 
-   /* @Scheduled(fixedDelay = 3600000)
+ /*   @Scheduled(fixedDelay = 3600000)
     public void navernews4(){
         System.out.println("시작");
         newsRepository.delete("AI");
@@ -345,7 +345,7 @@ public class NaverApiService {
         }
     }*/
 
- /*   @Scheduled(fixedDelay = 3600000)
+  /*  @Scheduled(fixedDelay = 3600000)
     public void saveYoutube4(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -379,7 +379,7 @@ public class NaverApiService {
 
     }*/
 
-   /* @Scheduled(fixedDelay = 3600000)
+/*    @Scheduled(fixedDelay = 3600000)
     public void navernews5(){
         newsRepository.delete("인공지능");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -427,7 +427,7 @@ public class NaverApiService {
         }
     }*/
 
-  /*  @Scheduled(fixedDelay = 3600000)
+/*    @Scheduled(fixedDelay = 3600000)
     public void saveYoutube5(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -459,7 +459,7 @@ public class NaverApiService {
 
     }*/
 
-    /*@Scheduled(fixedDelay = 3600000)
+/*    @Scheduled(fixedDelay = 3600000)
     public void navernews6(){
         newsRepository.delete("보안");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -506,7 +506,7 @@ public class NaverApiService {
             newsRepository.save(news);
         }
     }*/
-   /* @Scheduled(fixedDelay = 3600000)
+/*    @Scheduled(fixedDelay = 3600000)
     public void saveYoutube6(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
