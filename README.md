@@ -26,6 +26,8 @@
 * 최정인 : Portfolio 페이지, 공공데이터 API를 활용한 시험일정 캘린더, XML 데이터 파싱, @Schduled 태그를 이용한 API 관리, 스터디페이지 CSS
 * 김동호 : 스터디 페이지 CRUD, 즐겨찾기 기능
 
+Github : [강준우](https://github.com/JK-17), [유상곤](https://github.com/YuSangGon), [이승준](https://github.com/james9726), [최정인](https://github.com/Jeongin917), [김동호](https://github.com/kimdongho9)
+
 
 
 ## 웹 사이트 시연 및 기능 구현 설명 영상
