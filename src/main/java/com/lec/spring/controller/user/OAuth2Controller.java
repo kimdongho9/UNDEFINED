@@ -78,7 +78,7 @@ public class OAuth2Controller {
         User kakaoUser = kakaoUserTemp(profile);
         if(kakaoUser != null){  //회원 정보가 없을 경우
             model.addAttribute("info", kakaoUser);
-            return "/user/login";
+            return "user/login";
         }
 
         return "redirect:/";

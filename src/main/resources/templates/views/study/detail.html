@@ -3,6 +3,10 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
+    <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+    />
     <meta charset="utf-8"/>
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
@@ -195,7 +199,7 @@
         let username = [[${user.name}]]; // 기본 사용자 이름 설정
 
         // 웹소켓 연결
-        const websocket = new WebSocket("ws://ec2-43-203-27-225.ap-northeast-2.compute.amazonaws.com:8080/ws/chat"); //자바스크립트가 지원 하는 내장 웹소켓
+        const websocket = new WebSocket("ws://undefined-project.com/ws/chat"); //자바스크립트가 지원 하는 내장 웹소켓
         // 채팅에서 나가는 기능
         $("#button-close").on("click", (e) => {
             const exitMessage = username + ": 방을 나갔습니다.";
