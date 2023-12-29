@@ -56,10 +56,8 @@ CREATE TABLE portfolio
     increaseViewCount int DEFAULT 0,
     regdate datetime DEFAULT NOW()
 );
-
 DELETE FROM portfolio;
 ALTER TABLE portfolio AUTO_INCREMENT = 1;
-
 INSERT INTO portfolio( userId, content, title, experience, userPr, increaseViewCount, regdate)
 VALUES
     ( 1,'나를 소개하지','내이름은 코난탐정이죠', '10년','나 노래잘해(최지은)','40',  '2023-12-13'),
@@ -68,5 +66,4 @@ VALUES
     ( 4,'자기를 소개하지','내이름은 코난탐정이죠', '13년','나 노래잘해(강준우)','44',  '2023-12-12');
 
 SELECT * FROM portfolio;
-
 

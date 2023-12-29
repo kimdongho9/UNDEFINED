@@ -10,7 +10,6 @@ version = '0.0.1-SNAPSHOT'
 java {
     sourceCompatibility = '17'
 }
-
 jar {
     enabled = false
 }
@@ -39,7 +38,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation group: 'org.json', name: 'json', version: '20230227'
 }
-
 tasks.named('test') {
     useJUnitPlatform()
 }
