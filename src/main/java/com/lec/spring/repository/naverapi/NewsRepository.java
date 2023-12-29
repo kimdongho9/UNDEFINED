@@ -12,6 +12,8 @@ public interface NewsRepository {
 
     int saveYoutue(YoutubeDTO youtube);
 
+    int deleteYoutube(String keyword);
+
     int saveBooks(Book book);
 
     int delete(String keyword);

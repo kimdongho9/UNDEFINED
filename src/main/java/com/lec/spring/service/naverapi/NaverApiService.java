@@ -43,7 +43,7 @@ public class NaverApiService {
         newsRepository = sqlSession.getMapper(NewsRepository.class);
     }
 
-    //@Scheduled(fixedDelay = 3600000)
+
 
 /*    @Scheduled(fixedDelay = 3600000)
     public void navernews(){
@@ -261,7 +261,7 @@ public class NaverApiService {
         }
     }*/
 
- /*   @Scheduled(fixedDelay = 3600000)
+/*    @Scheduled(cron="0 0 20 * * ?")
     public void saveYoutube3(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
@@ -294,9 +294,9 @@ public class NaverApiService {
             newsRepository.saveYoutue(youtubeDTO);
         }
 
-    }*/
+    }
 
- /*   @Scheduled(fixedDelay = 3600000)
+    @Scheduled(cron="0 0 15 * * ?")
     public void navernews4(){
         System.out.println("시작");
         newsRepository.delete("AI");
@@ -343,14 +343,14 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    }*/
+    }
 
-  /*  @Scheduled(fixedDelay = 3600000)
+    @Scheduled(cron="0 0 12 * * ?")
     public void saveYoutube4(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
                 + "&maxResults=10&q=AI";
-
+        newsRepository.deleteYoutube("AI");
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         String resBody = response.getBody();
         JSONObject jsonObject = new JSONObject(resBody);
@@ -377,9 +377,9 @@ public class NaverApiService {
             newsRepository.saveYoutue(youtubeDTO);
         }
 
-    }*/
+    }
 
-/*    @Scheduled(fixedDelay = 3600000)
+    @Scheduled(cron="0 0 10 * * ?")
     public void navernews5(){
         newsRepository.delete("인공지능");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
@@ -425,13 +425,14 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    }*/
+    }
 
-/*    @Scheduled(fixedDelay = 3600000)
+    @Scheduled(cron="0 0 08 * * ?")
     public void saveYoutube5(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
                 + "&maxResults=10&q=인공지능";
+        newsRepository.deleteYoutube("인공지능");
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         String resBody = response.getBody();
         JSONObject jsonObject = new JSONObject(resBody);
@@ -457,13 +458,12 @@ public class NaverApiService {
             newsRepository.saveYoutue(youtubeDTO);
         }
 
-    }*/
+    }
 
-/*    @Scheduled(fixedDelay = 3600000)
+    @Scheduled(cron="0 0 09 * * ?")
     public void navernews6(){
         newsRepository.delete("보안");
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-
         URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com")
                 .path("/v1/search/news.json")
                 .queryParam("query", "보안")
@@ -505,13 +505,13 @@ public class NaverApiService {
         for (News news : newsList) {
             newsRepository.save(news);
         }
-    }*/
-/*    @Scheduled(fixedDelay = 3600000)
+    }
+    @Scheduled(cron="0 0 05 * * ?")
     public void saveYoutube6(){
         RestTemplate restTemplate =new RestTemplate();
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + youtuekey
                 + "&maxResults=10&q=보안";
-
+        newsRepository.deleteYoutube("보안");
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         String resBody = response.getBody();
         JSONObject jsonObject = new JSONObject(resBody);

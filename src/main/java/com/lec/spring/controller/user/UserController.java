@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public void login(){};
+    public String login(){return "user/login";};
 
 
     @PostMapping("/loginError")
@@ -145,7 +145,7 @@ public class UserController {
 
     @GetMapping("/mypage")
     public String mypage(Model model,  @AuthenticationPrincipal PrincipalDetails userDetails){
-        if(userDetails == null) return "/user/login";
+        if(userDetails == null) return "user/login";
         Long id = userDetails.getUser().getId();
         model.addAttribute("bookList", naverApiService.likeBooks(id));    //이 유저가 좋아요 누른 책 정보
         model.addAttribute("studyList", studyService.listForMyPage(id));

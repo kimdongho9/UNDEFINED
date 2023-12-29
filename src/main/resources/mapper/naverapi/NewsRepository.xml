@@ -29,6 +29,9 @@
     <delete id="deleteBooks" flushCache="true">
         DELETE FROM books WHERE user_id = #{userId} AND isbn = #{isbn} AND title = #{title}
     </delete>
+    <delete id="deleteYoutube">
+        DELETE FROM youtube WHERE keyword = #{keyword}
+    </delete>
 
     <select id="list" resultType="com.lec.spring.domain.naverapi.News">
         SELECT
