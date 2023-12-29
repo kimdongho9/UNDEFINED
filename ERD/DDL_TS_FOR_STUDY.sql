@@ -57,8 +57,6 @@ VALUES
     ( 1,'html 스터디 구해영!', 'html 스터디 구합니다!', 1,'2023-12-07', 3,'백엔드'),
     ( 1,'html 스터디 구해영!', 'html 스터디 구합니다!', 1,'2023-12-07', 3,'프론트엔드');
 SELECT * FROM study_posts;
-
-
 DELETE FROM study_favor;
 INSERT INTO study_favor (post_id, user_id)
     VALUE (17, 2);

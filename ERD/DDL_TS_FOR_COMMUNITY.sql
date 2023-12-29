@@ -152,7 +152,6 @@ VALUES (1, '오늘 점심 추천 좀', '점심 메뉴 생각하기가 가장 힘
        (1, '오늘 저녁도 추천 좀', '', 'temp'),
        (1, '오늘 아침 추천 좀', '아침 먹기가 힘들지만, 먹는 버릇을 들여보려고 해여...가볍게 먹을게 뭐가 있을까요?', 'comp')
         ;
-
 DELETE FROM feed_tags;
 ALTER TABLE feed_tags
     AUTO_INCREMENT = 1;

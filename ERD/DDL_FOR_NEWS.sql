@@ -56,8 +56,6 @@ DELETE FROM youtube;
 ALTER TABLE youtube AUTO_INCREMENT = 1;
 
 SELECT * FROM youtube;
-
-
 DROP TABLE IF EXISTS books;
 CREATE TABLE books
 (
