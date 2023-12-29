@@ -1,5 +1,5 @@
 # Spring Boot Project - Undefined
-스프링 부트와 공공 데이터 API를 활용한 개발자 커뮤니티 사이트([바로가기](http://ec2-43-203-27-225.ap-northeast-2.compute.amazonaws.com:8080/home))
+스프링 부트와 공공 데이터 API를 활용한 개발자 커뮤니티 사이트([바로가기](https://www.undefined-project.com))
 
 
 ## 프로젝트 개요
