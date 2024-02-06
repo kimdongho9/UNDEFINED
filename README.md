@@ -25,7 +25,7 @@
 * 유상곤 : 커뮤니티 페이지, 마이페이지, 스터디 페이지, 전체적인 CSS, 프로젝트의 모든 검색 기능 구현
 * 이승준 : Websocket을 활용한 채팅 서비스, Portfolio 페이지
 * 최정인 : Portfolio 페이지, 공공데이터 API를 활용한 시험일정 캘린더, XML 데이터 파싱, @Schduled 태그를 이용한 API 관리, 스터디페이지 CSS
-* 김동호 : 스터디 페이지 CRUD, 즐겨찾기 기능
+* 김동호 : 스터디 페이지 CRUD, 스터디 페이지 css, 즐겨찾기 기능
 
 Github : [강준우](https://github.com/JK-17), [유상곤](https://github.com/YuSangGon/portfolio), [이승준](https://github.com/james9726), [최정인](https://github.com/Jeongin917), [김동호](https://github.com/kimdongho9)
 
