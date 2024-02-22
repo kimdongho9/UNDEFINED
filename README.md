@@ -38,5 +38,4 @@ Github : [강준우](https://github.com/JK-17), [유상곤](https://github.com/Y
 <img width="80%" src="https://github.com/YuSangGon/codingTest/assets/61350460/d7aed4c1-2f5c-4a0e-ac4d-8577d328b292"/>
 
 
-## 페이지 구조
-<img width="80%" src="https://github.com/YuSangGon/WEEK5/assets/61350460/bee7fd26-1480-4881-be9e-2d0d014c79e8"/>
+
